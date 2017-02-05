@@ -1,0 +1,300 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AD284DD31E2CE63200A15F31 /* PHPlayerCore.hpp in Headers */ = {isa = PBXBuildFile; fileRef = AD284DD21E2CE63200A15F31 /* PHPlayerCore.hpp */; };
+		AD284DD51E2CE63200A15F31 /* PHPlayerCorePriv.hpp in Headers */ = {isa = PBXBuildFile; fileRef = AD284DD41E2CE63200A15F31 /* PHPlayerCorePriv.hpp */; };
+		AD284DD71E2CE63200A15F31 /* PHPlayerCore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD284DD61E2CE63200A15F31 /* PHPlayerCore.cpp */; };
+		AD284DEC1E2DE92F00A15F31 /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD284DEA1E2DE92F00A15F31 /* Player.cpp */; };
+		AD284DED1E2DE92F00A15F31 /* Player.hpp in Headers */ = {isa = PBXBuildFile; fileRef = AD284DEB1E2DE92F00A15F31 /* Player.hpp */; };
+		AD284E091E325F2700A15F31 /* PacketQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD284E071E325F2700A15F31 /* PacketQueue.cpp */; };
+		AD284E0A1E325F2700A15F31 /* PacketQueue.hpp in Headers */ = {isa = PBXBuildFile; fileRef = AD284E081E325F2700A15F31 /* PacketQueue.hpp */; };
+		AD284E0D1E325F3C00A15F31 /* FrameQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD284E0B1E325F3C00A15F31 /* FrameQueue.cpp */; };
+		AD284E0E1E325F3C00A15F31 /* FrameQueue.hpp in Headers */ = {isa = PBXBuildFile; fileRef = AD284E0C1E325F3C00A15F31 /* FrameQueue.hpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		AD284DCF1E2CE63200A15F31 /* libPHPlayerCore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPHPlayerCore.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD284DD21E2CE63200A15F31 /* PHPlayerCore.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PHPlayerCore.hpp; sourceTree = "<group>"; };
+		AD284DD41E2CE63200A15F31 /* PHPlayerCorePriv.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PHPlayerCorePriv.hpp; sourceTree = "<group>"; };
+		AD284DD61E2CE63200A15F31 /* PHPlayerCore.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PHPlayerCore.cpp; sourceTree = "<group>"; };
+		AD284DEA1E2DE92F00A15F31 /* Player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Player.cpp; sourceTree = "<group>"; };
+		AD284DEB1E2DE92F00A15F31 /* Player.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Player.hpp; sourceTree = "<group>"; };
+		AD284E071E325F2700A15F31 /* PacketQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PacketQueue.cpp; sourceTree = "<group>"; };
+		AD284E081E325F2700A15F31 /* PacketQueue.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PacketQueue.hpp; sourceTree = "<group>"; };
+		AD284E0B1E325F3C00A15F31 /* FrameQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FrameQueue.cpp; sourceTree = "<group>"; };
+		AD284E0C1E325F3C00A15F31 /* FrameQueue.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FrameQueue.hpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AD284DCC1E2CE63200A15F31 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AD284DC61E2CE63200A15F31 = {
+			isa = PBXGroup;
+			children = (
+				AD284DD11E2CE63200A15F31 /* PHPlayerCore */,
+				AD284DD01E2CE63200A15F31 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AD284DD01E2CE63200A15F31 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AD284DCF1E2CE63200A15F31 /* libPHPlayerCore.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AD284DD11E2CE63200A15F31 /* PHPlayerCore */ = {
+			isa = PBXGroup;
+			children = (
+				AD284DD21E2CE63200A15F31 /* PHPlayerCore.hpp */,
+				AD284DD41E2CE63200A15F31 /* PHPlayerCorePriv.hpp */,
+				AD284DD61E2CE63200A15F31 /* PHPlayerCore.cpp */,
+				AD284DEA1E2DE92F00A15F31 /* Player.cpp */,
+				AD284DEB1E2DE92F00A15F31 /* Player.hpp */,
+				AD284E071E325F2700A15F31 /* PacketQueue.cpp */,
+				AD284E081E325F2700A15F31 /* PacketQueue.hpp */,
+				AD284E0B1E325F3C00A15F31 /* FrameQueue.cpp */,
+				AD284E0C1E325F3C00A15F31 /* FrameQueue.hpp */,
+			);
+			path = PHPlayerCore;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		AD284DCD1E2CE63200A15F31 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD284DED1E2DE92F00A15F31 /* Player.hpp in Headers */,
+				AD284E0E1E325F3C00A15F31 /* FrameQueue.hpp in Headers */,
+				AD284DD31E2CE63200A15F31 /* PHPlayerCore.hpp in Headers */,
+				AD284E0A1E325F2700A15F31 /* PacketQueue.hpp in Headers */,
+				AD284DD51E2CE63200A15F31 /* PHPlayerCorePriv.hpp in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		AD284DCE1E2CE63200A15F31 /* PHPlayerCore */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AD284DDA1E2CE63200A15F31 /* Build configuration list for PBXNativeTarget "PHPlayerCore" */;
+			buildPhases = (
+				AD284DCB1E2CE63200A15F31 /* Sources */,
+				AD284DCC1E2CE63200A15F31 /* Frameworks */,
+				AD284DCD1E2CE63200A15F31 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PHPlayerCore;
+			productName = PHPlayerCore;
+			productReference = AD284DCF1E2CE63200A15F31 /* libPHPlayerCore.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AD284DC71E2CE63200A15F31 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0810;
+				ORGANIZATIONNAME = huhexiang;
+				TargetAttributes = {
+					AD284DCE1E2CE63200A15F31 = {
+						CreatedOnToolsVersion = 8.1;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = AD284DCA1E2CE63200A15F31 /* Build configuration list for PBXProject "PHPlayerCore" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = AD284DC61E2CE63200A15F31;
+			productRefGroup = AD284DD01E2CE63200A15F31 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AD284DCE1E2CE63200A15F31 /* PHPlayerCore */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AD284DCB1E2CE63200A15F31 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD284DEC1E2DE92F00A15F31 /* Player.cpp in Sources */,
+				AD284DD71E2CE63200A15F31 /* PHPlayerCore.cpp in Sources */,
+				AD284E091E325F2700A15F31 /* PacketQueue.cpp in Sources */,
+				AD284E0D1E325F3C00A15F31 /* FrameQueue.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		AD284DD81E2CE63200A15F31 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		AD284DD91E2CE63200A15F31 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		AD284DDB1E2CE63200A15F31 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				GCC_ENABLE_CPP_EXCEPTIONS = YES;
+				GCC_ENABLE_CPP_RTTI = YES;
+				HEADER_SEARCH_PATHS = (
+					/Users/pkhope/Documents/develop/opensource/ffmpeg/libavformat,
+					/Users/pkhope/Documents/develop/opensource/ffmpeg/libavcodec,
+					/Users/pkhope/Documents/develop/opensource/ffmpeg,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		AD284DDC1E2CE63200A15F31 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				GCC_ENABLE_CPP_EXCEPTIONS = YES;
+				GCC_ENABLE_CPP_RTTI = YES;
+				HEADER_SEARCH_PATHS = (
+					/Users/pkhope/Documents/develop/opensource/ffmpeg/libavformat,
+					/Users/pkhope/Documents/develop/opensource/ffmpeg/libavcodec,
+					/Users/pkhope/Documents/develop/opensource/ffmpeg,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AD284DCA1E2CE63200A15F31 /* Build configuration list for PBXProject "PHPlayerCore" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD284DD81E2CE63200A15F31 /* Debug */,
+				AD284DD91E2CE63200A15F31 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AD284DDA1E2CE63200A15F31 /* Build configuration list for PBXNativeTarget "PHPlayerCore" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD284DDB1E2CE63200A15F31 /* Debug */,
+				AD284DDC1E2CE63200A15F31 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = AD284DC71E2CE63200A15F31 /* Project object */;
+}

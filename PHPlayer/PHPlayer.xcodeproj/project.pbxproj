@@ -1,0 +1,335 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AD284DBA1E2CE43300A15F31 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD284DB91E2CE43300A15F31 /* AppDelegate.swift */; };
+		AD284DBC1E2CE43300A15F31 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD284DBB1E2CE43300A15F31 /* Assets.xcassets */; };
+		AD284DBF1E2CE43300A15F31 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD284DBD1E2CE43300A15F31 /* MainMenu.xib */; };
+		AD284DE01E2CFC0900A15F31 /* CPPWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = AD284DDF1E2CFC0900A15F31 /* CPPWrapper.mm */; };
+		AD284DE91E2D093D00A15F31 /* libPHPlayerCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD284DE81E2D093D00A15F31 /* libPHPlayerCore.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		AD284DB61E2CE43300A15F31 /* PHPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PHPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD284DB91E2CE43300A15F31 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		AD284DBB1E2CE43300A15F31 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		AD284DBE1E2CE43300A15F31 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		AD284DC01E2CE43300A15F31 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AD284DDE1E2CFC0900A15F31 /* PHPlayer-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PHPlayer-Bridging-Header.h"; sourceTree = "<group>"; };
+		AD284DDF1E2CFC0900A15F31 /* CPPWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CPPWrapper.mm; sourceTree = "<group>"; };
+		AD284DE11E2CFD1C00A15F31 /* cppwrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cppwrapper.h; sourceTree = "<group>"; };
+		AD284DE61E2D043100A15F31 /* libPHPlayerCore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPHPlayerCore.a; path = ../PHPlayerCore/build/Debug/libPHPlayerCore.a; sourceTree = "<group>"; };
+		AD284DE81E2D093D00A15F31 /* libPHPlayerCore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPHPlayerCore.a; path = "../../../../../Library/Developer/Xcode/DerivedData/PHPlayer-eduvxblpmmuqsnghgyqnmsxhgvac/Build/Products/Debug/libPHPlayerCore.a"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AD284DB31E2CE43300A15F31 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD284DE91E2D093D00A15F31 /* libPHPlayerCore.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AD284DAD1E2CE43300A15F31 = {
+			isa = PBXGroup;
+			children = (
+				AD284DDD1E2CFBAD00A15F31 /* CPPWrapper */,
+				AD284DB81E2CE43300A15F31 /* PHPlayer */,
+				AD284DB71E2CE43300A15F31 /* Products */,
+				AD284DE51E2D043000A15F31 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		AD284DB71E2CE43300A15F31 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AD284DB61E2CE43300A15F31 /* PHPlayer.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AD284DB81E2CE43300A15F31 /* PHPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				AD284DB91E2CE43300A15F31 /* AppDelegate.swift */,
+				AD284DBB1E2CE43300A15F31 /* Assets.xcassets */,
+				AD284DBD1E2CE43300A15F31 /* MainMenu.xib */,
+				AD284DC01E2CE43300A15F31 /* Info.plist */,
+			);
+			path = PHPlayer;
+			sourceTree = "<group>";
+		};
+		AD284DDD1E2CFBAD00A15F31 /* CPPWrapper */ = {
+			isa = PBXGroup;
+			children = (
+				AD284DDF1E2CFC0900A15F31 /* CPPWrapper.mm */,
+				AD284DDE1E2CFC0900A15F31 /* PHPlayer-Bridging-Header.h */,
+				AD284DE11E2CFD1C00A15F31 /* cppwrapper.h */,
+			);
+			name = CPPWrapper;
+			sourceTree = "<group>";
+		};
+		AD284DE51E2D043000A15F31 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AD284DE81E2D093D00A15F31 /* libPHPlayerCore.a */,
+				AD284DE61E2D043100A15F31 /* libPHPlayerCore.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AD284DB51E2CE43300A15F31 /* PHPlayer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AD284DC31E2CE43300A15F31 /* Build configuration list for PBXNativeTarget "PHPlayer" */;
+			buildPhases = (
+				AD284DB21E2CE43300A15F31 /* Sources */,
+				AD284DB31E2CE43300A15F31 /* Frameworks */,
+				AD284DB41E2CE43300A15F31 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PHPlayer;
+			productName = PHPlayer;
+			productReference = AD284DB61E2CE43300A15F31 /* PHPlayer.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AD284DAE1E2CE43300A15F31 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0810;
+				LastUpgradeCheck = 0810;
+				ORGANIZATIONNAME = huhexiang;
+				TargetAttributes = {
+					AD284DB51E2CE43300A15F31 = {
+						CreatedOnToolsVersion = 8.1;
+						LastSwiftMigration = 0810;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = AD284DB11E2CE43300A15F31 /* Build configuration list for PBXProject "PHPlayer" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = AD284DAD1E2CE43300A15F31;
+			productRefGroup = AD284DB71E2CE43300A15F31 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AD284DB51E2CE43300A15F31 /* PHPlayer */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AD284DB41E2CE43300A15F31 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD284DBC1E2CE43300A15F31 /* Assets.xcassets in Resources */,
+				AD284DBF1E2CE43300A15F31 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AD284DB21E2CE43300A15F31 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD284DBA1E2CE43300A15F31 /* AppDelegate.swift in Sources */,
+				AD284DE01E2CFC0900A15F31 /* CPPWrapper.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		AD284DBD1E2CE43300A15F31 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AD284DBE1E2CE43300A15F31 /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		AD284DC11E2CE43300A15F31 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		AD284DC21E2CE43300A15F31 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+			};
+			name = Release;
+		};
+		AD284DC41E2CE43300A15F31 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				"HEADER_SEARCH_PATHS[arch=*]" = "$(PROJECT_DIR)Core/PHPlayerCore";
+				INFOPLIST_FILE = PHPlayer/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)Core/build/Debug",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.pkhope.PHPlayer;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "PHPlayer-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		AD284DC51E2CE43300A15F31 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = PHPlayer/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)Core/build/Debug",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.pkhope.PHPlayer;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "PHPlayer-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AD284DB11E2CE43300A15F31 /* Build configuration list for PBXProject "PHPlayer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD284DC11E2CE43300A15F31 /* Debug */,
+				AD284DC21E2CE43300A15F31 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AD284DC31E2CE43300A15F31 /* Build configuration list for PBXNativeTarget "PHPlayer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD284DC41E2CE43300A15F31 /* Debug */,
+				AD284DC51E2CE43300A15F31 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = AD284DAE1E2CE43300A15F31 /* Project object */;
+}
