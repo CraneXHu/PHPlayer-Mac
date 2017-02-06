@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "AD284DCE1E2CE63200A15F31"
-               BuildableName = "libPHPlayerCore.a"
+               BuildableName = "libPHPlayerCore.dylib"
                BlueprintName = "PHPlayerCore"
                ReferencedContainer = "container:PHPlayerCore.xcodeproj">
             </BuildableReference>
@@ -46,7 +46,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "AD284DCE1E2CE63200A15F31"
-            BuildableName = "libPHPlayerCore.a"
+            BuildableName = "libPHPlayerCore.dylib"
             BlueprintName = "PHPlayerCore"
             ReferencedContainer = "container:PHPlayerCore.xcodeproj">
          </BuildableReference>
@@ -64,7 +64,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "AD284DCE1E2CE63200A15F31"
-            BuildableName = "libPHPlayerCore.a"
+            BuildableName = "libPHPlayerCore.dylib"
             BlueprintName = "PHPlayerCore"
             ReferencedContainer = "container:PHPlayerCore.xcodeproj">
          </BuildableReference>

@@ -22,8 +22,14 @@
 
 -(int) add: (int) a and: (int) b
 {
-    int result = static_cast<PHPlayerCore*>(_player)->add(a, b);
-    return result;
+    int ret = static_cast<PHPlayerCore*>(_player)->add(a, b);
+    return ret;
+}
+
+-(bool) open:(char *) file
+{
+    bool ret = static_cast<PHPlayerCore*>(_player)->open(file);
+    return ret;
 }
 
 -(void) dealloc

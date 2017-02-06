@@ -21,6 +21,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let obj: CPPWrapper = CPPWrapper()
         let result: Int = Int(obj.add(1, and: 2))
         resultLabel.stringValue = String(result)
+        let path:String = "/Users/pkhope/Downloads/WW.S01E09.720p.FIX字幕侠/WW.S01E09.720p.FIX字幕侠.mkv"
+        let pathCStr = (path as NSString).utf8String
+        obj.open(UnsafeMutablePointer<Int8>(mutating: pathCStr))
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {

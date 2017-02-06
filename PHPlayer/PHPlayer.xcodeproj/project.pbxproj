@@ -7,14 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AD25E55B1E476AB000415E8D /* libPHPlayerCore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AD25E55A1E476AB000415E8D /* libPHPlayerCore.dylib */; };
 		AD284DBA1E2CE43300A15F31 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD284DB91E2CE43300A15F31 /* AppDelegate.swift */; };
 		AD284DBC1E2CE43300A15F31 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD284DBB1E2CE43300A15F31 /* Assets.xcassets */; };
 		AD284DBF1E2CE43300A15F31 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD284DBD1E2CE43300A15F31 /* MainMenu.xib */; };
 		AD284DE01E2CFC0900A15F31 /* CPPWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = AD284DDF1E2CFC0900A15F31 /* CPPWrapper.mm */; };
-		AD284DE91E2D093D00A15F31 /* libPHPlayerCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD284DE81E2D093D00A15F31 /* libPHPlayerCore.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AD25E55A1E476AB000415E8D /* libPHPlayerCore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libPHPlayerCore.dylib; path = "../../../../../Library/Developer/Xcode/DerivedData/PHPlayer-eduvxblpmmuqsnghgyqnmsxhgvac/Build/Products/Debug/libPHPlayerCore.dylib"; sourceTree = "<group>"; };
 		AD284DB61E2CE43300A15F31 /* PHPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PHPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD284DB91E2CE43300A15F31 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AD284DBB1E2CE43300A15F31 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -23,8 +24,6 @@
 		AD284DDE1E2CFC0900A15F31 /* PHPlayer-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PHPlayer-Bridging-Header.h"; sourceTree = "<group>"; };
 		AD284DDF1E2CFC0900A15F31 /* CPPWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CPPWrapper.mm; sourceTree = "<group>"; };
 		AD284DE11E2CFD1C00A15F31 /* cppwrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cppwrapper.h; sourceTree = "<group>"; };
-		AD284DE61E2D043100A15F31 /* libPHPlayerCore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPHPlayerCore.a; path = ../PHPlayerCore/build/Debug/libPHPlayerCore.a; sourceTree = "<group>"; };
-		AD284DE81E2D093D00A15F31 /* libPHPlayerCore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPHPlayerCore.a; path = "../../../../../Library/Developer/Xcode/DerivedData/PHPlayer-eduvxblpmmuqsnghgyqnmsxhgvac/Build/Products/Debug/libPHPlayerCore.a"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,7 +31,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AD284DE91E2D093D00A15F31 /* libPHPlayerCore.a in Frameworks */,
+				AD25E55B1E476AB000415E8D /* libPHPlayerCore.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,8 +80,7 @@
 		AD284DE51E2D043000A15F31 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				AD284DE81E2D093D00A15F31 /* libPHPlayerCore.a */,
-				AD284DE61E2D043100A15F31 /* libPHPlayerCore.a */,
+				AD25E55A1E476AB000415E8D /* libPHPlayerCore.dylib */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -274,6 +272,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
+				HEADER_SEARCH_PATHS = "";
 				"HEADER_SEARCH_PATHS[arch=*]" = "$(PROJECT_DIR)Core/PHPlayerCore";
 				INFOPLIST_FILE = PHPlayer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
@@ -295,6 +294,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = PHPlayer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (

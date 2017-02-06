@@ -12,8 +12,10 @@
 #include <stdio.h>
 #include <queue>
 #include <thread>
+extern "C" {
 #include "avformat.h"
 #include "avcodec.h"
+}
 
 class PacketQueue
 {

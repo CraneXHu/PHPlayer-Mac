@@ -15,4 +15,6 @@
 
 -(int) add: (int) a and: (int) b;
 
+-(bool) open: (char*) file;
+
 @end

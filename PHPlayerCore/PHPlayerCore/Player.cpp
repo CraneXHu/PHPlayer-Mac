@@ -7,9 +7,15 @@
 //
 
 #include "Player.hpp"
+#include "PacketQueue.hpp"
+#include "FrameQueue.hpp"
 
 Player::Player():pFormatCtx(0)
 {
+    videoPacketQueue = new PacketQueue();
+    audioPacketQueue = new PacketQueue();
+    videoFrameQueue = new FrameQueue();
+    
     av_register_all();
 };
 
@@ -23,7 +29,6 @@ bool Player::open(char *file)
         return false;
     }
     
-    int streamIndex = 0;
     AVStream *pAVStream = 0;
     int ret = av_find_best_stream(pFormatCtx, AVMEDIA_TYPE_VIDEO, -1, -1, NULL, 0);
     if (ret < 0) {
@@ -87,9 +92,9 @@ void Player::demux()
             break;
         }
         if (pkt.stream_index == videoStreamIndex) {
-            videoPacketQueue.push(pkt);
+            videoPacketQueue->push(pkt);
         } else if(pkt.stream_index == audioStreamIndex){
-            audioPacketQueue.push(pkt);
+            audioPacketQueue->push(pkt);
         }
         av_packet_unref(&pkt);
     }
@@ -98,30 +103,35 @@ void Player::demux()
 void Player::decodeVideo()
 {
     AVPacket pkt;
-    AVFrame *pFrame = av_frame_alloc();
-    while (videoPacketQueue.front(pkt)) {
-        int gotFrame = 0;
-        int ret = decodeVideo(&pkt, pFrame, &gotFrame);
+
+    while (videoPacketQueue->front(pkt)) {
+        int ret = decodeVideoPacket(&pkt);
 
     }
     
 }
 
-int Player::decodeVideo(AVPacket *pPacket, AVFrame *pFrame,int *gotFrame)
+int Player::decodeVideoPacket(AVPacket *pPacket)
 {
-    *gotFrame = 0;
+    AVFrame *pFrame = av_frame_alloc();
+    
     int ret = avcodec_send_packet(pVideoCodecCtx, pPacket);
-    if (ret < 0 && ret != AVERROR_EOF) {
-        return ret;
+    if (ret < 0) {
+        goto out;
     }
-    ret = avcodec_receive_frame(pVideoCodecCtx, pFrame);
-    if (ret < 0 && ret != AVERROR(EAGAIN)) {
-        return ret;
+
+    while (!ret) {
+        ret = avcodec_receive_frame(pVideoCodecCtx, pFrame);
+        if (!ret)
+        {
+            videoFrameQueue->push(*pFrame);
+        }
     }
-    if (ret >= 0) {
-        *gotFrame = 1;
-    }
-    return 0;
+out:
+    av_frame_free(&pFrame);
+    if (ret == AVERROR(EAGAIN))
+        return 0;
+    return ret;
 }
 
 void Player::decodeAudio()
@@ -129,17 +139,17 @@ void Player::decodeAudio()
     
 }
 
-int Player::decodeAudio(AVPacket *pPacket, AVFrame *pFrame,int *gotFrame)
+int Player::decodeAudio(AVPacket *pPacket)
 {
-    int ret = avcodec_send_packet(pAudioCodecCtx, pPacket);
-    if (ret < 0 && ret != AVERROR_EOF) {
-        return ret;
-    }
-    while (1) {
-        ret = avcodec_receive_frame(pAudioCodecCtx, pFrame);
-        if (ret < 0 && ret != AVERROR(EAGAIN)) {
-            return ret;
-        }
-    }
+//    int ret = avcodec_send_packet(pAudioCodecCtx, pPacket);
+//    if (ret < 0 && ret != AVERROR_EOF) {
+//        return ret;
+//    }
+//    while (1) {
+//        ret = avcodec_receive_frame(pAudioCodecCtx, pFrame);
+//        if (ret < 0 && ret != AVERROR(EAGAIN)) {
+//            return ret;
+//        }
+//    }
     return 0;
 }
