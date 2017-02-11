@@ -12,6 +12,10 @@
 		AD284DBC1E2CE43300A15F31 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD284DBB1E2CE43300A15F31 /* Assets.xcassets */; };
 		AD284DBF1E2CE43300A15F31 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD284DBD1E2CE43300A15F31 /* MainMenu.xib */; };
 		AD284DE01E2CFC0900A15F31 /* CPPWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = AD284DDF1E2CFC0900A15F31 /* CPPWrapper.mm */; };
+		ADE4A0051E4C54C7009D3AD7 /* VideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE4A0041E4C54C7009D3AD7 /* VideoView.swift */; };
+		ADE4A0071E4C5513009D3AD7 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADE4A0061E4C5513009D3AD7 /* OpenGL.framework */; };
+		ADE4A0091E4C6B18009D3AD7 /* MainWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ADE4A0081E4C6B18009D3AD7 /* MainWindowController.xib */; };
+		ADE4A00B1E4C6B9A009D3AD7 /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE4A00A1E4C6B9A009D3AD7 /* MainWindowController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +28,10 @@
 		AD284DDE1E2CFC0900A15F31 /* PHPlayer-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PHPlayer-Bridging-Header.h"; sourceTree = "<group>"; };
 		AD284DDF1E2CFC0900A15F31 /* CPPWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CPPWrapper.mm; sourceTree = "<group>"; };
 		AD284DE11E2CFD1C00A15F31 /* cppwrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cppwrapper.h; sourceTree = "<group>"; };
+		ADE4A0041E4C54C7009D3AD7 /* VideoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoView.swift; sourceTree = "<group>"; };
+		ADE4A0061E4C5513009D3AD7 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		ADE4A0081E4C6B18009D3AD7 /* MainWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindowController.xib; sourceTree = "<group>"; };
+		ADE4A00A1E4C6B9A009D3AD7 /* MainWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +39,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADE4A0071E4C5513009D3AD7 /* OpenGL.framework in Frameworks */,
 				AD25E55B1E476AB000415E8D /* libPHPlayerCore.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -63,6 +72,9 @@
 				AD284DBB1E2CE43300A15F31 /* Assets.xcassets */,
 				AD284DBD1E2CE43300A15F31 /* MainMenu.xib */,
 				AD284DC01E2CE43300A15F31 /* Info.plist */,
+				ADE4A0041E4C54C7009D3AD7 /* VideoView.swift */,
+				ADE4A0081E4C6B18009D3AD7 /* MainWindowController.xib */,
+				ADE4A00A1E4C6B9A009D3AD7 /* MainWindowController.swift */,
 			);
 			path = PHPlayer;
 			sourceTree = "<group>";
@@ -80,6 +92,7 @@
 		AD284DE51E2D043000A15F31 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				ADE4A0061E4C5513009D3AD7 /* OpenGL.framework */,
 				AD25E55A1E476AB000415E8D /* libPHPlayerCore.dylib */,
 			);
 			name = Frameworks;
@@ -147,6 +160,7 @@
 			files = (
 				AD284DBC1E2CE43300A15F31 /* Assets.xcassets in Resources */,
 				AD284DBF1E2CE43300A15F31 /* MainMenu.xib in Resources */,
+				ADE4A0091E4C6B18009D3AD7 /* MainWindowController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -157,7 +171,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADE4A0051E4C54C7009D3AD7 /* VideoView.swift in Sources */,
 				AD284DBA1E2CE43300A15F31 /* AppDelegate.swift in Sources */,
+				ADE4A00B1E4C6B9A009D3AD7 /* MainWindowController.swift in Sources */,
 				AD284DE01E2CFC0900A15F31 /* CPPWrapper.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -32,6 +32,16 @@
     return ret;
 }
 
+-(void) start
+{
+    static_cast<PHPlayerCore*>(_player)->start();
+}
+
+-(void) setCallback:(Callback)callback context: (void*) ctx
+{
+    static_cast<PHPlayerCore*>(_player)->setCallback(callback, ctx);
+}
+
 -(void) dealloc
 {
     delete static_cast<PHPlayerCore*>(_player);

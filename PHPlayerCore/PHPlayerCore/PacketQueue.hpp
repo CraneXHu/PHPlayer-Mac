@@ -20,8 +20,9 @@ extern "C" {
 class PacketQueue
 {
 public:
-    bool push(const AVPacket &packet);
-    bool front(AVPacket &packet);
+    bool push(const AVPacket *packet);
+    bool front(AVPacket *packet);
+    int size();
     
 private:
     std::queue<AVPacket> queue;

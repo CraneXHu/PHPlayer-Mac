@@ -20,11 +20,12 @@ extern "C" {
 class FrameQueue
 {
 public:
-    bool push(const AVFrame &frame);
-    bool front(AVFrame &frame);
+    bool push(const AVFrame *pFrame);
+    bool front(AVFrame **pFrame);
+    int size();
     
 private:
-    std::queue<AVFrame> queue;
+    std::queue<AVFrame*> queue;
     std::mutex mutex;
 };
 #endif /* FrameQueue_hpp */

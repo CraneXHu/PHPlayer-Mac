@@ -10,6 +10,7 @@
 #define Player_hpp
 
 #include <stdio.h>
+#include <thread>
 
 struct AVPacket;
 struct AVFormatContext;
@@ -17,6 +18,7 @@ struct AVCodecContext;
 class PacketQueue;
 class FrameQueue;
 
+typedef void (*Callback)(void *ctx, unsigned char *data, int width, int height, int *linesize);
 class Player
 {
 public:
@@ -26,7 +28,9 @@ public:
     void decodeVideo();
     int decodeVideoPacket(AVPacket *pPacket);
     void decodeAudio();
-    int decodeAudio(AVPacket *pPacket);
+    int decodeAudioPacket(AVPacket *pPacket);
+    void play();
+    void setCallback(Callback callback, void *ctx);
     
 private:
     AVFormatContext *pFormatCtx;
@@ -37,5 +41,11 @@ private:
     PacketQueue *audioPacketQueue;
     int videoStreamIndex;
     int audioStreamIndex;
+    bool isEnded;
+    Callback reciveImage;
+    void *ctx;
+    
+    std::mutex mutex;
+    std::condition_variable cond;
 };
 #endif /* Player_hpp */

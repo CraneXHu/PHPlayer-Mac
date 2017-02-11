@@ -29,17 +29,31 @@ int PHPlayerCore::add(int a, int b)
     return a + b;
 };
 
+void PHPlayerCore::setCallback(Callback callback, void * ctx)
+{
+    player->setCallback(callback, ctx);
+}
+
 bool PHPlayerCore::open(char *file)
 {
     bool ret = player->open(file);
     if (ret == false) {
         return false;
     }
-    std::thread demuxThread(&Player::demux, player);
-    demuxThread.join();
-    std::thread videoThread(&Player::decodeVideo, player);
-    videoThread.join();
+
     return true;
+}
+
+void PHPlayerCore::start()
+{
+    std::thread demuxThread(&Player::demux, player);
+//    std::thread videoThread(&Player::decodeVideo, player);
+    //    std::thread audioThread(&Player::decodeAudio, player);
+//    std::thread displayThread(&Player::play, player);
+//    demuxThread.detach();
+//    videoThread.detach();
+    //    audioThread.detach();
+//    displayThread.detach();
 }
 
 void PHPlayerCorePriv::HelloWorldPriv(const char * s) 

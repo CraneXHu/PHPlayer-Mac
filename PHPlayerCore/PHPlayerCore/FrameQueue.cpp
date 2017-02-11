@@ -8,35 +8,44 @@
 
 #include "FrameQueue.hpp"
 
-bool FrameQueue::push(const AVFrame &frame)
+bool FrameQueue::push(const AVFrame *pFrame)
 {
-    AVFrame distFrame;
-    av_frame_ref(&distFrame, &frame);
+    AVFrame *pDistFrame = av_frame_alloc();
+    int ret = av_frame_ref(pDistFrame, pFrame);
+    if (ret < 0) {
+        return false;
+    }
     
     mutex.lock();
-    queue.push(distFrame);
+    queue.push(pDistFrame);
     mutex.unlock();
     
     return true;
 }
 
-bool FrameQueue::front(AVFrame &frame)
+bool FrameQueue::front(AVFrame **pFrame)
 {
     bool ret = true;
     mutex.lock();
     if (!queue.empty()) {
-        int res = av_frame_ref(&frame, &queue.front());
+        int res = av_frame_ref(*pFrame, queue.front());
         if (res < 0) {
-            ret = false;
+            return false;
         }
         
-        AVFrame temp = queue.front();
+        AVFrame *temp = queue.front();
         queue.pop();
-        av_frame_unref(&temp);
+        av_frame_unref(temp);
         
     } else{
         ret = false;
     }
     mutex.unlock();
     return ret;
+}
+
+int FrameQueue::size()
+{
+    int size = queue.size();
+    return size;
 }

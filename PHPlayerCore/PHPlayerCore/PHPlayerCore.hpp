@@ -22,6 +22,8 @@ public:
     void HelloWorld(const char *);
     int add(int a, int b);
     bool open(char* file);
+    void start();
+    void setCallback(Callback callback, void * ctx);
     
 private:
     Player *player;

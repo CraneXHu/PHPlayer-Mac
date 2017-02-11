@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11542" systemVersion="15G1212" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11542"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="MainWindowController" customModule="PHPlayer" customModuleProvider="target">
+            <connections>
+                <outlet property="videoView" destination="vyB-bv-ZI8" id="6DI-Bt-hZ1"/>
+                <outlet property="window" destination="QvC-M9-y7g" id="tpU-JG-bTN"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" animationBehavior="default" id="QvC-M9-y7g">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" fullSizeContentView="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="196" y="240" width="480" height="270"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
+            <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
+                <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <openGLView useAuxiliaryDepthBufferStencil="NO" allowOffline="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vyB-bv-ZI8" customClass="VideoView" customModule="PHPlayer" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                    </openGLView>
+                    <visualEffectView appearanceType="vibrantDark" fixedFrame="YES" blendingMode="withinWindow" material="dark" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="NSZ-0P-rfW">
+                        <rect key="frame" x="0.0" y="215" width="480" height="55"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    </visualEffectView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="vyB-bv-ZI8" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" id="8Ux-Ko-swZ"/>
+                    <constraint firstAttribute="bottom" secondItem="vyB-bv-ZI8" secondAttribute="bottom" id="M1Z-Bd-MAn"/>
+                    <constraint firstItem="vyB-bv-ZI8" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" id="dbq-uu-1yt"/>
+                    <constraint firstAttribute="trailing" secondItem="vyB-bv-ZI8" secondAttribute="trailing" id="icP-EE-WS3"/>
+                </constraints>
+            </view>
+            <connections>
+                <outlet property="delegate" destination="-2" id="FUY-7b-3g5"/>
+            </connections>
+        </window>
+    </objects>
+</document>

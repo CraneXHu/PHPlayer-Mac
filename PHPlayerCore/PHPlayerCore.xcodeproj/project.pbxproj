@@ -25,6 +25,8 @@
 		ADE49FF71E482958009D3AD7 /* libpostproc.54.2.100.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ADE49FEE1E482958009D3AD7 /* libpostproc.54.2.100.dylib */; };
 		ADE49FF81E482958009D3AD7 /* libswresample.2.4.100.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ADE49FEF1E482958009D3AD7 /* libswresample.2.4.100.dylib */; };
 		ADE49FF91E482958009D3AD7 /* libswscale.4.3.101.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ADE49FF01E482958009D3AD7 /* libswscale.4.3.101.dylib */; };
+		ADE4A0021E4B2CE0009D3AD7 /* VideoToolbox.c in Sources */ = {isa = PBXBuildFile; fileRef = ADE4A0001E4B2CE0009D3AD7 /* VideoToolbox.c */; };
+		ADE4A0031E4B2CE0009D3AD7 /* VideoToolbox.h in Headers */ = {isa = PBXBuildFile; fileRef = ADE4A0011E4B2CE0009D3AD7 /* VideoToolbox.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +49,8 @@
 		ADE49FEE1E482958009D3AD7 /* libpostproc.54.2.100.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpostproc.54.2.100.dylib; path = ../ffmpeg/libpostproc.54.2.100.dylib; sourceTree = "<group>"; };
 		ADE49FEF1E482958009D3AD7 /* libswresample.2.4.100.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libswresample.2.4.100.dylib; path = ../ffmpeg/libswresample.2.4.100.dylib; sourceTree = "<group>"; };
 		ADE49FF01E482958009D3AD7 /* libswscale.4.3.101.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libswscale.4.3.101.dylib; path = ../ffmpeg/libswscale.4.3.101.dylib; sourceTree = "<group>"; };
+		ADE4A0001E4B2CE0009D3AD7 /* VideoToolbox.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = VideoToolbox.c; sourceTree = "<group>"; };
+		ADE4A0011E4B2CE0009D3AD7 /* VideoToolbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoToolbox.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +102,8 @@
 				AD284E081E325F2700A15F31 /* PacketQueue.hpp */,
 				AD284E0B1E325F3C00A15F31 /* FrameQueue.cpp */,
 				AD284E0C1E325F3C00A15F31 /* FrameQueue.hpp */,
+				ADE4A0001E4B2CE0009D3AD7 /* VideoToolbox.c */,
+				ADE4A0011E4B2CE0009D3AD7 /* VideoToolbox.h */,
 			);
 			path = PHPlayerCore;
 			sourceTree = "<group>";
@@ -125,6 +131,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADE4A0031E4B2CE0009D3AD7 /* VideoToolbox.h in Headers */,
 				AD284DED1E2DE92F00A15F31 /* Player.hpp in Headers */,
 				AD284E0E1E325F3C00A15F31 /* FrameQueue.hpp in Headers */,
 				AD284DD31E2CE63200A15F31 /* PHPlayerCore.hpp in Headers */,
@@ -194,6 +201,7 @@
 				AD284DD71E2CE63200A15F31 /* PHPlayerCore.cpp in Sources */,
 				AD284E091E325F2700A15F31 /* PacketQueue.cpp in Sources */,
 				AD284E0D1E325F3C00A15F31 /* FrameQueue.cpp in Sources */,
+				ADE4A0021E4B2CE0009D3AD7 /* VideoToolbox.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -297,6 +305,7 @@
 					/Users/pkhope/Documents/develop/opensource/ffmpeg/libavformat,
 					/Users/pkhope/Documents/develop/opensource/ffmpeg/libavcodec,
 					/Users/pkhope/Documents/develop/opensource/ffmpeg,
+					/Users/pkhope/Documents/develop/opensource/ffmpeg/libswscale,
 				);
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/../ffmpeg";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -313,6 +322,7 @@
 					/Users/pkhope/Documents/develop/opensource/ffmpeg/libavformat,
 					/Users/pkhope/Documents/develop/opensource/ffmpeg/libavcodec,
 					/Users/pkhope/Documents/develop/opensource/ffmpeg,
+					/Users/pkhope/Documents/develop/opensource/ffmpeg/libswscale,
 				);
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/../ffmpeg";
 				PRODUCT_NAME = "$(TARGET_NAME)";

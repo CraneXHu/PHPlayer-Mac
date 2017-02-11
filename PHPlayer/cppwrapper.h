@@ -17,4 +17,10 @@
 
 -(bool) open: (char*) file;
 
+-(void) start;
+
+typedef void (*Callback)(void *cxt, unsigned char *data, int width, int height, int *linesize);
+
+-(void) setCallback:(Callback) callback context: (void *) ctx;
+
 @end

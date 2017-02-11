@@ -8,27 +8,29 @@
 
 #include "PacketQueue.hpp"
 
-bool PacketQueue::push(const AVPacket &packet)
+bool PacketQueue::push(const AVPacket *packet)
 {
-    AVPacket pkt;
-    av_init_packet(&pkt);
-    av_packet_ref(&pkt, &packet);
+	AVPacket *pkt = av_packet_alloc();
+    int ret = av_packet_ref(pkt, packet);
+    if (ret < 0) {
+        return false;
+    }
     
     mutex.lock();
-    queue.push(pkt);
+    queue.push(*pkt);
     mutex.unlock();
     
     return true;
 }
 
-bool PacketQueue::front(AVPacket &packet)
+bool PacketQueue::front(AVPacket *packet)
 {
     bool ret = true;
     mutex.lock();
     if (!queue.empty()) {
-        int res = av_packet_ref(&packet, &queue.front());
+        int res = av_packet_ref(packet, &queue.front());
         if (res < 0) {
-            ret = false;
+            return false;
         }
         
         AVPacket pkt = queue.front();
@@ -40,4 +42,10 @@ bool PacketQueue::front(AVPacket &packet)
     }
     mutex.unlock();
     return ret;
+}
+
+int PacketQueue::size()
+{
+    int size = queue.size();
+    return size;
 }
