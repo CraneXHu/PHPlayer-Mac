@@ -46,6 +46,8 @@ private:
     void *ctx;
     
     std::mutex mutex;
+    std::mutex frameMutex;
     std::condition_variable cond;
+    std::condition_variable frameCond;
 };
 #endif /* Player_hpp */

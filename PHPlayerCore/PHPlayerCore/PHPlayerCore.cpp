@@ -47,13 +47,14 @@ bool PHPlayerCore::open(char *file)
 void PHPlayerCore::start()
 {
     std::thread demuxThread(&Player::demux, player);
-//    std::thread videoThread(&Player::decodeVideo, player);
-    //    std::thread audioThread(&Player::decodeAudio, player);
-//    std::thread displayThread(&Player::play, player);
-//    demuxThread.detach();
-//    videoThread.detach();
-    //    audioThread.detach();
-//    displayThread.detach();
+    std::thread videoThread(&Player::decodeVideo, player);
+//    std::thread audioThread(&Player::decodeAudio, player);
+    std::thread displayThread(&Player::play, player);
+    demuxThread.detach();
+    videoThread.detach();
+//    audioThread.detach();
+    displayThread.detach();
+
 }
 
 void PHPlayerCorePriv::HelloWorldPriv(const char * s) 

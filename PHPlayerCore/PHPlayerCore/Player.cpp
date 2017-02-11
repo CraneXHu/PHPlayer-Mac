@@ -123,6 +123,8 @@ bool Player::open(char *file)
 
 void Player::demux()
 {
+    printf("Demux Thread id : %d\n", std::this_thread::get_id());
+    
 	AVPacket *packet = av_packet_alloc();
     
     int ret = 0;
@@ -136,7 +138,7 @@ void Player::demux()
         }
         
         std::unique_lock<std::mutex> ulock(mutex);
-        while (videoPacketQueue->size() > 20) {
+        while (videoPacketQueue->size() > 10) {
             cond.wait(ulock);
         }
         
@@ -153,9 +155,11 @@ void Player::demux()
 
 void Player::decodeVideo()
 {
+    printf("Video Thread id : %d\n", std::this_thread::get_id());
+    
 	AVPacket *pkt = av_packet_alloc();
     while (!isEnded) {
-        
+//        std::this_thread::sleep_for(std::chrono::milliseconds(10));
         std::unique_lock<std::mutex> ulock(mutex);
         bool res = videoPacketQueue->front(pkt);
         if (res == false) {
@@ -183,6 +187,10 @@ int Player::decodeVideoPacket(AVPacket *pPacket)
         ret = avcodec_receive_frame(pVideoCodecCtx, pFrame);
         if (!ret)
         {
+            std::unique_lock<std::mutex> ulock(frameMutex);
+            while (videoFrameQueue->size() > 5) {
+                frameCond.wait(ulock);
+            }
             videoFrameQueue->push(pFrame);
             av_frame_unref(pFrame);
         }
@@ -236,6 +244,8 @@ void Player::setCallback(Callback callback, void *ctx)
 
 void Player::play()
 {
+    printf("Display Thread id : %d\n", std::this_thread::get_id());
+    
     AVFrame *pFrame = av_frame_alloc();
     AVFrame *pRGBAFrame = av_frame_alloc();
     pRGBAFrame->width = pVideoCodecCtx->width;
@@ -249,7 +259,13 @@ void Player::play()
     SwsContext *imageConvertContext = sws_getContext(pVideoCodecCtx->width, pVideoCodecCtx->height, pVideoCodecCtx->pix_fmt, pVideoCodecCtx->width, pVideoCodecCtx->height, AV_PIX_FMT_RGBA, SWS_BICUBIC, NULL, NULL, NULL);
     
     while (!isEnded) {
+        std::this_thread::sleep_for(std::chrono::milliseconds(20));
+        
+        std::unique_lock<std::mutex> ulock(frameMutex);
         bool ret = videoFrameQueue->front(&pFrame);
+        if (videoFrameQueue->size() < 5) {
+            frameCond.notify_all();
+        }
         if (ret == false) {
             continue;
         }
