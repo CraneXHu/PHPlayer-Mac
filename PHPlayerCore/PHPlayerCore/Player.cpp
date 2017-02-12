@@ -15,6 +15,15 @@ extern "C"{
 #include "libavutil/imgutils.h"
 }
 
+/* no AV sync correction is done if below the minimum AV sync threshold */
+#define AV_SYNC_THRESHOLD_MIN 0.04
+/* AV sync correction is done if above the maximum AV sync threshold */
+#define AV_SYNC_THRESHOLD_MAX 0.1
+/* If a frame duration is longer than this, it will not be duplicated to compensate AV sync */
+#define AV_SYNC_FRAMEDUP_THRESHOLD 0.1
+/* no AV correction is done if too big error */
+#define AV_NOSYNC_THRESHOLD 10.0
+
 static enum AVPixelFormat get_format(struct AVCodecContext *s, const enum AVPixelFormat * fmt)
 {
     while (*fmt != AV_PIX_FMT_NONE) {
@@ -31,6 +40,7 @@ Player::Player():pFormatCtx(0)
     videoPacketQueue = new PacketQueue();
     audioPacketQueue = new PacketQueue();
     videoFrameQueue = new FrameQueue();
+    audioFrameQueue = new FrameQueue();
     
     isEnded = false;
     
@@ -137,19 +147,15 @@ void Player::demux()
             break;
         }
         
-        std::unique_lock<std::mutex> ulock(mutex);
-        while (videoPacketQueue->size() > 10) {
-            cond.wait(ulock);
-        }
-        
         if (packet->stream_index == videoStreamIndex) {
             videoPacketQueue->push(packet);
             
         } else if(packet->stream_index == audioStreamIndex){
-//            audioPacketQueue->push(packet);
+            audioPacketQueue->push(packet);
         }
         av_packet_unref(packet);
     }
+    av_packet_free(&packet);
     isEnded = true;
 }
 
@@ -159,14 +165,10 @@ void Player::decodeVideo()
     
 	AVPacket *pkt = av_packet_alloc();
     while (!isEnded) {
-//        std::this_thread::sleep_for(std::chrono::milliseconds(10));
-        std::unique_lock<std::mutex> ulock(mutex);
-        bool res = videoPacketQueue->front(pkt);
-        if (res == false) {
+
+        bool isSucceed = videoPacketQueue->front(pkt);
+        if (!isSucceed) {
             continue;
-        }
-        if (videoPacketQueue->size() < 10) {
-            cond.notify_all();
         }
         int ret = decodeVideoPacket(pkt);
         av_packet_unref(pkt);
@@ -187,10 +189,6 @@ int Player::decodeVideoPacket(AVPacket *pPacket)
         ret = avcodec_receive_frame(pVideoCodecCtx, pFrame);
         if (!ret)
         {
-            std::unique_lock<std::mutex> ulock(frameMutex);
-            while (videoFrameQueue->size() > 5) {
-                frameCond.wait(ulock);
-            }
             videoFrameQueue->push(pFrame);
             av_frame_unref(pFrame);
         }
@@ -206,11 +204,16 @@ void Player::decodeAudio()
 {
 	AVPacket *pkt = av_packet_alloc();
     
-    while (audioPacketQueue->front(pkt) || 1) {
-            int ret = decodeAudioPacket(pkt);
-            av_packet_free(&pkt);
+    while (!isEnded) {
+        bool isSuccess = audioPacketQueue->front(pkt);
+        if (!isSuccess) {
+            continue;
+        }
+        int ret = decodeAudioPacket(pkt);
+        av_packet_unref(pkt);
         
     }
+    av_packet_free(&pkt);
 }
 
 int Player::decodeAudioPacket(AVPacket *pPacket)
@@ -226,7 +229,8 @@ int Player::decodeAudioPacket(AVPacket *pPacket)
         ret = avcodec_receive_frame(pAudioCodecCtx, pFrame);
         if (!ret)
         {
-           
+            audioFrameQueue->push(pFrame);
+            av_frame_unref(pFrame);
         }
     }
 out:
@@ -242,7 +246,7 @@ void Player::setCallback(Callback callback, void *ctx)
     this->ctx = ctx;
 }
 
-void Player::play()
+void Player::playVideo()
 {
     printf("Display Thread id : %d\n", std::this_thread::get_id());
     
@@ -259,15 +263,30 @@ void Player::play()
     SwsContext *imageConvertContext = sws_getContext(pVideoCodecCtx->width, pVideoCodecCtx->height, pVideoCodecCtx->pix_fmt, pVideoCodecCtx->width, pVideoCodecCtx->height, AV_PIX_FMT_RGBA, SWS_BICUBIC, NULL, NULL, NULL);
     
     while (!isEnded) {
-        std::this_thread::sleep_for(std::chrono::milliseconds(20));
         
-        std::unique_lock<std::mutex> ulock(frameMutex);
+//        std::this_thread::sleep_for(std::chrono::milliseconds(20));
+        
         bool ret = videoFrameQueue->front(&pFrame);
-        if (videoFrameQueue->size() < 5) {
-            frameCond.notify_all();
-        }
         if (ret == false) {
             continue;
+        }
+        double timestamp;
+        if(pFrame->pts == AV_NOPTS_VALUE) {
+            timestamp = 0;
+        } else {
+            timestamp = av_frame_get_best_effort_timestamp(pFrame)*av_q2d(pFormatCtx->streams[videoStreamIndex]->time_base);
+        }
+        double frameRate = av_q2d(pFormatCtx->streams[videoStreamIndex]->avg_frame_rate);
+        frameRate += pFrame->repeat_pict * (frameRate * 0.5);
+        if (timestamp == 0.0) {
+            std::this_thread::sleep_for(std::chrono::milliseconds((unsigned long)(frameRate*1000)));
+        }else {
+            if (fabs(timestamp - audioClock) > AV_SYNC_THRESHOLD_MIN &&
+                fabs(timestamp - audioClock) < AV_NOSYNC_THRESHOLD) {
+                if (timestamp > audioClock) {
+                    std::this_thread::sleep_for(std::chrono::milliseconds((unsigned long)((timestamp - audioClock)*1000000)));
+                }
+            }
         }
         sws_scale(imageConvertContext, (uint8_t const * const *)pFrame->data, pFrame->linesize, 0, pVideoCodecCtx->height, pRGBAFrame->data, pRGBAFrame->linesize);
         av_frame_unref(pFrame);
@@ -275,4 +294,12 @@ void Player::play()
     }
     av_free(outBuffer);
     av_frame_free(&pRGBAFrame);
+}
+
+void Player::audioCallback()
+{
+    AVFrame *pFrame = av_frame_alloc();
+    audioFrameQueue->front(&pFrame);
+    std::unique_lock<std::mutex> lock(mutex);
+    audioClock = pFrame->pts*av_q2d(pFormatCtx->streams[audioStreamIndex]->time_base);
 }

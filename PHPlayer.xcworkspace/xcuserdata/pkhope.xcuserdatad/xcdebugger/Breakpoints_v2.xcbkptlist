@@ -89,13 +89,29 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "PHPlayerCore/PHPlayerCore/PacketQueue.cpp"
-            timestampString = "508427527.549504"
+            filePath = "PHPlayerCore/PHPlayerCore/Player.cpp"
+            timestampString = "508514387.325684"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "33"
-            endingLineNumber = "33"
-            landmarkName = "PacketQueue::front(AVPacket *packet)"
+            startingLineNumber = "247"
+            endingLineNumber = "247"
+            landmarkName = "Player::playVideo()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PHPlayerCore/PHPlayerCore/Player.cpp"
+            timestampString = "508515533.06249"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "238"
+            endingLineNumber = "238"
+            landmarkName = "Player::setCallback(Callback callback, void *ctx)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

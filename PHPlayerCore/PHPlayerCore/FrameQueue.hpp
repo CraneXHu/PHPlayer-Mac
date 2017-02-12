@@ -27,5 +27,8 @@ public:
 private:
     std::queue<AVFrame*> queue;
     std::mutex mutex;
+    std::condition_variable conditionEmpty;
+    std::condition_variable conditionFull;
+    const int MAX_SIZE = 8;
 };
 #endif /* FrameQueue_hpp */

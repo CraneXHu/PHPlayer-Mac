@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AD15A8111E50441700E3245A /* AudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD15A8101E50441700E3245A /* AudioController.swift */; };
+		AD15A8131E50442800E3245A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD15A8121E50442800E3245A /* AudioToolbox.framework */; };
 		AD25E55B1E476AB000415E8D /* libPHPlayerCore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AD25E55A1E476AB000415E8D /* libPHPlayerCore.dylib */; };
 		AD284DBA1E2CE43300A15F31 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD284DB91E2CE43300A15F31 /* AppDelegate.swift */; };
 		AD284DBC1E2CE43300A15F31 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD284DBB1E2CE43300A15F31 /* Assets.xcassets */; };
@@ -19,6 +21,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AD15A8101E50441700E3245A /* AudioController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioController.swift; sourceTree = "<group>"; };
+		AD15A8121E50442800E3245A /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		AD25E55A1E476AB000415E8D /* libPHPlayerCore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libPHPlayerCore.dylib; path = "../../../../../Library/Developer/Xcode/DerivedData/PHPlayer-eduvxblpmmuqsnghgyqnmsxhgvac/Build/Products/Debug/libPHPlayerCore.dylib"; sourceTree = "<group>"; };
 		AD284DB61E2CE43300A15F31 /* PHPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PHPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD284DB91E2CE43300A15F31 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -39,6 +43,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD15A8131E50442800E3245A /* AudioToolbox.framework in Frameworks */,
 				ADE4A0071E4C5513009D3AD7 /* OpenGL.framework in Frameworks */,
 				AD25E55B1E476AB000415E8D /* libPHPlayerCore.dylib in Frameworks */,
 			);
@@ -75,6 +80,7 @@
 				ADE4A0041E4C54C7009D3AD7 /* VideoView.swift */,
 				ADE4A0081E4C6B18009D3AD7 /* MainWindowController.xib */,
 				ADE4A00A1E4C6B9A009D3AD7 /* MainWindowController.swift */,
+				AD15A8101E50441700E3245A /* AudioController.swift */,
 			);
 			path = PHPlayer;
 			sourceTree = "<group>";
@@ -92,6 +98,7 @@
 		AD284DE51E2D043000A15F31 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AD15A8121E50442800E3245A /* AudioToolbox.framework */,
 				ADE4A0061E4C5513009D3AD7 /* OpenGL.framework */,
 				AD25E55A1E476AB000415E8D /* libPHPlayerCore.dylib */,
 			);
@@ -175,6 +182,7 @@
 				AD284DBA1E2CE43300A15F31 /* AppDelegate.swift in Sources */,
 				ADE4A00B1E4C6B9A009D3AD7 /* MainWindowController.swift in Sources */,
 				AD284DE01E2CFC0900A15F31 /* CPPWrapper.mm in Sources */,
+				AD15A8111E50441700E3245A /* AudioController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

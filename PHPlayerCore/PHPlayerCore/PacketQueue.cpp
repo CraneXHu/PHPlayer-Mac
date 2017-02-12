@@ -13,39 +13,47 @@ bool PacketQueue::push(const AVPacket *packet)
 	AVPacket *pkt = av_packet_alloc();
     int ret = av_packet_ref(pkt, packet);
     if (ret < 0) {
+//        av_packet_free(&pkt);
         return false;
     }
     
-    mutex.lock();
-    queue.push(*pkt);
-    mutex.unlock();
-    
-    return true;
+    std::unique_lock<std::mutex> lock(mutex);
+    for (; ; ) {
+        if (queue.size() <= MAX_SIZE) {
+            queue.push(*pkt);
+            conditionEmpty.notify_one();
+            return true;
+        } else {
+//            conditionFull.wait(lock, [&]() -> bool {return queue.size() < MAX_SIZE;});
+            conditionFull.wait(lock);
+        }
+    }
+
 }
 
 bool PacketQueue::front(AVPacket *packet)
 {
-    bool ret = true;
-    mutex.lock();
-    if (!queue.empty()) {
-        int res = av_packet_ref(packet, &queue.front());
-        if (res < 0) {
-            return false;
+    std::unique_lock<std::mutex> lock(mutex);
+    for (; ; ) {
+        if (!queue.empty()) {
+            int ret = av_packet_ref(packet, &queue.front());
+            if (ret < 0) {
+                return false;
+            }
+            AVPacket pkt = queue.front();
+            queue.pop();
+            conditionFull.notify_one();
+            av_packet_unref(&pkt);
+            return true;
+        } else{
+//            conditionEmpty.wait(lock, [&]() -> bool {return queue.size() != 0;});
+            conditionEmpty.wait(lock);
         }
-        
-        AVPacket pkt = queue.front();
-        queue.pop();
-        av_packet_unref(&pkt);
-        
-    } else{
-        ret = false;
     }
-    mutex.unlock();
-    return ret;
 }
 
 int PacketQueue::size()
 {
-    int size = queue.size();
-    return size;
+    std::unique_lock<std::mutex> lock(mutex);
+    return queue.size();
 }

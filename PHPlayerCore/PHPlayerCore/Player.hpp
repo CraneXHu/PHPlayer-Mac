@@ -29,7 +29,8 @@ public:
     int decodeVideoPacket(AVPacket *pPacket);
     void decodeAudio();
     int decodeAudioPacket(AVPacket *pPacket);
-    void play();
+    void playVideo();
+    void audioCallback();
     void setCallback(Callback callback, void *ctx);
     
 private:
@@ -39,15 +40,14 @@ private:
     PacketQueue *videoPacketQueue;
     FrameQueue *videoFrameQueue;
     PacketQueue *audioPacketQueue;
+    FrameQueue *audioFrameQueue;
     int videoStreamIndex;
     int audioStreamIndex;
     bool isEnded;
+    double timestamp;
+    double audioClock;
     Callback reciveImage;
     void *ctx;
-    
     std::mutex mutex;
-    std::mutex frameMutex;
-    std::condition_variable cond;
-    std::condition_variable frameCond;
 };
 #endif /* Player_hpp */
