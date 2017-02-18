@@ -8,6 +8,11 @@
 
 #include "PacketQueue.hpp"
 
+PacketQueue::PacketQueue(int maxSize)
+{
+    this->maxSize = maxSize;
+}
+
 bool PacketQueue::push(const AVPacket *packet)
 {
 	AVPacket *pkt = av_packet_alloc();
@@ -19,7 +24,7 @@ bool PacketQueue::push(const AVPacket *packet)
     
     std::unique_lock<std::mutex> lock(mutex);
     for (; ; ) {
-        if (queue.size() <= MAX_SIZE) {
+        if (queue.size() <= maxSize) {
             queue.push(*pkt);
             conditionEmpty.notify_one();
             return true;
@@ -28,7 +33,7 @@ bool PacketQueue::push(const AVPacket *packet)
             conditionFull.wait(lock);
         }
     }
-
+    
 }
 
 bool PacketQueue::front(AVPacket *packet)

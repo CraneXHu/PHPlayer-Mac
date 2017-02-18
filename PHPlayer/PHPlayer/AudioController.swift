@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import AVFoundation
 import AudioToolbox
 
 class AudioController : NSObject {
@@ -15,9 +14,12 @@ class AudioController : NSObject {
     let audioQueueNumberBuffers = 3
     var audioQueueRef: AudioQueueRef?
     var audioQueueBufferRefs:[AudioQueueBufferRef] = []
+    var player: CPPWrapper?
+    var bufferSize: UInt32?
     
-    override init() {
+    init(player: CPPWrapper) {
         super.init()
+        self.player = player
     }
     
     func initWithAudioSpec(sampleRate: Float64, channels: UInt32) {
@@ -27,7 +29,7 @@ class AudioController : NSObject {
         streamDescription!.mSampleRate = sampleRate
         streamDescription!.mFormatID = kAudioFormatLinearPCM
         streamDescription!.mFormatFlags = kLinearPCMFormatFlagIsPacked | kLinearPCMFormatFlagIsSignedInteger
-        streamDescription!.mChannelsPerFrame = channels
+        streamDescription!.mChannelsPerFrame = 2
         streamDescription!.mFramesPerPacket = 1
         streamDescription!.mBitsPerChannel = 16
         
@@ -35,7 +37,7 @@ class AudioController : NSObject {
         streamDescription!.mBytesPerPacket = streamDescription!.mBytesPerFrame * streamDescription!.mFramesPerPacket;
         
         /* Set the desired format */
-        var status: OSStatus = AudioQueueNewOutput(&streamDescription!,
+        let status: OSStatus = AudioQueueNewOutput(&streamDescription!,
                                               audioQueueOuptutCallback,
                                               UnsafeMutableRawPointer(Unmanaged.passRetained(self).toOpaque()),
                                               nil,
@@ -46,25 +48,32 @@ class AudioController : NSObject {
             return;
         }
         
-        var bufferSize: UInt32 = 512*streamDescription!.mBytesPerFrame
+        AudioQueueSetParameter(audioQueueRef!, kAudioQueueParam_Volume, 1.0)
+        
+        bufferSize = 1024*6
         
         
-        for i in 0..<audioQueueNumberBuffers
+        for _ in 0..<audioQueueNumberBuffers
         {
             var audioQueueBufferRef: AudioQueueBufferRef?
-            AudioQueueAllocateBuffer(audioQueueRef!, bufferSize, &audioQueueBufferRef)
+            let status: OSStatus = AudioQueueAllocateBuffer(audioQueueRef!, bufferSize!, &audioQueueBufferRef)
+            if status != noErr {
+                return
+            }
             audioQueueBufferRefs.append(audioQueueBufferRef!)
+            audioQueueBufferRef?.pointee.mAudioDataByteSize = bufferSize!
+            AudioQueueEnqueueBuffer(audioQueueRef!, audioQueueBufferRef!, 0, nil)
         }
-
         
-        var propValue: UInt32 = 1;
-        AudioQueueSetProperty(audioQueueRef!, kAudioQueueProperty_EnableTimePitch, &propValue, UInt32(MemoryLayout<UInt32>.size))
-        propValue = 1;
-        AudioQueueSetProperty(audioQueueRef!, kAudioQueueProperty_TimePitchBypass, &propValue, UInt32(MemoryLayout<UInt32>.size));
-        propValue = kAudioQueueTimePitchAlgorithm_Spectral;
-        AudioQueueSetProperty(audioQueueRef!, kAudioQueueProperty_TimePitchAlgorithm, &propValue, UInt32(MemoryLayout<UInt32>.size));
-        
+        AudioQueueAddPropertyListener(audioQueueRef!, kAudioQueueProperty_IsRunning, audioQueueIsRunningCallback, nil)
 
+//        
+//        var propValue: UInt32 = 1;
+//        AudioQueueSetProperty(audioQueueRef!, kAudioQueueProperty_EnableTimePitch, &propValue, UInt32(MemoryLayout<UInt32>.size))
+//        propValue = 1;
+//        AudioQueueSetProperty(audioQueueRef!, kAudioQueueProperty_TimePitchBypass, &propValue, UInt32(MemoryLayout<UInt32>.size));
+//        propValue = kAudioQueueTimePitchAlgorithm_Spectral;
+//        AudioQueueSetProperty(audioQueueRef!, kAudioQueueProperty_TimePitchAlgorithm, &propValue, UInt32(MemoryLayout<UInt32>.size));
         
     }
     
@@ -73,6 +82,7 @@ class AudioController : NSObject {
         if (status != noErr) {
             return ;
         }
+    
     }
     
     func pause() {
@@ -104,7 +114,7 @@ class AudioController : NSObject {
     }
     
     func setPlaybackVolume(playbackVolume: Float) {
-        var aq_volume: Float = playbackVolume
+        let aq_volume: Float = playbackVolume
         if (fabsf(aq_volume - 1.0) <= 0.000001) {
             AudioQueueSetParameter(audioQueueRef!, kAudioQueueParam_Volume, 1.0)
         } else {
@@ -116,6 +126,18 @@ class AudioController : NSObject {
 
 func audioQueueOuptutCallback(clientData: UnsafeMutableRawPointer?, AQ: AudioQueueRef, buffer: AudioQueueBufferRef) {
     
-    
+    let audioController = Unmanaged<AudioController>.fromOpaque(UnsafeRawPointer(clientData)!).takeUnretainedValue()
+    audioController.player?.getAudioBuffer(buffer.pointee.mAudioData.assumingMemoryBound(to: UInt8.self), size: Int32(buffer.pointee.mAudioDataByteSize))
+//    buffer.pointee.mAudioDataByteSize = audioController.bufferSize!
     AudioQueueEnqueueBuffer(AQ, buffer, 0, nil)
+}
+
+func audioQueueIsRunningCallback(clientData: UnsafeMutableRawPointer?, AQ: AudioQueueRef, inID: AudioQueuePropertyID)
+{
+    var running: UInt32 = 0
+    var output: UInt32 = UInt32(MemoryLayout<UInt32>.size);
+    let err : OSStatus = AudioQueueGetProperty(AQ, kAudioQueueProperty_IsRunning, &running, &output);
+    if err != noErr {
+    
+    }
 }

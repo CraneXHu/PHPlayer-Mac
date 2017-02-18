@@ -13,6 +13,7 @@
 extern "C"{
 #include "swscale.h"
 #include "libavutil/imgutils.h"
+#include "libswresample/swresample.h"
 }
 
 /* no AV sync correction is done if below the minimum AV sync threshold */
@@ -37,12 +38,15 @@ static enum AVPixelFormat get_format(struct AVCodecContext *s, const enum AVPixe
 
 Player::Player():pFormatCtx(0)
 {
-    videoPacketQueue = new PacketQueue();
-    audioPacketQueue = new PacketQueue();
-    videoFrameQueue = new FrameQueue();
-    audioFrameQueue = new FrameQueue();
+    videoPacketQueue = new PacketQueue(32);
+    audioPacketQueue = new PacketQueue(16);
+    videoFrameQueue = new FrameQueue(32);
+    audioFrameQueue = new FrameQueue(16);
     
     isEnded = false;
+    curIndex = 0;
+    curFrame = 0;
+    audioClock = 0;
     
     av_register_all();
 };
@@ -151,7 +155,7 @@ void Player::demux()
             videoPacketQueue->push(packet);
             
         } else if(packet->stream_index == audioStreamIndex){
-            audioPacketQueue->push(packet);
+//            audioPacketQueue->push(packet);
         }
         av_packet_unref(packet);
     }
@@ -194,7 +198,7 @@ int Player::decodeVideoPacket(AVPacket *pPacket)
         }
     }
 out:
-    av_freep(pFrame);
+    av_frame_free(&pFrame);
     if (ret == AVERROR(EAGAIN))
         return 0;
     return ret;
@@ -270,36 +274,119 @@ void Player::playVideo()
         if (ret == false) {
             continue;
         }
+//        double timestamp;
+//        if(pFrame->pts == AV_NOPTS_VALUE) {
+//            timestamp = 0;
+//        } else {
+//            timestamp = av_frame_get_best_effort_timestamp(pFrame)*av_q2d(pFormatCtx->streams[videoStreamIndex]->time_base);
+//        }
+//        double frameRate = av_q2d(pFormatCtx->streams[videoStreamIndex]->avg_frame_rate);
+//        frameRate += pFrame->repeat_pict * (frameRate * 0.5);
+//        if (timestamp == 0.0) {
+//            std::this_thread::sleep_for(std::chrono::milliseconds((unsigned long)(frameRate*1000)));
+//        }else {
+//            if (fabs(timestamp - audioClock) > AV_SYNC_THRESHOLD_MIN &&
+//                fabs(timestamp - audioClock) < AV_NOSYNC_THRESHOLD) {
+//                if (timestamp > audioClock) {
+//                    std::this_thread::sleep_for(std::chrono::milliseconds((unsigned long)((timestamp - audioClock)*1000000)));
+//                }
+//            }
+//        }
         double timestamp;
-        if(pFrame->pts == AV_NOPTS_VALUE) {
-            timestamp = 0;
-        } else {
-            timestamp = av_frame_get_best_effort_timestamp(pFrame)*av_q2d(pFormatCtx->streams[videoStreamIndex]->time_base);
-        }
-        double frameRate = av_q2d(pFormatCtx->streams[videoStreamIndex]->avg_frame_rate);
-        frameRate += pFrame->repeat_pict * (frameRate * 0.5);
-        if (timestamp == 0.0) {
-            std::this_thread::sleep_for(std::chrono::milliseconds((unsigned long)(frameRate*1000)));
-        }else {
-            if (fabs(timestamp - audioClock) > AV_SYNC_THRESHOLD_MIN &&
-                fabs(timestamp - audioClock) < AV_NOSYNC_THRESHOLD) {
-                if (timestamp > audioClock) {
-                    std::this_thread::sleep_for(std::chrono::milliseconds((unsigned long)((timestamp - audioClock)*1000000)));
-                }
-            }
-        }
+//        timestamp = av_frame_get_best_effort_timestamp(pFrame)*av_q2d(pFormatCtx->streams[videoStreamIndex]->time_base);
+//        if (timestamp > audioClock) {
+//            std::this_thread::sleep_for(std::chrono::milliseconds((unsigned long)((timestamp - audioClock)*1000)));
+//        }
         sws_scale(imageConvertContext, (uint8_t const * const *)pFrame->data, pFrame->linesize, 0, pVideoCodecCtx->height, pRGBAFrame->data, pRGBAFrame->linesize);
         av_frame_unref(pFrame);
-        reciveImage(ctx, (unsigned char *)pRGBAFrame->data, pRGBAFrame->width, pRGBAFrame->height, pRGBAFrame->linesize);
+        reciveImage(ctx, (unsigned char *)pRGBAFrame->data[0], pRGBAFrame->width, pRGBAFrame->height, pRGBAFrame->linesize);
     }
     av_free(outBuffer);
     av_frame_free(&pRGBAFrame);
+    av_frame_free(&pFrame);
 }
 
-void Player::audioCallback()
+void Player::getAudioBuffer(unsigned char* outData, int size)
 {
-    AVFrame *pFrame = av_frame_alloc();
-    audioFrameQueue->front(&pFrame);
-    std::unique_lock<std::mutex> lock(mutex);
+//    int index = 0;
+//    AVFrame *pFrame = av_frame_alloc();
+//    std::unique_lock<std::mutex> lock(mutex);
+//    bool ret = audioFrameQueue->front(&pFrame);
+//    if (ret == false) {
+//        return;
+//    }
+    
+    //        if (pFrame->channels > 0 && pFrame->channel_layout == 0)
+    //            pFrame->channel_layout = av_get_default_channel_layout(pFrame->channels);
+    //        else if (pFrame->channels == 0 && pFrame->channel_layout > 0)
+    //            pFrame->channels = av_get_channel_layout_nb_channels(pFrame->channel_layout);
+    //
+    //        AVSampleFormat dstFormat = AV_SAMPLE_FMT_S16;
+    //        u_int64_t dstLayout = av_get_default_channel_layout(pFrame->channels);
+    //        struct SwrContext *swrCtx = swr_alloc_set_opts(NULL, dstLayout, dstFormat, pFrame->sample_rate, pFrame->channel_layout, (AVSampleFormat)pFrame->format, pFrame->sample_rate, 0, NULL);
+    
+//    audioClock = pFrame->pts*av_q2d(pFormatCtx->streams[audioStreamIndex]->time_base);
+    
+//    bool exit = false;
+//    while (!exit) {
+//        AVFrame *pFrame = 0;
+//        if (!curFrame) {
+//            pFrame = av_frame_alloc();
+//            bool ret = audioFrameQueue->front(&pFrame);
+//            if (ret == false) {
+//                return;
+//            }
+//        } else {
+//            pFrame = curFrame;
+//        }
+//        
+//        for (int i = curIndex; i < pFrame->linesize[0]; i++) {
+//            for (int j = 0; j < pFrame->channels; j++) {
+//                *outData++ = pFrame->data[j][i];
+//            }
+//            if (i - curIndex == size) {
+//                curFrame = pFrame;
+//                curIndex = i;
+//                exit = true;
+//                break;
+//            }
+//        }
+//        size -= pFrame->linesize[0] - curIndex;
+//        
+//        if (!exit) {
+//            av_frame_unref(pFrame);
+//        }
+//    }
+    
+    unsigned char * pos = outData;
+    AVFrame * pFrame = av_frame_alloc();
+    bool ret = audioFrameQueue->front(&pFrame);
+    if (ret == false) {
+        return;
+    }
     audioClock = pFrame->pts*av_q2d(pFormatCtx->streams[audioStreamIndex]->time_base);
+    if (pFrame->channels > 0 && pFrame->channel_layout == 0){
+        pFrame->channel_layout = av_get_default_channel_layout(pFrame->channels);
+    }
+    else if (pFrame->channels == 0 && pFrame->channel_layout > 0){
+        pFrame->channels = av_get_channel_layout_nb_channels(pFrame->channel_layout);
+    }
+    AVSampleFormat dstFormat = AV_SAMPLE_FMT_S16;
+    u_int64_t dstLayout = av_get_default_channel_layout(pFrame->channels);
+    SwrContext *swrCtx = swr_alloc_set_opts(NULL, dstLayout, dstFormat, pFrame->sample_rate, pFrame->channel_layout, (AVSampleFormat)pFrame->format, pFrame->sample_rate, 0, NULL);
+    if (!swrCtx || swr_init(swrCtx) < 0)
+        return ;
+    int dst_nb_samples = av_rescale_rnd(swr_get_delay(swrCtx, pFrame->sample_rate) + pFrame->nb_samples, pFrame->sample_rate, pFrame->sample_rate, AVRounding(1));
+    uint8_t **out;
+    int outLineSize = 0;
+//    av_samples_alloc_array_and_samples(&out, &outLineSize, pFrame->channels, dst_nb_samples, AV_SAMPLE_FMT_S16, 0);
+    int nb = swr_convert(swrCtx, &outData, dst_nb_samples, (const uint8_t**)pFrame->data, pFrame->nb_samples);
+//    for (int i = 0; i < outLineSize; i++) {
+//        for (int j = 0; j < pFrame->channels; j++) {
+//            *outData++ = out[j][i];
+//        }
+//    }
+    int data_size = pFrame->channels * nb * av_get_bytes_per_sample(dstFormat);
+    swr_free(&swrCtx);
+    av_frame_free(&pFrame);
 }

@@ -8,6 +8,11 @@
 
 #include "FrameQueue.hpp"
 
+FrameQueue::FrameQueue(int maxSize)
+{
+    this->maxSize = maxSize;
+}
+
 bool FrameQueue::push(const AVFrame *pFrame)
 {
     AVFrame *pDistFrame = av_frame_alloc();
@@ -19,7 +24,7 @@ bool FrameQueue::push(const AVFrame *pFrame)
     
     std::unique_lock<std::mutex> lock(mutex);
     for (; ; ) {
-        if (queue.size() <= MAX_SIZE) {
+        if (queue.size() <= maxSize) {
             queue.push(pDistFrame);
             conditionEmpty.notify_one();
             return true;

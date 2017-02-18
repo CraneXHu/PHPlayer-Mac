@@ -24,6 +24,7 @@ public:
     bool open(char* file);
     void start();
     void setCallback(Callback callback, void * ctx);
+    void getAudioBuffer(unsigned char *outData, int size);
     
 private:
     Player *player;

@@ -23,4 +23,6 @@ typedef void (*Callback)(void *cxt, unsigned char *data, int width, int height, 
 
 -(void) setCallback:(Callback) callback context: (void *) ctx;
 
+-(void) getAudioBuffer: (unsigned char *) outData size: (int) size;
+
 @end

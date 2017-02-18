@@ -42,6 +42,11 @@
     static_cast<PHPlayerCore*>(_player)->setCallback(callback, ctx);
 }
 
+-(void) getAudioBuffer:(unsigned char *)outData size:(int)size
+{
+    static_cast<PHPlayerCore*>(_player)->getAudioBuffer(outData, size);
+}
+
 -(void) dealloc
 {
     delete static_cast<PHPlayerCore*>(_player);

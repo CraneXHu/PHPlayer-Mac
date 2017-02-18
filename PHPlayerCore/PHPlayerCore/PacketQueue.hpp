@@ -20,6 +20,7 @@ extern "C" {
 class PacketQueue
 {
 public:
+    PacketQueue(int maxSize);
     bool push(const AVPacket *packet);
     bool front(AVPacket *packet);
     int size();
@@ -29,6 +30,6 @@ private:
     std::mutex mutex;
     std::condition_variable conditionEmpty;
     std::condition_variable conditionFull;
-    const int MAX_SIZE = 8;
+    int maxSize;
 };
 #endif /* PacketQueue_hpp */

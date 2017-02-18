@@ -20,6 +20,7 @@ extern "C" {
 class FrameQueue
 {
 public:
+    FrameQueue(int maxSize);
     bool push(const AVFrame *pFrame);
     bool front(AVFrame **pFrame);
     int size();
@@ -29,6 +30,6 @@ private:
     std::mutex mutex;
     std::condition_variable conditionEmpty;
     std::condition_variable conditionFull;
-    const int MAX_SIZE = 8;
+    int maxSize;
 };
 #endif /* FrameQueue_hpp */

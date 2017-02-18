@@ -17,23 +17,28 @@
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" animationBehavior="default" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" fullSizeContentView="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="240" width="480" height="270"/>
+            <rect key="contentRect" x="196" y="240" width="474" height="288"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
             <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
-                <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                <rect key="frame" x="0.0" y="0.0" width="474" height="288"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <openGLView useAuxiliaryDepthBufferStencil="NO" allowOffline="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vyB-bv-ZI8" customClass="VideoView" customModule="PHPlayer" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                        <rect key="frame" x="0.0" y="0.0" width="474" height="288"/>
                     </openGLView>
-                    <visualEffectView appearanceType="vibrantDark" fixedFrame="YES" blendingMode="withinWindow" material="dark" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="NSZ-0P-rfW">
-                        <rect key="frame" x="0.0" y="215" width="480" height="55"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <visualEffectView appearanceType="vibrantDark" blendingMode="withinWindow" material="dark" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="NSZ-0P-rfW">
+                        <rect key="frame" x="0.0" y="255" width="474" height="33"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="33" id="bqa-KD-HmS"/>
+                        </constraints>
                     </visualEffectView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="vyB-bv-ZI8" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" id="8Ux-Ko-swZ"/>
+                    <constraint firstAttribute="trailing" secondItem="NSZ-0P-rfW" secondAttribute="trailing" id="Amh-6W-U1L"/>
                     <constraint firstAttribute="bottom" secondItem="vyB-bv-ZI8" secondAttribute="bottom" id="M1Z-Bd-MAn"/>
+                    <constraint firstItem="NSZ-0P-rfW" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" id="bTO-5l-AIU"/>
+                    <constraint firstItem="NSZ-0P-rfW" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" id="dMk-oh-IXT"/>
                     <constraint firstItem="vyB-bv-ZI8" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" id="dbq-uu-1yt"/>
                     <constraint firstAttribute="trailing" secondItem="vyB-bv-ZI8" secondAttribute="trailing" id="icP-EE-WS3"/>
                 </constraints>
@@ -41,6 +46,7 @@
             <connections>
                 <outlet property="delegate" destination="-2" id="FUY-7b-3g5"/>
             </connections>
+            <point key="canvasLocation" x="129" y="274"/>
         </window>
     </objects>
 </document>

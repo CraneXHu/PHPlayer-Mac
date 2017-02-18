@@ -13,6 +13,7 @@
 #include <thread>
 
 struct AVPacket;
+struct AVFrame;
 struct AVFormatContext;
 struct AVCodecContext;
 class PacketQueue;
@@ -30,7 +31,7 @@ public:
     void decodeAudio();
     int decodeAudioPacket(AVPacket *pPacket);
     void playVideo();
-    void audioCallback();
+    void getAudioBuffer(unsigned char *outData, int size);
     void setCallback(Callback callback, void *ctx);
     
 private:
@@ -49,5 +50,8 @@ private:
     Callback reciveImage;
     void *ctx;
     std::mutex mutex;
+    AVFrame *curFrame;
+    int curIndex;
+    
 };
 #endif /* Player_hpp */
