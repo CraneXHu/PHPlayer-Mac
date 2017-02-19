@@ -49,7 +49,7 @@ bool FrameQueue::front(AVFrame **pFrame)
             AVFrame *temp = queue.front();
             queue.pop();
             conditionFull.notify_one();
-            av_frame_unref(temp);
+            av_frame_free(&temp);
             return true;
         } else{
             //        conditionEmpty.wait(lock, [&]() -> bool {return queue.size() != 0;});

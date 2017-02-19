@@ -143,6 +143,7 @@ void Player::demux()
     
     int ret = 0;
     while (1) {
+
         ret = av_read_frame(pFormatCtx, packet);
         if (ret == AVERROR(EAGAIN)) {
             continue;
@@ -155,7 +156,7 @@ void Player::demux()
             videoPacketQueue->push(packet);
             
         } else if(packet->stream_index == audioStreamIndex){
-//            audioPacketQueue->push(packet);
+            audioPacketQueue->push(packet);
         }
         av_packet_unref(packet);
     }
@@ -182,7 +183,6 @@ void Player::decodeVideo()
 
 int Player::decodeVideoPacket(AVPacket *pPacket)
 {
-    AVFrame *pFrame = av_frame_alloc();
     
     int ret = avcodec_send_packet(pVideoCodecCtx, pPacket);
     if (ret < 0) {
@@ -190,15 +190,15 @@ int Player::decodeVideoPacket(AVPacket *pPacket)
     }
 
     while (!ret) {
+        AVFrame *pFrame = av_frame_alloc();
         ret = avcodec_receive_frame(pVideoCodecCtx, pFrame);
         if (!ret)
         {
             videoFrameQueue->push(pFrame);
-            av_frame_unref(pFrame);
         }
+        av_frame_free(&pFrame);
     }
 out:
-    av_frame_free(&pFrame);
     if (ret == AVERROR(EAGAIN))
         return 0;
     return ret;
@@ -222,7 +222,6 @@ void Player::decodeAudio()
 
 int Player::decodeAudioPacket(AVPacket *pPacket)
 {
-    AVFrame *pFrame = av_frame_alloc();
     
     int ret = avcodec_send_packet(pAudioCodecCtx, pPacket);
     if (ret < 0) {
@@ -230,15 +229,15 @@ int Player::decodeAudioPacket(AVPacket *pPacket)
     }
     
     while (!ret) {
+        AVFrame *pFrame = av_frame_alloc();
         ret = avcodec_receive_frame(pAudioCodecCtx, pFrame);
         if (!ret)
         {
             audioFrameQueue->push(pFrame);
-            av_frame_unref(pFrame);
         }
+        av_frame_free(&pFrame);
     }
 out:
-    av_frame_free(&pFrame);
     if (ret == AVERROR(EAGAIN))
         return 0;
     return ret;
@@ -293,10 +292,10 @@ void Player::playVideo()
 //            }
 //        }
         double timestamp;
-//        timestamp = av_frame_get_best_effort_timestamp(pFrame)*av_q2d(pFormatCtx->streams[videoStreamIndex]->time_base);
-//        if (timestamp > audioClock) {
-//            std::this_thread::sleep_for(std::chrono::milliseconds((unsigned long)((timestamp - audioClock)*1000)));
-//        }
+        timestamp = av_frame_get_best_effort_timestamp(pFrame)*av_q2d(pFormatCtx->streams[videoStreamIndex]->time_base);
+        if (timestamp > audioClock) {
+            std::this_thread::sleep_for(std::chrono::milliseconds((unsigned long)((timestamp - audioClock)*1000)));
+        }
         sws_scale(imageConvertContext, (uint8_t const * const *)pFrame->data, pFrame->linesize, 0, pVideoCodecCtx->height, pRGBAFrame->data, pRGBAFrame->linesize);
         av_frame_unref(pFrame);
         reciveImage(ctx, (unsigned char *)pRGBAFrame->data[0], pRGBAFrame->width, pRGBAFrame->height, pRGBAFrame->linesize);

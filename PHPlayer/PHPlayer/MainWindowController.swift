@@ -35,7 +35,7 @@ class MainWindowController: NSWindowController, NSWindowDelegate {
         obj.open(UnsafeMutablePointer<Int8>(mutating: pathCStr))
         obj.start()
 
-//        audioPlayer?.initWithAudioSpec(sampleRate: 48000, channels: 2)
-//        audioPlayer?.play();
+        audioPlayer?.initWithAudioSpec(sampleRate: 48000, channels: 2)
+        audioPlayer?.play();
     }
 }

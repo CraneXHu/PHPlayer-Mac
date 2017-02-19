@@ -26,7 +26,7 @@ public:
     int size();
     
 private:
-    std::queue<AVPacket> queue;
+    std::queue<AVPacket*> queue;
     std::mutex mutex;
     std::condition_variable conditionEmpty;
     std::condition_variable conditionFull;

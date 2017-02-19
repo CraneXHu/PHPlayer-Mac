@@ -25,7 +25,7 @@ bool PacketQueue::push(const AVPacket *packet)
     std::unique_lock<std::mutex> lock(mutex);
     for (; ; ) {
         if (queue.size() <= maxSize) {
-            queue.push(*pkt);
+            queue.push(pkt);
             conditionEmpty.notify_one();
             return true;
         } else {
@@ -41,14 +41,14 @@ bool PacketQueue::front(AVPacket *packet)
     std::unique_lock<std::mutex> lock(mutex);
     for (; ; ) {
         if (!queue.empty()) {
-            int ret = av_packet_ref(packet, &queue.front());
+            int ret = av_packet_ref(packet, queue.front());
             if (ret < 0) {
                 return false;
             }
-            AVPacket pkt = queue.front();
+            AVPacket *pkt = queue.front();
             queue.pop();
             conditionFull.notify_one();
-            av_packet_unref(&pkt);
+            av_packet_free(&pkt);
             return true;
         } else{
 //            conditionEmpty.wait(lock, [&]() -> bool {return queue.size() != 0;});

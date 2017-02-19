@@ -48,11 +48,11 @@ void PHPlayerCore::start()
 {
     std::thread demuxThread(&Player::demux, player);
     std::thread videoThread(&Player::decodeVideo, player);
-//    std::thread audioThread(&Player::decodeAudio, player);
+    std::thread audioThread(&Player::decodeAudio, player);
     std::thread displayThread(&Player::playVideo, player);
     demuxThread.detach();
     videoThread.detach();
-//    audioThread.detach();
+    audioThread.detach();
     displayThread.detach();
 
 }
