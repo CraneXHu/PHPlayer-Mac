@@ -44,7 +44,12 @@ private:
     FrameQueue *audioFrameQueue;
     int videoStreamIndex;
     int audioStreamIndex;
+    bool pauseReq;
+    bool playReq;
+    bool seekReq;
     bool isEnded;
+    double seekPos;
+    double lastPts;
     double timestamp;
     double audioClock;
     Callback reciveImage;

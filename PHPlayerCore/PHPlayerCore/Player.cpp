@@ -44,6 +44,9 @@ Player::Player():pFormatCtx(0)
     audioFrameQueue = new FrameQueue(16);
     
     isEnded = false;
+    pauseReq = false;
+    playReq = false;
+    seekReq = false;
     curIndex = 0;
     curFrame = 0;
     audioClock = 0;
@@ -144,6 +147,15 @@ void Player::demux()
     int ret = 0;
     while (1) {
 
+        if (pauseReq) {
+            av_read_pause(pFormatCtx);
+        }
+        if (playReq) {
+            av_read_play(pFormatCtx);
+        }
+        if (seekReq) {
+            av_seek_frame(pFormatCtx, -1, seekPos, AVSEEK_FLAG_ANY);
+        }
         ret = av_read_frame(pFormatCtx, packet);
         if (ret == AVERROR(EAGAIN)) {
             continue;
@@ -298,7 +310,9 @@ void Player::playVideo()
         }
         sws_scale(imageConvertContext, (uint8_t const * const *)pFrame->data, pFrame->linesize, 0, pVideoCodecCtx->height, pRGBAFrame->data, pRGBAFrame->linesize);
         av_frame_unref(pFrame);
-        reciveImage(ctx, (unsigned char *)pRGBAFrame->data[0], pRGBAFrame->width, pRGBAFrame->height, pRGBAFrame->linesize);
+        if (reciveImage) {
+            reciveImage(ctx, (unsigned char *)pRGBAFrame->data[0], pRGBAFrame->width, pRGBAFrame->height, pRGBAFrame->linesize);
+        }
     }
     av_free(outBuffer);
     av_frame_free(&pRGBAFrame);

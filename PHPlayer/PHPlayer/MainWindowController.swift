@@ -29,7 +29,7 @@ class MainWindowController: NSWindowController, NSWindowDelegate {
         audioPlayer = AudioController(player: obj)
         
 //        videoView.initTexture()
-        videoView.setUpCallback(obj: obj)
+        videoView.setObj(obj: obj)
         let path:String = "/Users/pkhope/Downloads/WW.S01E09.720p.FIX字幕侠/WW.S01E09.720p.FIX字幕侠.mkv"
         let pathCStr = (path as NSString).utf8String
         obj.open(UnsafeMutablePointer<Int8>(mutating: pathCStr))
@@ -37,5 +37,16 @@ class MainWindowController: NSWindowController, NSWindowDelegate {
 
         audioPlayer?.initWithAudioSpec(sampleRate: 48000, channels: 2)
         audioPlayer?.play();
+    }
+    
+    override func keyDown(with event: NSEvent) {
+        let key = Int(event.keyCode)
+        if key == NSLeftArrowFunctionKey {
+            
+        }
+    }
+    
+    override func mouseEntered(with event: NSEvent) {
+        
     }
 }
