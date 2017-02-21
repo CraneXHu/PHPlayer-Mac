@@ -152,7 +152,7 @@ class VideoView: NSOpenGLView {
     func drawVideo() {
         openGLContext?.lock()
         openGLContext?.makeCurrentContext()
-        glColor3f(1.0, 0.85, 0.35);
+//        glColor3f(1.0, 0.85, 0.35);
         glClear(GLenum(GL_COLOR_BUFFER_BIT) | GLenum(GL_DEPTH_BUFFER_BIT))
         glBindTexture(GLenum(GL_TEXTURE_2D), texName);
         glBegin(GLenum(GL_QUADS))

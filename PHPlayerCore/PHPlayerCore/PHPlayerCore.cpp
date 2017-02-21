@@ -10,59 +10,106 @@
 #include <iostream>
 #include <thread>
 #include "PHPlayerCore.hpp"
-#include "PHPlayerCorePriv.hpp"
+#include "Source.hpp"
+#include "Demuxer.hpp"
+#include "Decoder.hpp"
 
 PHPlayerCore::PHPlayerCore()
 {
-    player = new Player();
+    source = new Source();
+    demuxer = new Demuxer(this);
+    videoDecoder = new Decoder(this, PH_DECODER_VIDEO);
+    audioDecoder = new Decoder(this, PH_DECODER_AUDIO);
+    subtitleDecoder = new Decoder(this, PH_DECODER_SUBTITLE);
 }
 
-void PHPlayerCore::HelloWorld(const char * s)
+PHPlayerCore::~PHPlayerCore()
 {
-    PHPlayerCorePriv *theObj = new PHPlayerCorePriv;
-    theObj->HelloWorldPriv(s);
-    delete theObj;
-};
-
-int PHPlayerCore::add(int a, int b)
-{
-    return a + b;
-};
-
-void PHPlayerCore::setCallback(Callback callback, void * ctx)
-{
-    player->setCallback(callback, ctx);
+    delete source;
+    delete demuxer;
+    delete videoDecoder;
+    delete audioDecoder;
+    delete subtitleDecoder;
 }
 
-bool PHPlayerCore::open(char *file)
+void PHPlayerCore::setState(PlayerState state)
 {
-    bool ret = player->open(file);
-    if (ret == false) {
-        return false;
-    }
-
-    return true;
+    this->state = state;
 }
 
-void PHPlayerCore::start()
+PlayerState PHPlayerCore::getState()
 {
-    std::thread demuxThread(&Player::demux, player);
-    std::thread videoThread(&Player::decodeVideo, player);
-    std::thread audioThread(&Player::decodeAudio, player);
-    std::thread displayThread(&Player::playVideo, player);
-    demuxThread.detach();
-    videoThread.detach();
-    audioThread.detach();
-    displayThread.detach();
-
+    return state;
 }
 
-void PHPlayerCore::getAudioBuffer(unsigned char *outData, int size)
+Source* PHPlayerCore::getSource()
 {
-    player->getAudioBuffer(outData, size);
+    return source;
 }
 
-void PHPlayerCorePriv::HelloWorldPriv(const char * s) 
+Demuxer* PHPlayerCore::getDemuxer()
 {
-    std::cout << s << std::endl;
-};
+    return demuxer;
+}
+
+void PHPlayerCore::seek(int64_t position)
+{
+    demuxer->seek(position);
+}
+
+Decoder *PHPlayerCore::getVideoDecoder()
+{
+    return videoDecoder;
+}
+
+Decoder *PHPlayerCore::getAudioDecoder()
+{
+    return audioDecoder;
+}
+
+Decoder *PHPlayerCore::getSubtitleDecoder()
+{
+    return subtitleDecoder;
+}
+
+
+//void PHPlayerCore::init()
+//{
+//    av_register_all();
+//}
+//
+//bool PHPlayerCore::open(char *file)
+//{
+//    if (avformat_open_input(&pFormatCtx, file, NULL, NULL) < 0) {
+//        return false;
+//    }
+//    
+//    if (avformat_find_stream_info(pFormatCtx, NULL) < 0) {
+//        return false;
+//    }
+//    
+//    return true;
+//}
+//
+//void PHPlayerCore::setCallback(Callback callback, void * ctx)
+//{
+//    player->setCallback(callback, ctx);
+//}
+//
+//void PHPlayerCore::start()
+//{
+//    std::thread demuxThread(&Player::demux, player);
+//    std::thread videoThread(&Player::decodeVideo, player);
+//    std::thread audioThread(&Player::decodeAudio, player);
+//    std::thread displayThread(&Player::playVideo, player);
+//    demuxThread.detach();
+//    videoThread.detach();
+//    audioThread.detach();
+//    displayThread.detach();
+//
+//}
+//
+//void PHPlayerCore::getAudioBuffer(unsigned char *outData, int size)
+//{
+//    player->getAudioBuffer(outData, size);
+//}

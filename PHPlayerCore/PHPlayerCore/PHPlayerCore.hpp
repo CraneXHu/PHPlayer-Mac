@@ -13,21 +13,38 @@
 /* The classes below are exported */
 #pragma GCC visibility push(default)
 
-#include "Player.hpp"
+#include "globalenum.h"
+
+class Source;
+class Demuxer;
+class Decoder;
 
 class PHPlayerCore
 {
 public:
     PHPlayerCore();
-    void HelloWorld(const char *);
-    int add(int a, int b);
+    ~PHPlayerCore();
+    void init();
+    void setState(PlayerState state);
+    PlayerState getState();
     bool open(char* file);
     void start();
-    void setCallback(Callback callback, void * ctx);
-    void getAudioBuffer(unsigned char *outData, int size);
+    void seek(int64_t postion);
+    
+public:
+    Source *getSource();
+    Demuxer *getDemuxer();
+    Decoder *getVideoDecoder();
+    Decoder *getAudioDecoder();
+    Decoder *getSubtitleDecoder();
     
 private:
-    Player *player;
+    PlayerState state;
+    Source *source;
+    Demuxer *demuxer;
+    Decoder *videoDecoder;
+    Decoder *audioDecoder;
+    Decoder *subtitleDecoder;
 };
 
 #pragma GCC visibility pop

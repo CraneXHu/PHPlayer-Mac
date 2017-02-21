@@ -46,10 +46,12 @@ Player::Player():pFormatCtx(0)
     isEnded = false;
     pauseReq = false;
     playReq = false;
-    seekReq = false;
+    seekReq = true;
     curIndex = 0;
     curFrame = 0;
     audioClock = 0;
+    
+    reciveImage = 0;
     
     av_register_all();
 };
@@ -154,7 +156,8 @@ void Player::demux()
             av_read_play(pFormatCtx);
         }
         if (seekReq) {
-            av_seek_frame(pFormatCtx, -1, seekPos, AVSEEK_FLAG_ANY);
+            av_seek_frame(pFormatCtx, -1, 50*AV_TIME_BASE, AVSEEK_FLAG_ANY);
+            seekReq = false;
         }
         ret = av_read_frame(pFormatCtx, packet);
         if (ret == AVERROR(EAGAIN)) {
@@ -275,7 +278,7 @@ void Player::playVideo()
     unsigned char *outBuffer = (unsigned char *)av_malloc(size);
     av_image_fill_arrays(pRGBAFrame->data, pRGBAFrame->linesize, outBuffer, AV_PIX_FMT_RGBA, pVideoCodecCtx->width, pVideoCodecCtx->height, 1);
     
-    SwsContext *imageConvertContext = sws_getContext(pVideoCodecCtx->width, pVideoCodecCtx->height, pVideoCodecCtx->pix_fmt, pVideoCodecCtx->width, pVideoCodecCtx->height, AV_PIX_FMT_RGBA, SWS_BICUBIC, NULL, NULL, NULL);
+    SwsContext *imageConvertContext = sws_getContext(pVideoCodecCtx->width, pVideoCodecCtx->height, pVideoCodecCtx->pix_fmt, pVideoCodecCtx->width, pVideoCodecCtx->height, AV_PIX_FMT_RGBA, SWS_BILINEAR, NULL, NULL, NULL);
     
     while (!isEnded) {
         
