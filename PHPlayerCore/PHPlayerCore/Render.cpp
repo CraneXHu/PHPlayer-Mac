@@ -29,6 +29,12 @@ Render::~Render()
     
 }
 
+void Render::start()
+{
+    std::thread renderVideoThread(&Render::renderVideo, this);
+    renderVideoThread.detach();
+}
+
 void Render::renderVideo()
 {
     AVFrame *frame = av_frame_alloc();

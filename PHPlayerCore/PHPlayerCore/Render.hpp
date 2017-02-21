@@ -18,6 +18,8 @@ public:
     Render(PHPlayerCore *player);
     ~Render();
     
+    void start();
+    
     void renderVideo();
     void renderAudio(unsigned char* outData, int size);
 private:
