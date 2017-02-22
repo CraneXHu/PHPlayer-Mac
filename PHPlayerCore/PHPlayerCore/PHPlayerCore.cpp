@@ -13,6 +13,11 @@
 #include "Source.hpp"
 #include "Demuxer.hpp"
 #include "Decoder.hpp"
+#include "Render.hpp"
+
+extern "C" {
+#include "avcodec.h"
+}
 
 PHPlayerCore::PHPlayerCore()
 {
@@ -21,6 +26,7 @@ PHPlayerCore::PHPlayerCore()
     videoDecoder = new Decoder(this, PH_DECODER_VIDEO);
     audioDecoder = new Decoder(this, PH_DECODER_AUDIO);
     subtitleDecoder = new Decoder(this, PH_DECODER_SUBTITLE);
+    render = new Render(this);
 }
 
 PHPlayerCore::~PHPlayerCore()
@@ -30,6 +36,12 @@ PHPlayerCore::~PHPlayerCore()
     delete videoDecoder;
     delete audioDecoder;
     delete subtitleDecoder;
+    delete render;
+}
+
+void PHPlayerCore::init()
+{
+    Source::init();
 }
 
 void PHPlayerCore::setState(PlayerState state)
@@ -42,6 +54,60 @@ PlayerState PHPlayerCore::getState()
     return state;
 }
 
+bool PHPlayerCore::open(char *file)
+{
+    return source->open(file);
+}
+
+void PHPlayerCore::start()
+{
+    demuxer->start();
+    videoDecoder->start();
+    audioDecoder->start();
+    subtitleDecoder->start();
+    render->start();
+}
+
+void PHPlayerCore::pause()
+{
+    
+}
+
+void PHPlayerCore::stop()
+{
+    
+}
+
+void PHPlayerCore::setVideoCallback(void *userData, VideoCallback callback)
+{
+    render->setVideoCallback(userData, callback);
+}
+
+void PHPlayerCore::getAudioData(unsigned char *outData, int size)
+{
+    render->renderAudio(outData, size);
+}
+
+int PHPlayerCore::getVideoWidth()
+{
+    return videoDecoder->getCodecContex()->width;
+}
+
+int PHPlayerCore::getVideoHeight()
+{
+    return videoDecoder->getCodecContex()->height;
+}
+
+int PHPlayerCore::getAudioSampleRate()
+{
+    return audioDecoder->getCodecContex()->sample_rate;
+}
+
+int PHPlayerCore::getAudioChannels()
+{
+    return audioDecoder->getCodecContex()->channels;
+}
+
 Source* PHPlayerCore::getSource()
 {
     return source;
@@ -52,7 +118,7 @@ Demuxer* PHPlayerCore::getDemuxer()
     return demuxer;
 }
 
-void PHPlayerCore::seek(int64_t position)
+void PHPlayerCore::seek(__int64_t position)
 {
     demuxer->seek(position);
 }
@@ -72,44 +138,3 @@ Decoder *PHPlayerCore::getSubtitleDecoder()
     return subtitleDecoder;
 }
 
-
-//void PHPlayerCore::init()
-//{
-//    av_register_all();
-//}
-//
-//bool PHPlayerCore::open(char *file)
-//{
-//    if (avformat_open_input(&pFormatCtx, file, NULL, NULL) < 0) {
-//        return false;
-//    }
-//    
-//    if (avformat_find_stream_info(pFormatCtx, NULL) < 0) {
-//        return false;
-//    }
-//    
-//    return true;
-//}
-//
-//void PHPlayerCore::setCallback(Callback callback, void * ctx)
-//{
-//    player->setCallback(callback, ctx);
-//}
-//
-//void PHPlayerCore::start()
-//{
-//    std::thread demuxThread(&Player::demux, player);
-//    std::thread videoThread(&Player::decodeVideo, player);
-//    std::thread audioThread(&Player::decodeAudio, player);
-//    std::thread displayThread(&Player::playVideo, player);
-//    demuxThread.detach();
-//    videoThread.detach();
-//    audioThread.detach();
-//    displayThread.detach();
-//
-//}
-//
-//void PHPlayerCore::getAudioBuffer(unsigned char *outData, int size)
-//{
-//    player->getAudioBuffer(outData, size);
-//}

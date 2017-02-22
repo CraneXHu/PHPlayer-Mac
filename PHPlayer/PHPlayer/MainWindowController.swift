@@ -16,8 +16,8 @@ class MainWindowController: NSWindowController, NSWindowDelegate {
     }
     @IBOutlet weak var videoView: VideoView!
     
-    let obj: CPPWrapper = CPPWrapper()
-    var audioPlayer : AudioController?
+//    let obj: CPPWrapper = CPPWrapper()
+//    var audioPlayer : AudioController?
     
     override func windowDidLoad() {
         super.windowDidLoad()
@@ -26,17 +26,17 @@ class MainWindowController: NSWindowController, NSWindowDelegate {
         self.window?.styleMask.insert(NSFullSizeContentViewWindowMask)
         self.window?.titlebarAppearsTransparent = true
         
-        audioPlayer = AudioController(player: obj)
-        
-//        videoView.initTexture()
-        videoView.setObj(obj: obj)
-        let path:String = "/Users/pkhope/Downloads/WW.S01E09.720p.FIX字幕侠/WW.S01E09.720p.FIX字幕侠.mkv"
-        let pathCStr = (path as NSString).utf8String
-        obj.open(UnsafeMutablePointer<Int8>(mutating: pathCStr))
-        obj.start()
-
-        audioPlayer?.initWithAudioSpec(sampleRate: 48000, channels: 2)
-        audioPlayer?.play();
+//        audioPlayer = AudioController(player: obj)
+//        
+////        videoView.initTexture()
+//        videoView.setObj(obj: obj)
+//        let path:String = "/Users/pkhope/Downloads/WW.S01E09.720p.FIX字幕侠/WW.S01E09.720p.FIX字幕侠.mkv"
+//        let pathCStr = (path as NSString).utf8String
+//        obj.open(UnsafeMutablePointer<Int8>(mutating: pathCStr))
+//        obj.start()
+//
+//        audioPlayer?.initWithAudioSpec(sampleRate: 48000, channels: 2)
+//        audioPlayer?.play();
     }
     
     override func keyDown(with event: NSEvent) {

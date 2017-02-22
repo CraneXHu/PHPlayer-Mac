@@ -14,7 +14,6 @@ extern "C"{
 Source::Source()
 {
     formatContext = 0;
-    init();
 }
 
 Source::~Source()

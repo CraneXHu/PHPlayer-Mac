@@ -50,6 +50,7 @@
 		AD1348AC1E5C29F700840214 /* Source.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Source.cpp; sourceTree = "<group>"; };
 		AD1348AD1E5C29F700840214 /* Source.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Source.hpp; sourceTree = "<group>"; };
 		AD1348B01E5C481100840214 /* globalenum.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = globalenum.h; sourceTree = "<group>"; };
+		AD1348B11E5D2E0200840214 /* globaldef.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = globaldef.h; sourceTree = "<group>"; };
 		AD284DCF1E2CE63200A15F31 /* libPHPlayerCore.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libPHPlayerCore.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD284DD21E2CE63200A15F31 /* PHPlayerCore.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PHPlayerCore.hpp; sourceTree = "<group>"; };
 		AD284DD61E2CE63200A15F31 /* PHPlayerCore.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PHPlayerCore.cpp; sourceTree = "<group>"; };
@@ -133,6 +134,7 @@
 				AD1348AC1E5C29F700840214 /* Source.cpp */,
 				AD1348AD1E5C29F700840214 /* Source.hpp */,
 				AD1348B01E5C481100840214 /* globalenum.h */,
+				AD1348B11E5D2E0200840214 /* globaldef.h */,
 			);
 			path = PHPlayerCore;
 			sourceTree = "<group>";

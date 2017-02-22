@@ -17,7 +17,7 @@ class Source {
 public:
     Source();
     ~Source();
-    void init();
+    static void init();
     bool open(char * file);
     AVFormatContext *getContext();
     

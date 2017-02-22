@@ -11,10 +11,12 @@ import Cocoa
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
     
-    var mainWindowController : MainWindowController = MainWindowController()
+    static let player = PlayerWrapper()
+    let mainWindowController : MainWindowController = MainWindowController()
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
+        
         mainWindowController.showWindow(nil);
     }
 

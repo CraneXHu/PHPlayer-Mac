@@ -21,6 +21,8 @@ extern "C"{
 Render::Render(PHPlayerCore *player)
 {
     this->player = player;
+    userData = 0;
+    videoCallback = 0;
     audioClock = 0;
 }
 
@@ -33,6 +35,12 @@ void Render::start()
 {
     std::thread renderVideoThread(&Render::renderVideo, this);
     renderVideoThread.detach();
+}
+
+void Render::setVideoCallback(void *userData, VideoCallback callback)
+{
+    this->userData = userData;
+    videoCallback = callback;
 }
 
 void Render::renderVideo()
@@ -63,9 +71,9 @@ void Render::renderVideo()
         }
         sws_scale(imageConvertContext, (uint8_t const * const *)frame->data, frame->linesize, 0, codecContext->height, rgbaFrame->data, rgbaFrame->linesize);
         av_frame_unref(frame);
-//        if (reciveImage) {
-//            reciveImage(ctx, (unsigned char *)rgbaFrame->data[0], rgbaFrame->width, rgbaFrame->height, rgbaFrame->linesize);
-//        }
+        if (videoCallback) {
+            videoCallback(userData, (unsigned char *)rgbaFrame->data[0], rgbaFrame->width, rgbaFrame->height, rgbaFrame->linesize);
+        }
     }
     av_free(outBuffer);
     av_frame_free(&rgbaFrame);
@@ -80,7 +88,7 @@ void Render::renderAudio(unsigned char* outData, int size)
         av_frame_free(&frame);
         return;
     }
-    int audioClock = frame->pts*av_q2d(player->getDemuxer()->getAudioStream()->time_base);
+    audioClock = frame->pts*av_q2d(player->getDemuxer()->getAudioStream()->time_base);
     if (frame->channels > 0 && frame->channel_layout == 0){
         frame->channel_layout = av_get_default_channel_layout(frame->channels);
     }

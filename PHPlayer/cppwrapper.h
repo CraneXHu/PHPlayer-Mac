@@ -8,21 +8,25 @@
 
 #import <Foundation/Foundation.h>
 
-@interface CPPWrapper : NSObject
+@interface PlayerWrapper : NSObject
 {
     void* _player;
 }
-
--(int) add: (int) a and: (int) b;
 
 -(bool) open: (char*) file;
 
 -(void) start;
 
-typedef void (*Callback)(void *cxt, unsigned char *data, int width, int height, int *linesize);
+typedef void (*VideoCallback)(void *userData, unsigned char *data, int width, int height, int *linesize);
 
--(void) setCallback:(Callback) callback context: (void *) ctx;
+-(void) videoCallback:(VideoCallback) callback userData: (void *) data;
 
--(void) getAudioBuffer: (unsigned char *) outData size: (int) size;
+-(void) getAudioData: (unsigned char *) outData size: (int) size;
+
+-(int) getVideoWidth;
+-(int) getVideoHeight;
+
+-(int) getAudioSampleRate;
+-(int) getAudioChannels;
 
 @end

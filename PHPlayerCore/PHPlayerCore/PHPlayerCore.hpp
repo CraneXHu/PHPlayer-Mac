@@ -13,11 +13,14 @@
 /* The classes below are exported */
 #pragma GCC visibility push(default)
 
+#include <stdio.h>
 #include "globalenum.h"
+#include "globaldef.h"
 
 class Source;
 class Demuxer;
 class Decoder;
+class Render;
 
 class PHPlayerCore
 {
@@ -29,7 +32,18 @@ public:
     PlayerState getState();
     bool open(char* file);
     void start();
-    void seek(int64_t postion);
+    void pause();
+    void stop();
+    void seek(__int64_t postion);
+    
+    void setVideoCallback(void *userData, VideoCallback callback);
+    void getAudioData(unsigned char* outData, int size);
+    
+    int getVideoWidth();
+    int getVideoHeight();
+    
+    int getAudioSampleRate();
+    int getAudioChannels();
     
 public:
     Source *getSource();
@@ -45,6 +59,7 @@ private:
     Decoder *videoDecoder;
     Decoder *audioDecoder;
     Decoder *subtitleDecoder;
+    Render *render;
 };
 
 #pragma GCC visibility pop

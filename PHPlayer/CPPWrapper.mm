@@ -9,22 +9,17 @@
 #import "cppwrapper.h"
 #include "PHPlayerCore.hpp"
 
-@implementation CPPWrapper
+@implementation PlayerWrapper
 
 -(id) init
 {
     self = [super init];
     if (self) {
         _player = new PHPlayerCore();
+        static_cast<PHPlayerCore*>(_player)->init();
     }
     return self;
 };
-
--(int) add: (int) a and: (int) b
-{
-    int ret = static_cast<PHPlayerCore*>(_player)->add(a, b);
-    return ret;
-}
 
 -(bool) open:(char *) file
 {
@@ -37,14 +32,34 @@
     static_cast<PHPlayerCore*>(_player)->start();
 }
 
--(void) setCallback:(Callback)callback context: (void*) ctx
+-(int) getVideoWidth
 {
-    static_cast<PHPlayerCore*>(_player)->setCallback(callback, ctx);
+    return static_cast<PHPlayerCore*>(_player)->getVideoWidth();
 }
 
--(void) getAudioBuffer:(unsigned char *)outData size:(int)size
+-(int) getVideoHeight
 {
-    static_cast<PHPlayerCore*>(_player)->getAudioBuffer(outData, size);
+    return static_cast<PHPlayerCore*>(_player)->getVideoHeight();
+}
+
+-(int) getAudioSampleRate
+{
+    return static_cast<PHPlayerCore*>(_player)->getAudioSampleRate();
+}
+
+-(int) getAudioChannels
+{
+    return static_cast<PHPlayerCore*>(_player)->getAudioChannels();
+}
+
+-(void) videoCallback:(VideoCallback)callback userData: (void*) data
+{
+    static_cast<PHPlayerCore*>(_player)->setVideoCallback(data, callback);
+}
+
+-(void) getAudioData:(unsigned char *)outData size:(int)size
+{
+    static_cast<PHPlayerCore*>(_player)->getAudioData(outData, size);
 }
 
 -(void) dealloc

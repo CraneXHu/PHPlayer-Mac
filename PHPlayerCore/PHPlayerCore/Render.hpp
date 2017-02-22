@@ -10,6 +10,7 @@
 #define Render_hpp
 
 #include <stdio.h>
+#include "globaldef.h"
 
 class PHPlayerCore;
 
@@ -19,11 +20,16 @@ public:
     ~Render();
     
     void start();
-    
+    void pause();
+    void stop();
+    void setVideoCallback(void *userData, VideoCallback callback);
     void renderVideo();
     void renderAudio(unsigned char* outData, int size);
+    
 private:
     PHPlayerCore *player;
+    void *userData;
+    VideoCallback videoCallback;
     int audioClock;
 };
 #endif /* Render_hpp */

@@ -14,7 +14,6 @@ class VideoView: NSOpenGLView {
     
     var texName: GLuint = 0
     var pboId: GLuint = 0
-    var obj: CPPWrapper?
     
 //    override init(frame: CGRect) {
 //        // init context
@@ -49,17 +48,13 @@ class VideoView: NSOpenGLView {
     
     var lastTime: Int64 = 0
     
-    func setObj(obj: CPPWrapper) {
-        self.obj = obj
-    }
-    
-    func setUpCallback(obj: CPPWrapper) {
+    func setVideoCallback() {
 
         let voidSelf = UnsafeMutableRawPointer(Unmanaged.passRetained(self).toOpaque())
         
-        obj.setCallback({ (ctx: UnsafeMutableRawPointer?, data: UnsafeMutablePointer<UInt8>?, width: Int32, height: Int32, linesize: UnsafeMutablePointer<Int32>?) -> Void in
+        AppDelegate.player.videoCallback({ (userData: UnsafeMutableRawPointer?, data: UnsafeMutablePointer<UInt8>?, width: Int32, height: Int32, linesize: UnsafeMutablePointer<Int32>?) -> Void in
             
-            let videoView = unsafeBitCast(ctx, to: VideoView.self)
+            let videoView = unsafeBitCast(userData, to: VideoView.self)
             videoView.openGLContext?.lock()
             videoView.openGLContext?.makeCurrentContext()
             glBindTexture(GLenum(GL_TEXTURE_2D), videoView.texName)
@@ -86,10 +81,13 @@ class VideoView: NSOpenGLView {
 //                }
 //            }
             
-            }, context: voidSelf)
+            }, userData: voidSelf)
     }
     
-    func initTexture() {
+    func updateText() {
+        
+        let width = AppDelegate.player.getVideoWidth()
+        let height = AppDelegate.player.getVideoHeight()
         
         glClearColor (0.0, 0.0, 0.0, 0.0)
         glShadeModel(GLenum(GL_FLAT))
@@ -123,36 +121,14 @@ class VideoView: NSOpenGLView {
         super.prepareOpenGL()
 //        openGLContext?.makeCurrentContext()
         initTexture()
-        setUpCallback(obj: self.obj!)
+        setVideoCallback()
         setUpDisplayLink()
         startDisplayLink()
     }
     
-//    override func draw(_ dirtyRect: NSRect) {
-//        
-//        openGLContext?.lock()
-//        super.draw(dirtyRect)
-//        glColor3f(1.0, 0.85, 0.35);
-//        glClear(GLenum(GL_COLOR_BUFFER_BIT) | GLenum(GL_DEPTH_BUFFER_BIT))
-//        glBindTexture(GLenum(GL_TEXTURE_2D), texName);
-//        glBegin(GLenum(GL_QUADS))
-//        glTexCoord2f(0.0, 0.0)
-//        glVertex3f(-1.0, 1.0, 0.0)
-//        glTexCoord2f(0.0, 1.0)
-//        glVertex3f(-1.0, -1.0, 0.0)
-//        glTexCoord2f(1.0, 1.0)
-//        glVertex3f(1.0, -1.0, 0.0)
-//        glTexCoord2f(1.0, 0.0)
-//        glVertex3f(1.0, 1.0, 0.0)
-//        glEnd();
-//        glFlush();
-//        openGLContext?.unlock()
-//    }
-    
     func drawVideo() {
         openGLContext?.lock()
         openGLContext?.makeCurrentContext()
-//        glColor3f(1.0, 0.85, 0.35);
         glClear(GLenum(GL_COLOR_BUFFER_BIT) | GLenum(GL_DEPTH_BUFFER_BIT))
         glBindTexture(GLenum(GL_TEXTURE_2D), texName);
         glBegin(GLenum(GL_QUADS))
