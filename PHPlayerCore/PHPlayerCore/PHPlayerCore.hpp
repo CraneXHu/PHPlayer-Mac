@@ -37,13 +37,16 @@ public:
     void seek(__int64_t postion);
     
     void setVideoCallback(void *userData, VideoCallback callback);
-    void getAudioData(unsigned char* outData, int size);
+    void getAudioData(unsigned char* outData, int* size);
     
     int getVideoWidth();
     int getVideoHeight();
     
     int getAudioSampleRate();
     int getAudioChannels();
+    
+    char * getFileName();
+    __int64_t getDuration();
     
 public:
     Source *getSource();

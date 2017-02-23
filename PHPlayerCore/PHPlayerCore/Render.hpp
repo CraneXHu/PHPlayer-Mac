@@ -24,12 +24,12 @@ public:
     void stop();
     void setVideoCallback(void *userData, VideoCallback callback);
     void renderVideo();
-    void renderAudio(unsigned char* outData, int size);
+    void renderAudio(unsigned char* outData, int *size);
     
 private:
     PHPlayerCore *player;
     void *userData;
     VideoCallback videoCallback;
-    int audioClock;
+    double audioClock;
 };
 #endif /* Render_hpp */

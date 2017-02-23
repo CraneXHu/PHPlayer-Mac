@@ -27,9 +27,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="474" height="288"/>
                     </openGLView>
                     <visualEffectView appearanceType="vibrantDark" blendingMode="withinWindow" material="dark" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="NSZ-0P-rfW">
-                        <rect key="frame" x="0.0" y="255" width="474" height="33"/>
+                        <rect key="frame" x="0.0" y="264" width="474" height="24"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="33" id="bqa-KD-HmS"/>
+                            <constraint firstAttribute="height" constant="24" id="bqa-KD-HmS"/>
                         </constraints>
                     </visualEffectView>
                 </subviews>

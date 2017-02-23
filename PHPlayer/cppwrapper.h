@@ -21,12 +21,16 @@ typedef void (*VideoCallback)(void *userData, unsigned char *data, int width, in
 
 -(void) videoCallback:(VideoCallback) callback userData: (void *) data;
 
--(void) getAudioData: (unsigned char *) outData size: (int) size;
+-(void) getAudioData: (unsigned char *) outData size: (int*) size;
 
 -(int) getVideoWidth;
 -(int) getVideoHeight;
 
 -(int) getAudioSampleRate;
 -(int) getAudioChannels;
+
+-(int64_t) getDuration;
+
+-(char *) getFileName;
 
 @end

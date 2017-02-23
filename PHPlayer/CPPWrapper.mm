@@ -57,9 +57,19 @@
     static_cast<PHPlayerCore*>(_player)->setVideoCallback(data, callback);
 }
 
--(void) getAudioData:(unsigned char *)outData size:(int)size
+-(void) getAudioData:(unsigned char *)outData size:(int *)size
 {
     static_cast<PHPlayerCore*>(_player)->getAudioData(outData, size);
+}
+
+-(int64_t) getDuration
+{
+    return static_cast<PHPlayerCore*>(_player)->getDuration();
+}
+
+-(char*) getFileName
+{
+    return static_cast<PHPlayerCore*>(_player)->getFileName();
 }
 
 -(void) dealloc

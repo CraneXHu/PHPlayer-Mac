@@ -80,7 +80,7 @@ void Render::renderVideo()
     av_frame_free(&frame);
 }
 
-void Render::renderAudio(unsigned char* outData, int size)
+void Render::renderAudio(unsigned char* outData, int *size)
 {
     AVFrame * frame = av_frame_alloc();
     bool ret = player->getAudioDecoder()->getFrameQueue()->front(&frame);
@@ -103,6 +103,7 @@ void Render::renderAudio(unsigned char* outData, int size)
     int dstSamples = av_rescale_rnd(swr_get_delay(swrCtx, frame->sample_rate) + frame->nb_samples, frame->sample_rate, frame->sample_rate, AVRounding(1));
     int number = swr_convert(swrCtx, &outData, dstSamples, (const uint8_t**)frame->data, frame->nb_samples);
     int dataSize = frame->channels * number * av_get_bytes_per_sample(AV_SAMPLE_FMT_S16);
+    *size = dataSize;
     swr_free(&swrCtx);
     av_frame_free(&frame);
 }

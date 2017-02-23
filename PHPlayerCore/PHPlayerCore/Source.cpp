@@ -38,6 +38,17 @@ bool Source::open(char *file)
     return true;
 }
 
+int64_t Source::getDuration()
+{
+    //second
+   return formatContext->duration/AV_TIME_BASE;
+}
+
+char *Source::getFileName()
+{
+    return formatContext->filename;
+}
+
 AVFormatContext* Source::getContext(){
     return formatContext;
 }

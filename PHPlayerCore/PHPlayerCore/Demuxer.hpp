@@ -20,9 +20,10 @@ public:
     Demuxer(PHPlayerCore *player);
     ~Demuxer();
     
+    void findStream();
     bool start();
     void demux();
-    void seek(int64_t position);
+    void seek(__int64_t position);
     
     AVStream *getVideoStream();
     AVStream *getAudioStream();
@@ -40,6 +41,6 @@ private:
     PacketQueue *audioPacketQueue;
     PacketQueue *subtitlePacketQueue;
     bool isRequestSeek;
-    int64_t seekPosition;
+    __int64_t seekPosition;
 };
 #endif /* Demuxer_hpp */

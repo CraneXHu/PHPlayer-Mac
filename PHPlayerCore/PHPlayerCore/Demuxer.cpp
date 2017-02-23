@@ -18,10 +18,13 @@ Demuxer::Demuxer(PHPlayerCore *player)
 {
     this->player = player;
     
-    videoPacketQueue = new PacketQueue(8);
-    audioPacketQueue = new PacketQueue(8);
-    subtitlePacketQueue = new PacketQueue(8);
+    videoPacketQueue = new PacketQueue(16);
+    audioPacketQueue = new PacketQueue(16);
+    subtitlePacketQueue = new PacketQueue(16);
     
+    videoStream = NULL;
+    audioStream = NULL;
+    subtitleStream = NULL;
     isRequestSeek = false;
     seekPosition = 0;
 }
@@ -33,8 +36,36 @@ Demuxer::~Demuxer()
     delete subtitlePacketQueue;
 }
 
+void Demuxer::findStream()
+{
+    AVFormatContext *formatContext = player->getSource()->getContext();
+    int streamIndex = av_find_best_stream(formatContext, AVMEDIA_TYPE_VIDEO, -1, -1, NULL, 0);
+    if (streamIndex < 0) {
+        videoStream = 0;
+    } else {
+        videoStream = formatContext->streams[streamIndex];
+    }
+    
+    formatContext = player->getSource()->getContext();
+    streamIndex = av_find_best_stream(formatContext, AVMEDIA_TYPE_AUDIO, -1, -1, NULL, 0);
+    if (streamIndex < 0) {
+        audioStream = NULL;
+    } else {
+        audioStream = formatContext->streams[streamIndex];
+    }
+    
+    formatContext = player->getSource()->getContext();
+    streamIndex = av_find_best_stream(formatContext, AVMEDIA_TYPE_SUBTITLE, -1, -1, NULL, 0);
+    if (streamIndex < 0) {
+        subtitleStream = NULL;
+    } else {
+        subtitleStream = formatContext->streams[streamIndex];
+    }
+}
+
 bool Demuxer::start()
 {
+    findStream();
     std::thread demuxThread(&Demuxer::demux, this);
     demuxThread.detach();
     return true;
@@ -42,9 +73,21 @@ bool Demuxer::start()
 
 void Demuxer::demux()
 {
+    int videoStreamIndex = -1;
+    int audioStreamIndex = -1;
+    int subtitleStreamIndex = -1;
+    if (videoStream) {
+        videoStreamIndex = videoStream->index;
+    }
+    if (audioStream) {
+        audioStreamIndex = audioStream->index;
+    }
+    if (subtitleStream) {
+        subtitleStreamIndex = subtitleStream->index;
+    }
+    
     AVFormatContext *formatContext = player->getSource()->getContext();
     AVPacket *packet = av_packet_alloc();
-    
     while (1) {
         
         //used for network stream
@@ -67,11 +110,11 @@ void Demuxer::demux()
             break;
         }
         
-        if (packet->stream_index == videoStream->index) {
+        if (packet->stream_index == videoStreamIndex) {
             videoPacketQueue->push(packet);
-        } else if(packet->stream_index == audioStream->index){
+        } else if(packet->stream_index == audioStreamIndex){
             audioPacketQueue->push(packet);
-        } else if(packet->stream_index == subtitleStream->index){
+        } else if(packet->stream_index == subtitleStreamIndex){
             subtitlePacketQueue->push(packet);
         }
         av_packet_unref(packet);
@@ -88,34 +131,16 @@ void Demuxer::seek(int64_t position)
 
 AVStream *Demuxer::getVideoStream()
 {
-    AVFormatContext *formatContext = player->getSource()->getContext();
-    int streamIndex = av_find_best_stream(formatContext, AVMEDIA_TYPE_VIDEO, -1, -1, NULL, 0);
-    if (streamIndex < 0) {
-        return 0;
-    }
-    videoStream = formatContext->streams[streamIndex];
     return videoStream;
 }
 
 AVStream *Demuxer::getAudioStream()
 {
-    AVFormatContext *formatContext = player->getSource()->getContext();
-    int streamIndex = av_find_best_stream(formatContext, AVMEDIA_TYPE_AUDIO, -1, -1, NULL, 0);
-    if (streamIndex < 0) {
-        return 0;
-    }
-    audioStream = formatContext->streams[streamIndex];
     return audioStream;
 }
 
 AVStream *Demuxer::getSubtitleStream()
 {
-    AVFormatContext *formatContext = player->getSource()->getContext();
-    int streamIndex = av_find_best_stream(formatContext, AVMEDIA_TYPE_SUBTITLE, -1, -1, NULL, 0);
-    if (streamIndex < 0) {
-        return 0;
-    }
-    subtitleStream = formatContext->streams[streamIndex];
     return subtitleStream;
 }
 

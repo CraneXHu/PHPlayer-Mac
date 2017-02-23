@@ -83,7 +83,7 @@ void PHPlayerCore::setVideoCallback(void *userData, VideoCallback callback)
     render->setVideoCallback(userData, callback);
 }
 
-void PHPlayerCore::getAudioData(unsigned char *outData, int size)
+void PHPlayerCore::getAudioData(unsigned char *outData, int *size)
 {
     render->renderAudio(outData, size);
 }
@@ -106,6 +106,16 @@ int PHPlayerCore::getAudioSampleRate()
 int PHPlayerCore::getAudioChannels()
 {
     return audioDecoder->getCodecContex()->channels;
+}
+
+__int64_t PHPlayerCore::getDuration()
+{
+    return source->getDuration();
+}
+
+char *PHPlayerCore::getFileName()
+{
+    return source->getFileName();
 }
 
 Source* PHPlayerCore::getSource()

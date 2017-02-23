@@ -13,40 +13,9 @@ import OpenGL.GL3
 class VideoView: NSOpenGLView {
     
     var texName: GLuint = 0
-    var pboId: GLuint = 0
-    
-//    override init(frame: CGRect) {
-//        // init context
-//        let attributes: [NSOpenGLPixelFormatAttribute] = [
-//            UInt32(NSOpenGLPFADoubleBuffer),
-//            UInt32(NSOpenGLPFAAccelerated),
-//            UInt32(NSOpenGLPFAOpenGLProfile), UInt32(NSOpenGLProfileVersion3_2Core),
-//            0
-//        ]
-//        let desentAttributes: [NSOpenGLPixelFormatAttribute] = [
-//            UInt32(NSOpenGLPFADoubleBuffer),
-//            UInt32(NSOpenGLPFAOpenGLProfile), UInt32(NSOpenGLProfileVersion3_2Core),
-//            0
-//        ]
-//        
-//        let pixelFormat = NSOpenGLPixelFormat(attributes: attributes) ?? NSOpenGLPixelFormat(attributes: desentAttributes)
-//        
-//        super.init(frame: frame, pixelFormat: pixelFormat!)!
-//        
-//        guard openGLContext != nil else {
-//            return
-//        }
-//        
-//        initTexture()
-//    }
-//    
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
+    var pbo: GLuint = 0
     
     var displayLink: CVDisplayLink?
-    
-    var lastTime: Int64 = 0
     
     func setVideoCallback() {
 
@@ -58,7 +27,7 @@ class VideoView: NSOpenGLView {
             videoView.openGLContext?.lock()
             videoView.openGLContext?.makeCurrentContext()
             glBindTexture(GLenum(GL_TEXTURE_2D), videoView.texName)
-            glBindBuffer(GLenum(GL_PIXEL_UNPACK_BUFFER), videoView.pboId)
+            glBindBuffer(GLenum(GL_PIXEL_UNPACK_BUFFER), videoView.pbo)
 //            glBufferSubData(GLenum(GL_PIXEL_UNPACK_BUFFER), 0, GLsizeiptr(width*height*4), data)
 //            glBufferData(GLenum(GL_PIXEL_UNPACK_BUFFER), 1280*720*4, data, GLenum(GL_DYNAMIC_DRAW))
             let dst = glMapBuffer(GLenum(GL_PIXEL_UNPACK_BUFFER), GLenum(GL_READ_WRITE))
@@ -68,62 +37,65 @@ class VideoView: NSOpenGLView {
                          height, GLenum(GL_RGBA), GLenum(GL_UNSIGNED_BYTE),
                          nil)
             videoView.openGLContext?.unlock()
-//            let interval: TimeInterval = NSDate.timeIntervalSinceReferenceDate
-//            let millisecond = CLongLong(round(interval*1000))
-//            Swift.print(millisecond)
-//            if videoView.lastTime == 0 {
-//                videoView.lastTime = millisecond
-//            } else {
-//                if millisecond - videoView.lastTime > 100{
-//                    videoView.lastTime = millisecond
-//                } else {
-//                    videoView.lastTime = millisecond
-//                }
-//            }
-            
             }, userData: voidSelf)
     }
     
-    func updateText() {
+    func initData() {
+        prepareTexture()
+        setVideoCallback()
+        setUpDisplayLink()
+        startDisplayLink()
+    }
+    
+    func prepareTexture() {
         
         let width = AppDelegate.player.getVideoWidth()
         let height = AppDelegate.player.getVideoHeight()
         
+        openGLContext?.lock()
+        openGLContext?.makeCurrentContext()
+        
         glClearColor (0.0, 0.0, 0.0, 0.0)
         glShadeModel(GLenum(GL_FLAT))
         glEnable(GLenum(GL_DEPTH_TEST))
+        
+        if texName != 0 {
+            glDeleteTextures(1, &texName)
+        }
+        if pbo != 0 {
+            glDeleteBuffers(1, &pbo)
+        }
+        
         glGenTextures(1, &texName)
         glBindTexture(GLenum(GL_TEXTURE_2D), texName);
         glTexParameteri(GLenum(GL_TEXTURE_2D), GLenum(GL_TEXTURE_MAG_FILTER), GL_LINEAR);
         glTexParameteri(GLenum(GL_TEXTURE_2D), GLenum(GL_TEXTURE_MIN_FILTER), GL_LINEAR);
         
-        glGenBuffers(1, &pboId)
-        glBindBuffer(GLenum(GL_PIXEL_UNPACK_BUFFER), pboId)
+        glGenBuffers(1, &pbo)
+        glBindBuffer(GLenum(GL_PIXEL_UNPACK_BUFFER), pbo)
 //        glPixelStorei(GLenum(GL_UNPACK_ALIGNMENT), 1)
-        glBufferData(GLenum(GL_PIXEL_UNPACK_BUFFER), 1280*720*4, nil, GLenum(GL_DYNAMIC_COPY))
-        glTexImage2D(GLenum(GL_TEXTURE_2D), 0, GL_RGBA, 1280,
-                     720, 0, GLenum(GL_RGBA), GLenum(GL_UNSIGNED_BYTE),
+        let size = width*height*4
+        glBufferData(GLenum(GL_PIXEL_UNPACK_BUFFER), GLsizeiptr(size), nil, GLenum(GL_DYNAMIC_COPY))
+        glTexImage2D(GLenum(GL_TEXTURE_2D), 0, GL_RGBA, width,
+                     height, 0, GLenum(GL_RGBA), GLenum(GL_UNSIGNED_BYTE),
                      nil)
         glBindBuffer(GLenum(GL_PIXEL_UNPACK_BUFFER), 0)
         glBindTexture(GLenum(GL_TEXTURE_2D), 0)
         glEnable(GLenum(GL_TEXTURE_2D));
+        openGLContext?.unlock()
+    }
+    
+    func uninit() {
+        glDeleteTextures(1, &texName)
+        glDeleteBuffers(1, &pbo)
+    }
+    
+    deinit {
+        uninit()
     }
     
     func initShader() {
         
-    }
-    
-    func bindTexture() {
-        
-    }
-    
-    override func prepareOpenGL() {
-        super.prepareOpenGL()
-//        openGLContext?.makeCurrentContext()
-        initTexture()
-        setVideoCallback()
-        setUpDisplayLink()
-        startDisplayLink()
     }
     
     func drawVideo() {

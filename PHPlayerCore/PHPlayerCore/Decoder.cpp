@@ -17,7 +17,7 @@ Decoder::Decoder(PHPlayerCore *player, DecoderType type)
     this->player = player;
     this->type = type;
     
-    frameQueue = new FrameQueue(8);
+    frameQueue = new FrameQueue(16);
     if (type == PH_DECODER_VIDEO) {
         packetQueue = player->getDemuxer()->getVideoPacketQueue();
     } else if(type == PH_DECODER_AUDIO) {
@@ -41,6 +41,10 @@ bool Decoder::openDecoder()
         stream = player->getDemuxer()->getAudioStream();
     } else {
         stream = player->getDemuxer()->getSubtitleStream();
+    }
+    
+    if (stream == NULL) {
+        return false;
     }
     
     AVCodec *codec = avcodec_find_decoder(stream->codecpar->codec_id);
@@ -70,6 +74,10 @@ bool Decoder::openDecoder()
 
 bool Decoder::start()
 {
+    bool ret = openDecoder();
+    if (ret == false) {
+        return false;
+    }
     std::thread decodeThread(&Decoder::decode, this);
     decodeThread.detach();
     return true;

@@ -19,6 +19,8 @@ public:
     ~Source();
     static void init();
     bool open(char * file);
+    __int64_t getDuration();
+    char *getFileName();
     AVFormatContext *getContext();
     
 private:
