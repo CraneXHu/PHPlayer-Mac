@@ -66,7 +66,7 @@ void FrameQueue::clear()
         queue.pop();
         av_frame_free(&temp);
     }
-    conditionFull.notify_all();
+    conditionFull.notify_one();
 }
 
 int FrameQueue::size()
