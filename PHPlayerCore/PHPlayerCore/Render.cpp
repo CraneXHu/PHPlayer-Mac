@@ -37,6 +37,12 @@ void Render::start()
     renderVideoThread.detach();
 }
 
+void Render::play()
+{
+    std::unique_lock<std::mutex> lock(mutex);
+    cv.notify_one();
+}
+
 void Render::setVideoCallback(void *userData, VideoCallback callback)
 {
     this->userData = userData;
@@ -58,7 +64,12 @@ void Render::renderVideo()
     
     SwsContext *imageConvertContext = sws_getContext(codecContext->width, codecContext->height, codecContext->pix_fmt, codecContext->width, codecContext->height, AV_PIX_FMT_RGBA, SWS_BILINEAR, NULL, NULL, NULL);
     
-    while (1) {
+    while (player->getState() != PH_STATE_STOPED) {
+        
+        std::unique_lock<std::mutex> lock(mutex);
+        while (player->getState() == PH_STATE_PAUSED) {
+            cv.wait(lock);
+        }
         
         bool ret = player->getVideoDecoder()->getFrameQueue()->front(&frame);
         if (ret == false) {

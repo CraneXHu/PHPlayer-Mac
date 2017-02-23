@@ -12,8 +12,8 @@ import Cocoa
 class AppDelegate: NSObject, NSApplicationDelegate {
     
     static let player = PlayerWrapper()
+    static let audioController : AudioController = AudioController()
     let mainWindowController : MainWindowController = MainWindowController()
-    let audioController : AudioController = AudioController()
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
@@ -31,8 +31,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         AppDelegate.player.open(UnsafeMutablePointer<Int8>(mutating: path))
         AppDelegate.player.start()
         mainWindowController.videoView.initData()
-        audioController.initData()
-        audioController.play()
+        AppDelegate.audioController.initData()
+        AppDelegate.audioController.play()
         return true
     }
 }

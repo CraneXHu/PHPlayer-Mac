@@ -32,6 +32,31 @@
     static_cast<PHPlayerCore*>(_player)->start();
 }
 
+-(void) pause
+{
+    static_cast<PHPlayerCore*>(_player)->pause();
+}
+
+-(void) play
+{
+    static_cast<PHPlayerCore*>(_player)->play();
+}
+
+-(void) stop
+{
+    static_cast<PHPlayerCore*>(_player)->stop();
+}
+
+-(void) seek:(int64_t) postion
+{
+    static_cast<PHPlayerCore*>(_player)->seek(postion);
+}
+
+-(int) getState
+{
+    return static_cast<PHPlayerCore*>(_player)->getState();
+}
+
 -(int) getVideoWidth
 {
     return static_cast<PHPlayerCore*>(_player)->getVideoWidth();

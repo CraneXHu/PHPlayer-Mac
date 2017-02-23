@@ -30,13 +30,14 @@ bool PacketQueue::push(const AVPacket *packet)
             return true;
         } else {
 //            conditionFull.wait(lock, [&]() -> bool {return queue.size() < MAX_SIZE;});
-            printf("Packet full\n");
+            printf("Packet full %d\n", maxSize);
             conditionFull.wait(lock);
         }
     }
     
 }
 
+//need to optimize，not use av_packet_ref, use move.
 bool PacketQueue::front(AVPacket *packet)
 {
     std::unique_lock<std::mutex> lock(mutex);
@@ -48,15 +49,26 @@ bool PacketQueue::front(AVPacket *packet)
             }
             AVPacket *pkt = queue.front();
             queue.pop();
-            conditionFull.notify_one();
             av_packet_free(&pkt);
+            conditionFull.notify_one();
             return true;
         } else{
 //            conditionEmpty.wait(lock, [&]() -> bool {return queue.size() != 0;});
-            printf("Packet empty\n");
+            printf("Packet empty %d\n", maxSize);
             conditionEmpty.wait(lock);
         }
     }
+}
+
+void PacketQueue::clear()
+{
+    std::unique_lock<std::mutex> lock(mutex);
+    while (queue.size() > 0) {
+        AVPacket *pkt = queue.front();
+        queue.pop();
+        av_packet_free(&pkt);
+    }
+    conditionFull.notify_all();
 }
 
 int PacketQueue::size()

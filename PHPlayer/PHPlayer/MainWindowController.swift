@@ -24,10 +24,28 @@ class MainWindowController: NSWindowController, NSWindowDelegate {
         self.window?.titlebarAppearsTransparent = true
     }
     
+    func windowWillClose(_ notification: Notification) {
+        AppDelegate.player.stop()
+        AppDelegate.audioController.stop()
+    }
+    
     override func keyDown(with event: NSEvent) {
         let key = Int(event.keyCode)
-        if key == NSLeftArrowFunctionKey {
-            
+        switch key {
+        case 123:
+            AppDelegate.player.seek(-1000)
+        case 124:
+            AppDelegate.player.seek(1000)
+        case 49:
+            if AppDelegate.player.getState() != 2 {
+                AppDelegate.player.pause()
+                AppDelegate.audioController.pause()
+            } else {
+                AppDelegate.player.play()
+                AppDelegate.audioController.play()
+            }
+        default:
+            return
         }
     }
     

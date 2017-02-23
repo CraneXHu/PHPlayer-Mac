@@ -17,6 +17,16 @@
 
 -(void) start;
 
+-(void) pause;
+
+-(void) play;
+
+-(void) stop;
+
+-(void) seek: (int64_t) postion;
+
+-(int) getState;
+
 typedef void (*VideoCallback)(void *userData, unsigned char *data, int width, int height, int *linesize);
 
 -(void) videoCallback:(VideoCallback) callback userData: (void *) data;
@@ -24,9 +34,11 @@ typedef void (*VideoCallback)(void *userData, unsigned char *data, int width, in
 -(void) getAudioData: (unsigned char *) outData size: (int*) size;
 
 -(int) getVideoWidth;
+
 -(int) getVideoHeight;
 
 -(int) getAudioSampleRate;
+
 -(int) getAudioChannels;
 
 -(int64_t) getDuration;

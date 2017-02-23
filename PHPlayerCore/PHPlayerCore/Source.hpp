@@ -12,18 +12,21 @@
 #include <stdio.h>
 
 struct AVFormatContext;
+class PHPlayerCore;
 
 class Source {
 public:
-    Source();
+    Source(PHPlayerCore *player);
     ~Source();
     static void init();
     bool open(char * file);
+    void close();
     __int64_t getDuration();
     char *getFileName();
     AVFormatContext *getContext();
     
 private:
     AVFormatContext *formatContext;
+    PHPlayerCore *player;
 };
 #endif /* Source_hpp */

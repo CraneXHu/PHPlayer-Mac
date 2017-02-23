@@ -33,8 +33,10 @@ public:
     bool open(char* file);
     void start();
     void pause();
+    void play();
     void stop();
     void seek(__int64_t postion);
+    void clear();
     
     void setVideoCallback(void *userData, VideoCallback callback);
     void getAudioData(unsigned char* outData, int* size);

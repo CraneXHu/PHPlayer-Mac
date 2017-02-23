@@ -7,18 +7,21 @@
 //
 
 #include "Source.hpp"
+#include "PHPlayerCore.hpp"
+#include "Demuxer.hpp"
 extern "C"{
 #include "avformat.h"
 }
 
-Source::Source()
+Source::Source(PHPlayerCore *player)
 {
     formatContext = 0;
+    this->player = player;
 }
 
 Source::~Source()
 {
-    avformat_close_input(&formatContext);
+    
 }
 
 void Source::init(){
@@ -35,7 +38,13 @@ bool Source::open(char *file)
     if (avformat_find_stream_info(formatContext, NULL) < 0) {
         return false;
     }
+    player->getDemuxer()->findStream();
     return true;
+}
+
+void Source::close()
+{
+    avformat_close_input(&formatContext);
 }
 
 int64_t Source::getDuration()

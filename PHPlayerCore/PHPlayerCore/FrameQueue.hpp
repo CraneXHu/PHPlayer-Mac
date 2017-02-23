@@ -23,6 +23,7 @@ public:
     FrameQueue(int maxSize);
     bool push(const AVFrame *pFrame);
     bool front(AVFrame **pFrame);
+    void clear();
     int size();
     
 private:

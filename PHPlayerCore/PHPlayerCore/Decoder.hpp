@@ -24,6 +24,7 @@ public:
 
     bool openDecoder();
     bool start();
+    void clear();
     void decode();
     
     AVCodecContext *getCodecContex();

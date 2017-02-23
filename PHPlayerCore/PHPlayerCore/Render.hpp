@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include "globaldef.h"
+#include <thread>
 
 class PHPlayerCore;
 
@@ -20,7 +21,8 @@ public:
     ~Render();
     
     void start();
-    void pause();
+//    void pause();
+    void play();
     void stop();
     void setVideoCallback(void *userData, VideoCallback callback);
     void renderVideo();
@@ -31,5 +33,7 @@ private:
     void *userData;
     VideoCallback videoCallback;
     double audioClock;
+    std::mutex mutex;
+    std::condition_variable cv;
 };
 #endif /* Render_hpp */

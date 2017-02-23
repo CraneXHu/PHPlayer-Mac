@@ -23,6 +23,7 @@ public:
     PacketQueue(int maxSize);
     bool push(const AVPacket *packet);
     bool front(AVPacket *packet);
+    void clear();
     int size();
     
 private:

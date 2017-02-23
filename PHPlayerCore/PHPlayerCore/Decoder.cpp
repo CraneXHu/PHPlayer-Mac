@@ -86,7 +86,7 @@ bool Decoder::start()
 void Decoder::decode()
 {
     AVPacket *pkt = av_packet_alloc();
-    while (1) {
+    while (player->getState() != PH_STATE_STOPED) {
         
         bool isSucceed = packetQueue->front(pkt);
         if (!isSucceed) {
@@ -111,6 +111,11 @@ void Decoder::decode()
             av_packet_unref(pkt);
     }
     av_packet_free(&pkt);
+}
+
+void Decoder::clear()
+{
+    frameQueue->clear();
 }
 
 AVCodecContext *Decoder::getCodecContex()

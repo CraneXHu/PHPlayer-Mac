@@ -21,7 +21,7 @@ extern "C" {
 
 PHPlayerCore::PHPlayerCore()
 {
-    source = new Source();
+    source = new Source(this);
     demuxer = new Demuxer(this);
     videoDecoder = new Decoder(this, PH_DECODER_VIDEO);
     audioDecoder = new Decoder(this, PH_DECODER_AUDIO);
@@ -70,12 +70,34 @@ void PHPlayerCore::start()
 
 void PHPlayerCore::pause()
 {
-    
+    state = PH_STATE_PAUSED;
+}
+
+void PHPlayerCore::play()
+{
+    state = PH_STATE_RUNNING;
+    render->play();
 }
 
 void PHPlayerCore::stop()
 {
-    
+    state = PH_STATE_STOPED;
+    clear();
+    source->close();
+}
+
+void PHPlayerCore::seek(__int64_t position)
+{
+    clear();
+    demuxer->seek(position);
+}
+
+void PHPlayerCore::clear()
+{
+    demuxer->clear();
+    videoDecoder->clear();
+    audioDecoder->clear();
+    subtitleDecoder->clear();
 }
 
 void PHPlayerCore::setVideoCallback(void *userData, VideoCallback callback)
@@ -126,11 +148,6 @@ Source* PHPlayerCore::getSource()
 Demuxer* PHPlayerCore::getDemuxer()
 {
     return demuxer;
-}
-
-void PHPlayerCore::seek(__int64_t position)
-{
-    demuxer->seek(position);
 }
 
 Decoder *PHPlayerCore::getVideoDecoder()

@@ -48,14 +48,25 @@ bool FrameQueue::front(AVFrame **pFrame)
             
             AVFrame *temp = queue.front();
             queue.pop();
-            conditionFull.notify_one();
             av_frame_free(&temp);
+            conditionFull.notify_one();
             return true;
         } else{
             //        conditionEmpty.wait(lock, [&]() -> bool {return queue.size() != 0;});
             conditionEmpty.wait(lock);
         }
     }
+}
+
+void FrameQueue::clear()
+{
+    std::unique_lock<std::mutex> lock(mutex);
+    while (queue.size() > 0) {
+        AVFrame *temp = queue.front();
+        queue.pop();
+        av_frame_free(&temp);
+    }
+    conditionFull.notify_all();
 }
 
 int FrameQueue::size()

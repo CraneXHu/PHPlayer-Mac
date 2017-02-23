@@ -18,8 +18,8 @@ Demuxer::Demuxer(PHPlayerCore *player)
 {
     this->player = player;
     
-    videoPacketQueue = new PacketQueue(16);
-    audioPacketQueue = new PacketQueue(16);
+    videoPacketQueue = new PacketQueue(64);
+    audioPacketQueue = new PacketQueue(256);
     subtitlePacketQueue = new PacketQueue(16);
     
     videoStream = NULL;
@@ -65,7 +65,7 @@ void Demuxer::findStream()
 
 bool Demuxer::start()
 {
-    findStream();
+//    findStream();
     std::thread demuxThread(&Demuxer::demux, this);
     demuxThread.detach();
     return true;
@@ -88,15 +88,14 @@ void Demuxer::demux()
     
     AVFormatContext *formatContext = player->getSource()->getContext();
     AVPacket *packet = av_packet_alloc();
-    while (1) {
+    while (player->getState() != PH_STATE_STOPED) {
         
         //used for network stream
-//        if (pauseReq) {
-//            av_read_pause(pFormatCtx);
-//        }
-//        if (playReq) {
-//            av_read_play(pFormatCtx);
-//        }
+        if (player->getState() == PH_STATE_PAUSED) {
+            av_read_pause(formatContext);
+        } else {
+            av_read_play(formatContext);
+        }
         
         if (isRequestSeek) {
             av_seek_frame(formatContext, -1, seekPosition*AV_TIME_BASE, AVSEEK_FLAG_ANY);
@@ -127,6 +126,13 @@ void Demuxer::seek(int64_t position)
 {
     this->seekPosition = position;
     isRequestSeek = true;
+}
+
+void Demuxer::clear()
+{
+    videoPacketQueue->clear();
+    audioPacketQueue->clear();
+    subtitlePacketQueue->clear();
 }
 
 AVStream *Demuxer::getVideoStream()
