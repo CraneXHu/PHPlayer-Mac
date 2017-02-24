@@ -83,6 +83,7 @@ void PHPlayerCore::stop()
 {
     state = PH_STATE_STOPED;
     clear();
+    demuxer->stop();
     source->close();
 }
 

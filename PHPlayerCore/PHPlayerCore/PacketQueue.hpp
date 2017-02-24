@@ -23,7 +23,7 @@ public:
     PacketQueue(int maxSize);
     bool push(const AVPacket *packet);
     bool front(AVPacket *packet);
-    bool setAbort();
+    void setAbort(bool abort);
     void clear();
     int size();
     
@@ -33,5 +33,6 @@ private:
     std::condition_variable conditionEmpty;
     std::condition_variable conditionFull;
     int maxSize;
+    bool abort;
 };
 #endif /* PacketQueue_hpp */

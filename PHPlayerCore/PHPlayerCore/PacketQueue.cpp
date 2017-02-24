@@ -11,6 +11,7 @@
 PacketQueue::PacketQueue(int maxSize)
 {
     this->maxSize = maxSize;
+    abort = false;
 }
 
 bool PacketQueue::push(const AVPacket *packet)
@@ -42,6 +43,9 @@ bool PacketQueue::front(AVPacket *packet)
 {
     std::unique_lock<std::mutex> lock(mutex);
     for (; ; ) {
+        if (abort) {
+            return false;
+        }
         if (!queue.empty()) {
             int ret = av_packet_ref(packet, queue.front());
             if (ret < 0) {
@@ -58,6 +62,11 @@ bool PacketQueue::front(AVPacket *packet)
             conditionEmpty.wait(lock);
         }
     }
+}
+
+void PacketQueue::setAbort(bool abort)
+{
+    this->abort = abort;
 }
 
 void PacketQueue::clear()

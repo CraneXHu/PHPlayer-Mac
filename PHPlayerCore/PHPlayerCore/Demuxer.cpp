@@ -71,6 +71,13 @@ bool Demuxer::start()
     return true;
 }
 
+void Demuxer::stop()
+{
+    videoPacketQueue->setAbort(true);
+    audioPacketQueue->setAbort(true);
+    subtitlePacketQueue->setAbort(true);
+}
+
 void Demuxer::demux()
 {
     int videoStreamIndex = -1;

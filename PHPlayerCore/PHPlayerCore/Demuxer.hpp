@@ -25,6 +25,7 @@ public:
     void demux();
     void seek(__int64_t position);
     void clear();
+    void stop();
     
     AVStream *getVideoStream();
     AVStream *getAudioStream();
