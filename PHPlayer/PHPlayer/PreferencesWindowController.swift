@@ -12,6 +12,8 @@ class PreferencesWindowController: NSWindowController {
 
     @IBOutlet weak var toolbar: NSToolbar!
     
+    var toolbarHeight: CGFloat?
+    
     var prefsGeneralViewController: PrefsGeneralViewController = PrefsGeneralViewController()
     
     var prefsShortcutKeyViewController: PrefsShortcutKeyViewController = PrefsShortcutKeyViewController()
@@ -27,22 +29,11 @@ class PreferencesWindowController: NSWindowController {
         super.windowDidLoad()
 
         // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
-        
+        toolbarHeight = getToolbarHeight()
     }
     
-//    override func awakeFromNib() {
-//        initView()
-//    }
-    
-    func initView() {
-        
-        let newView = prefsGeneralViewController.view
-        let windowRect = self.window?.contentView?.frame
-        let currentViewRect = newView.frame
-        let yPos = windowRect!.origin.y + (windowRect!.size.height - currentViewRect.size.height)
-        let newFrame = NSMakeRect(windowRect!.origin.x, yPos, currentViewRect.size.width, currentViewRect.size.height)
-        self.window?.setFrame(newFrame, display: true, animate: true)
-        self.window?.contentView = newView
+    func getToolbarHeight() -> CGFloat {
+        return NSHeight(self.window!.frame) - NSHeight(self.window!.contentView!.frame)
     }
     
     @IBAction func generalSetting(_ sender: Any) {
@@ -61,9 +52,10 @@ class PreferencesWindowController: NSWindowController {
         
         let newView = currentViewController?.view
         var windowRect = self.window?.frame
+        let oldViewRect = self.window?.contentView?.frame
         let currentViewRect = newView?.frame
-        windowRect!.origin.y = windowRect!.origin.y + (windowRect!.size.height - currentViewRect!.size.height)
-        windowRect!.size.height = currentViewRect!.size.height
+        windowRect!.origin.y = windowRect!.origin.y + (oldViewRect!.size.height - currentViewRect!.size.height)
+        windowRect!.size.height = currentViewRect!.size.height + toolbarHeight!
         windowRect!.size.width = currentViewRect!.size.width
         self.window?.contentView = newView
         self.window?.setFrame(windowRect!, display: true, animate: true)
