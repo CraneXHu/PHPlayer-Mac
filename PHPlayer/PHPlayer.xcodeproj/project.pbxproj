@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AD1348CF1E6077A100840214 /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1348CD1E6077A100840214 /* PreferencesWindowController.swift */; };
+		AD1348D01E6077A100840214 /* PreferencesWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD1348CE1E6077A100840214 /* PreferencesWindowController.xib */; };
+		AD1348D41E613B0600840214 /* PrefsGeneralViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1348D21E613B0600840214 /* PrefsGeneralViewController.swift */; };
+		AD1348D51E613B0600840214 /* PrefsGeneralViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD1348D31E613B0600840214 /* PrefsGeneralViewController.xib */; };
+		AD1348D81E613B3A00840214 /* PrefsShortcutKeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1348D61E613B3A00840214 /* PrefsShortcutKeyViewController.swift */; };
+		AD1348D91E613B3A00840214 /* PrefsShortcutKeyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD1348D71E613B3A00840214 /* PrefsShortcutKeyViewController.xib */; };
+		AD1348DB1E61B7E400840214 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1348DA1E61B7E400840214 /* Preferences.swift */; };
+		AD1348DE1E61BB7300840214 /* AboutWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1348DC1E61BB7300840214 /* AboutWindowController.swift */; };
+		AD1348DF1E61BB7300840214 /* AboutWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD1348DD1E61BB7300840214 /* AboutWindowController.xib */; };
+		AD1348E21E65545D00840214 /* ControlbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1348E11E65545D00840214 /* ControlbarView.swift */; };
 		AD15A8111E50441700E3245A /* AudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD15A8101E50441700E3245A /* AudioController.swift */; };
 		AD15A8131E50442800E3245A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD15A8121E50442800E3245A /* AudioToolbox.framework */; };
 		AD25E55B1E476AB000415E8D /* libPHPlayerCore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AD25E55A1E476AB000415E8D /* libPHPlayerCore.dylib */; };
@@ -21,6 +31,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AD1348CD1E6077A100840214 /* PreferencesWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesWindowController.swift; sourceTree = "<group>"; };
+		AD1348CE1E6077A100840214 /* PreferencesWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreferencesWindowController.xib; sourceTree = "<group>"; };
+		AD1348D21E613B0600840214 /* PrefsGeneralViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrefsGeneralViewController.swift; sourceTree = "<group>"; };
+		AD1348D31E613B0600840214 /* PrefsGeneralViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PrefsGeneralViewController.xib; sourceTree = "<group>"; };
+		AD1348D61E613B3A00840214 /* PrefsShortcutKeyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrefsShortcutKeyViewController.swift; sourceTree = "<group>"; };
+		AD1348D71E613B3A00840214 /* PrefsShortcutKeyViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PrefsShortcutKeyViewController.xib; sourceTree = "<group>"; };
+		AD1348DA1E61B7E400840214 /* Preferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
+		AD1348DC1E61BB7300840214 /* AboutWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutWindowController.swift; sourceTree = "<group>"; };
+		AD1348DD1E61BB7300840214 /* AboutWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutWindowController.xib; sourceTree = "<group>"; };
+		AD1348E11E65545D00840214 /* ControlbarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlbarView.swift; sourceTree = "<group>"; };
 		AD15A8101E50441700E3245A /* AudioController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioController.swift; sourceTree = "<group>"; };
 		AD15A8121E50442800E3245A /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		AD25E55A1E476AB000415E8D /* libPHPlayerCore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libPHPlayerCore.dylib; path = "../../../../../Library/Developer/Xcode/DerivedData/PHPlayer-eduvxblpmmuqsnghgyqnmsxhgvac/Build/Products/Debug/libPHPlayerCore.dylib"; sourceTree = "<group>"; };
@@ -52,6 +72,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AD1348D11E613A5C00840214 /* Prefs */ = {
+			isa = PBXGroup;
+			children = (
+				AD1348CD1E6077A100840214 /* PreferencesWindowController.swift */,
+				AD1348CE1E6077A100840214 /* PreferencesWindowController.xib */,
+				AD1348D21E613B0600840214 /* PrefsGeneralViewController.swift */,
+				AD1348D31E613B0600840214 /* PrefsGeneralViewController.xib */,
+				AD1348D61E613B3A00840214 /* PrefsShortcutKeyViewController.swift */,
+				AD1348D71E613B3A00840214 /* PrefsShortcutKeyViewController.xib */,
+				AD1348DA1E61B7E400840214 /* Preferences.swift */,
+			);
+			name = Prefs;
+			sourceTree = "<group>";
+		};
+		AD1348E01E65541700840214 /* views */ = {
+			isa = PBXGroup;
+			children = (
+				AD1348E11E65545D00840214 /* ControlbarView.swift */,
+			);
+			name = views;
+			sourceTree = "<group>";
+		};
 		AD284DAD1E2CE43300A15F31 = {
 			isa = PBXGroup;
 			children = (
@@ -73,6 +115,8 @@
 		AD284DB81E2CE43300A15F31 /* PHPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				AD1348E01E65541700840214 /* views */,
+				AD1348D11E613A5C00840214 /* Prefs */,
 				AD284DB91E2CE43300A15F31 /* AppDelegate.swift */,
 				AD284DBB1E2CE43300A15F31 /* Assets.xcassets */,
 				AD284DBD1E2CE43300A15F31 /* MainMenu.xib */,
@@ -81,6 +125,8 @@
 				ADE4A0081E4C6B18009D3AD7 /* MainWindowController.xib */,
 				ADE4A00A1E4C6B9A009D3AD7 /* MainWindowController.swift */,
 				AD15A8101E50441700E3245A /* AudioController.swift */,
+				AD1348DC1E61BB7300840214 /* AboutWindowController.swift */,
+				AD1348DD1E61BB7300840214 /* AboutWindowController.xib */,
 			);
 			path = PHPlayer;
 			sourceTree = "<group>";
@@ -166,8 +212,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD284DBC1E2CE43300A15F31 /* Assets.xcassets in Resources */,
+				AD1348D51E613B0600840214 /* PrefsGeneralViewController.xib in Resources */,
+				AD1348DF1E61BB7300840214 /* AboutWindowController.xib in Resources */,
 				AD284DBF1E2CE43300A15F31 /* MainMenu.xib in Resources */,
+				AD1348D01E6077A100840214 /* PreferencesWindowController.xib in Resources */,
 				ADE4A0091E4C6B18009D3AD7 /* MainWindowController.xib in Resources */,
+				AD1348D91E613B3A00840214 /* PrefsShortcutKeyViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -178,10 +228,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD1348CF1E6077A100840214 /* PreferencesWindowController.swift in Sources */,
+				AD1348DE1E61BB7300840214 /* AboutWindowController.swift in Sources */,
 				ADE4A0051E4C54C7009D3AD7 /* VideoView.swift in Sources */,
+				AD1348E21E65545D00840214 /* ControlbarView.swift in Sources */,
 				AD284DBA1E2CE43300A15F31 /* AppDelegate.swift in Sources */,
+				AD1348D81E613B3A00840214 /* PrefsShortcutKeyViewController.swift in Sources */,
+				AD1348D41E613B0600840214 /* PrefsGeneralViewController.swift in Sources */,
 				ADE4A00B1E4C6B9A009D3AD7 /* MainWindowController.swift in Sources */,
 				AD284DE01E2CFC0900A15F31 /* CPPWrapper.mm in Sources */,
+				AD1348DB1E61B7E400840214 /* Preferences.swift in Sources */,
 				AD15A8111E50441700E3245A /* AudioController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -14,10 +14,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     static let player = PlayerWrapper()
     static let audioController : AudioController = AudioController()
     let mainWindowController : MainWindowController = MainWindowController()
+    let preferenceWindowController = PreferencesWindowController()
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
         
+        UserDefaults.standard.register(defaults: Preferences.defaults)
         mainWindowController.showWindow(nil);
     }
 
@@ -34,6 +36,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         AppDelegate.audioController.initData()
         AppDelegate.audioController.play()
         return true
+    }
+    
+    @IBAction func showPreferenceWindow(_ sender: Any) {
+        preferenceWindowController.showWindow(nil)
     }
 }
 
