@@ -12,6 +12,7 @@ class PreferencesWindowController: NSWindowController {
 
     @IBOutlet weak var toolbar: NSToolbar!
     
+    @IBOutlet weak var generalItem: NSToolbarItem!
     var toolbarHeight: CGFloat?
     
     var prefsGeneralViewController: PrefsGeneralViewController = PrefsGeneralViewController()
@@ -31,6 +32,8 @@ class PreferencesWindowController: NSWindowController {
         // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 
         toolbarHeight = getToolbarHeight()
+        toolbar.selectedItemIdentifier = "PrefGeneral"
+        generalSetting(0)
     }
     
     func getToolbarHeight() -> CGFloat {

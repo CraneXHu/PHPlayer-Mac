@@ -19,7 +19,7 @@
             <subviews>
                 <scrollView wantsLayer="YES" fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vPR-Ge-UAs">
                     <rect key="frame" x="0.0" y="0.0" width="400" height="300"/>
-                    <autoresizingMask key="autoresizingMask"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <clipView key="contentView" ambiguous="YES" id="SKu-9f-i97">
                         <rect key="frame" x="1" y="0.0" width="398" height="299"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -31,7 +31,7 @@
                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                 <tableColumns>
-                                    <tableColumn width="118" minWidth="40" maxWidth="1000" id="Rth-KX-Qui">
+                                    <tableColumn width="197.33984375" minWidth="40" maxWidth="1000" id="Rth-KX-Qui">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="test">
                                             <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -45,11 +45,11 @@
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         <prototypeCellViews>
                                             <tableCellView id="4gB-am-zWw">
-                                                <rect key="frame" x="1" y="1" width="118" height="17"/>
+                                                <rect key="frame" x="1" y="1" width="197.5" height="17"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XLH-0v-tSB">
-                                                        <rect key="frame" x="0.0" y="0.0" width="118" height="17"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="197.5" height="17"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="MhO-DG-ir4">
                                                             <font key="font" metaFont="system"/>
@@ -64,7 +64,7 @@
                                             </tableCellView>
                                         </prototypeCellViews>
                                     </tableColumn>
-                                    <tableColumn width="274" minWidth="40" maxWidth="1000" id="4a7-qg-Gad">
+                                    <tableColumn width="194.5" minWidth="40" maxWidth="1000" id="4a7-qg-Gad">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="test">
                                             <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -78,11 +78,11 @@
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         <prototypeCellViews>
                                             <tableCellView id="laQ-1u-LiC">
-                                                <rect key="frame" x="122" y="1" width="274" height="17"/>
+                                                <rect key="frame" x="201.5" y="1" width="194.5" height="17"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KnQ-Bn-WEK">
-                                                        <rect key="frame" x="0.0" y="0.0" width="274" height="17"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="194.5" height="17"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="rvO-Uj-lI8">
                                                             <font key="font" metaFont="system"/>
@@ -102,7 +102,7 @@
                         </subviews>
                     </clipView>
                     <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="hUr-Kj-iPB">
-                        <rect key="frame" x="1" y="-15" width="0.0" height="15"/>
+                        <rect key="frame" x="1" y="284" width="398" height="15"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="OW2-ii-oue">
