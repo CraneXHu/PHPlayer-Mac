@@ -23,7 +23,7 @@
                             <menuItem title="About PHPlayer" id="5kV-Vb-QxS">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="orderFrontStandardAboutPanel:" target="-1" id="Exp-CZ-Vem"/>
+                                    <action selector="showAboutWindow:" target="Voe-Tx-rLC" id="Ijl-ZD-J0g"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="VOq-y0-SEH"/>
@@ -129,6 +129,7 @@
                     </menu>
                 </menuItem>
             </items>
+            <point key="canvasLocation" x="8" y="92"/>
         </menu>
     </objects>
 </document>

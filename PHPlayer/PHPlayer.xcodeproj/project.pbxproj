@@ -20,10 +20,10 @@
 		AD15A8111E50441700E3245A /* AudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD15A8101E50441700E3245A /* AudioController.swift */; };
 		AD15A8131E50442800E3245A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD15A8121E50442800E3245A /* AudioToolbox.framework */; };
 		AD25E55B1E476AB000415E8D /* libPHPlayerCore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AD25E55A1E476AB000415E8D /* libPHPlayerCore.dylib */; };
-		AD284DBA1E2CE43300A15F31 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD284DB91E2CE43300A15F31 /* AppDelegate.swift */; };
 		AD284DBC1E2CE43300A15F31 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD284DBB1E2CE43300A15F31 /* Assets.xcassets */; };
 		AD284DBF1E2CE43300A15F31 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD284DBD1E2CE43300A15F31 /* MainMenu.xib */; };
 		AD284DE01E2CFC0900A15F31 /* CPPWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = AD284DDF1E2CFC0900A15F31 /* CPPWrapper.mm */; };
+		AD74BEBC1E65DF3400974282 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD74BEBB1E65DF3400974282 /* AppDelegate.swift */; };
 		ADE4A0051E4C54C7009D3AD7 /* VideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE4A0041E4C54C7009D3AD7 /* VideoView.swift */; };
 		ADE4A0071E4C5513009D3AD7 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADE4A0061E4C5513009D3AD7 /* OpenGL.framework */; };
 		ADE4A0091E4C6B18009D3AD7 /* MainWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ADE4A0081E4C6B18009D3AD7 /* MainWindowController.xib */; };
@@ -45,13 +45,13 @@
 		AD15A8121E50442800E3245A /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		AD25E55A1E476AB000415E8D /* libPHPlayerCore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libPHPlayerCore.dylib; path = "../../../../../Library/Developer/Xcode/DerivedData/PHPlayer-eduvxblpmmuqsnghgyqnmsxhgvac/Build/Products/Debug/libPHPlayerCore.dylib"; sourceTree = "<group>"; };
 		AD284DB61E2CE43300A15F31 /* PHPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PHPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		AD284DB91E2CE43300A15F31 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AD284DBB1E2CE43300A15F31 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AD284DBE1E2CE43300A15F31 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		AD284DC01E2CE43300A15F31 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AD284DDE1E2CFC0900A15F31 /* PHPlayer-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PHPlayer-Bridging-Header.h"; sourceTree = "<group>"; };
 		AD284DDF1E2CFC0900A15F31 /* CPPWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CPPWrapper.mm; sourceTree = "<group>"; };
 		AD284DE11E2CFD1C00A15F31 /* cppwrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cppwrapper.h; sourceTree = "<group>"; };
+		AD74BEBB1E65DF3400974282 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ADE4A0041E4C54C7009D3AD7 /* VideoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoView.swift; sourceTree = "<group>"; };
 		ADE4A0061E4C5513009D3AD7 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		ADE4A0081E4C6B18009D3AD7 /* MainWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindowController.xib; sourceTree = "<group>"; };
@@ -115,9 +115,9 @@
 		AD284DB81E2CE43300A15F31 /* PHPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				AD74BEBB1E65DF3400974282 /* AppDelegate.swift */,
 				AD1348E01E65541700840214 /* views */,
 				AD1348D11E613A5C00840214 /* Prefs */,
-				AD284DB91E2CE43300A15F31 /* AppDelegate.swift */,
 				AD284DBB1E2CE43300A15F31 /* Assets.xcassets */,
 				AD284DBD1E2CE43300A15F31 /* MainMenu.xib */,
 				AD284DC01E2CE43300A15F31 /* Info.plist */,
@@ -228,11 +228,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD74BEBC1E65DF3400974282 /* AppDelegate.swift in Sources */,
 				AD1348CF1E6077A100840214 /* PreferencesWindowController.swift in Sources */,
 				AD1348DE1E61BB7300840214 /* AboutWindowController.swift in Sources */,
 				ADE4A0051E4C54C7009D3AD7 /* VideoView.swift in Sources */,
 				AD1348E21E65545D00840214 /* ControlbarView.swift in Sources */,
-				AD284DBA1E2CE43300A15F31 /* AppDelegate.swift in Sources */,
 				AD1348D81E613B3A00840214 /* PrefsShortcutKeyViewController.swift in Sources */,
 				AD1348D41E613B0600840214 /* PrefsGeneralViewController.swift in Sources */,
 				ADE4A00B1E4C6B9A009D3AD7 /* MainWindowController.swift in Sources */,

@@ -29,9 +29,8 @@
                     <visualEffectView appearanceType="vibrantDark" blendingMode="withinWindow" material="dark" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="NSZ-0P-rfW" userLabel="Windows bar">
                         <rect key="frame" x="0.0" y="397" width="659" height="24"/>
                         <subviews>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uYe-OX-OZ5">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="uYe-OX-OZ5">
                                 <rect key="frame" x="314" y="3" width="31" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Title" id="Z5H-kS-JKh">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -40,6 +39,8 @@
                             </textField>
                         </subviews>
                         <constraints>
+                            <constraint firstItem="uYe-OX-OZ5" firstAttribute="centerX" secondItem="NSZ-0P-rfW" secondAttribute="centerX" id="I1s-u8-qdO"/>
+                            <constraint firstItem="uYe-OX-OZ5" firstAttribute="centerY" secondItem="NSZ-0P-rfW" secondAttribute="centerY" id="XZU-f8-iBc"/>
                             <constraint firstAttribute="height" constant="24" id="bqa-KD-HmS"/>
                         </constraints>
                     </visualEffectView>

@@ -22,7 +22,7 @@
             <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
             <view key="contentView" wantsLayer="YES" id="se5-gp-TjO">
                 <rect key="frame" x="0.0" y="0.0" width="400" height="270"/>
-                <autoresizingMask key="autoresizingMask"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             </view>
             <toolbar key="toolbar" implicitIdentifier="44F84102-D597-4816-A1E0-94AD5BD6B5AC" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="regular" id="sHa-vn-p5s">
                 <allowedToolbarItems>

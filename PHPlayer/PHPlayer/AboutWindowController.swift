@@ -10,6 +10,10 @@ import Cocoa
 
 class AboutWindowController: NSWindowController {
 
+    override var windowNibName: String {
+        return "AboutWindowController"
+    }
+    
     override func windowDidLoad() {
         super.windowDidLoad()
 
