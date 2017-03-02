@@ -11,6 +11,7 @@ extern "C"{
 }
 #include "Demuxer.hpp"
 #include "Source.hpp"
+#include "Render.hpp"
 #include "PHPlayerCore.hpp"
 #include "PacketQueue.hpp"
 
@@ -27,6 +28,7 @@ Demuxer::Demuxer(PHPlayerCore *player)
     subtitleStream = NULL;
     isRequestSeek = false;
     seekPosition = 0;
+    flag = 0;
 }
 
 Demuxer::~Demuxer()
@@ -105,7 +107,12 @@ void Demuxer::demux()
         }
         
         if (isRequestSeek) {
-            av_seek_frame(formatContext, -1, seekPosition*AV_TIME_BASE, AVSEEK_FLAG_ANY);
+            int ret = av_seek_frame(formatContext, -1, seekPosition*AV_TIME_BASE, flag);
+            if (ret < 0) {
+                printf("Error while seeking.");
+            }
+//            printf("Seek position: %f.\n", seekPosition);
+            player->clear();
             isRequestSeek = false;
         }
         int ret = av_read_frame(formatContext, packet);
@@ -129,10 +136,11 @@ void Demuxer::demux()
     av_packet_free(&packet);
 }
 
-void Demuxer::seek(int64_t position)
+void Demuxer::seek(__int64_t position, int flag)
 {
     this->seekPosition = position;
     isRequestSeek = true;
+    this->flag = flag;
 }
 
 void Demuxer::clear()

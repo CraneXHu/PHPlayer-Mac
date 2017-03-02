@@ -8,8 +8,10 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="MainWindowController" customModule="PHPlayer" customModuleProvider="target">
             <connections>
+                <outlet property="controlbar" destination="gd5-5p-kNS" id="0o7-ur-Lxd"/>
                 <outlet property="videoView" destination="vyB-bv-ZI8" id="6DI-Bt-hZ1"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="tpU-JG-bTN"/>
+                <outlet property="windowTitle" destination="uYe-OX-OZ5" id="WvS-iA-PqE"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
@@ -52,10 +54,13 @@
                                 <constraints>
                                     <constraint firstAttribute="width" constant="24" id="bEi-mi-xTk"/>
                                 </constraints>
-                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="play" imagePosition="only" alignment="center" alternateImage="pause" imageScaling="proportionallyUpOrDown" inset="2" id="FC6-3q-ktE">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="play" imagePosition="only" alignment="center" alternateImage="pause" state="on" imageScaling="proportionallyUpOrDown" inset="2" id="FC6-3q-ktE">
+                                    <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="playAction:" target="-2" id="ilF-fh-FgC"/>
+                                </connections>
                             </button>
                             <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cA8-aQ-5Ke" userLabel="Next button">
                                 <rect key="frame" x="262" y="9" width="22" height="22"/>

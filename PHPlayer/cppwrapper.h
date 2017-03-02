@@ -23,7 +23,11 @@
 
 -(void) stop;
 
--(void) seek: (int64_t) postion;
+-(void) seek: (double) postion;
+
+-(void) forward: (double) postion;
+
+-(void) backward: (double) postion;
 
 -(int) getState;
 

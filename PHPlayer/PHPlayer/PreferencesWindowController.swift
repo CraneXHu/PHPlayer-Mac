@@ -59,7 +59,11 @@ class PreferencesWindowController: NSWindowController {
         windowRect!.origin.y = windowRect!.origin.y + (oldViewRect!.size.height - currentViewRect!.size.height)
         windowRect!.size.height = currentViewRect!.size.height + toolbarHeight!
         windowRect!.size.width = currentViewRect!.size.width
-        self.window?.contentView = newView
+        let subviews = self.window?.contentView!.subviews
+        for view in subviews! {
+            view.removeFromSuperview()
+        }
+        self.window?.contentView!.addSubview(newView!)
         self.window?.setFrame(windowRect!, display: true, animate: true)
     }
 }

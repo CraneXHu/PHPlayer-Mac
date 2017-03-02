@@ -93,6 +93,12 @@ void Decoder::decode()
             continue;
         }
         
+        if (pkt->size == 0) {
+            avcodec_flush_buffers(codecContext);
+            printf("Flush buffers.\n");
+            continue;
+        }
+        
         int ret = avcodec_send_packet(codecContext, pkt);
         if (ret < 0) {
             goto out;
@@ -116,6 +122,9 @@ void Decoder::decode()
 void Decoder::clear()
 {
     frameQueue->clear();
+    AVPacket *pkt = av_packet_alloc();
+    packetQueue->push(pkt);
+    av_packet_free(&pkt);
 }
 
 AVCodecContext *Decoder::getCodecContex()

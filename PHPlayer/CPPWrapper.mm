@@ -47,9 +47,19 @@
     static_cast<PHPlayerCore*>(_player)->stop();
 }
 
--(void) seek:(int64_t) postion
+-(void) seek:(double) postion
 {
-    static_cast<PHPlayerCore*>(_player)->seek(postion);
+    static_cast<PHPlayerCore*>(_player)->seek(postion, 0);
+}
+
+-(void) forward:(double)postion
+{
+    static_cast<PHPlayerCore*>(_player)->forward(postion);
+}
+
+-(void) backward:(double)postion
+{
+    static_cast<PHPlayerCore*>(_player)->backward(postion);
 }
 
 -(int) getState

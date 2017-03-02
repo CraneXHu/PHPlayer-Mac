@@ -31,7 +31,7 @@ bool PacketQueue::push(const AVPacket *packet)
             return true;
         } else {
 //            conditionFull.wait(lock, [&]() -> bool {return queue.size() < MAX_SIZE;});
-            printf("Packet full %d\n", maxSize);
+//            printf("Packet full %d\n", maxSize);
             conditionFull.wait(lock);
         }
     }
@@ -58,7 +58,7 @@ bool PacketQueue::front(AVPacket *packet)
             return true;
         } else{
 //            conditionEmpty.wait(lock, [&]() -> bool {return queue.size() != 0;});
-            printf("Packet empty %d\n", maxSize);
+//            printf("Packet empty %d\n", maxSize);
             conditionEmpty.wait(lock);
         }
     }

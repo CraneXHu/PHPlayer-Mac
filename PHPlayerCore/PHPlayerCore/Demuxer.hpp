@@ -23,7 +23,7 @@ public:
     void findStream();
     bool start();
     void demux();
-    void seek(__int64_t position);
+    void seek(__int64_t position, int flag);
     void clear();
     void stop();
     
@@ -43,6 +43,7 @@ private:
     PacketQueue *audioPacketQueue;
     PacketQueue *subtitlePacketQueue;
     bool isRequestSeek;
-    __int64_t seekPosition;
+    double seekPosition;
+    int flag;
 };
 #endif /* Demuxer_hpp */

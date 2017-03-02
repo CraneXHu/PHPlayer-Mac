@@ -87,10 +87,23 @@ void PHPlayerCore::stop()
     source->close();
 }
 
-void PHPlayerCore::seek(__int64_t position)
+void PHPlayerCore::seek(double position, int flag)
 {
-    clear();
-    demuxer->seek(position);
+    demuxer->seek(position, flag);
+    render->seek(0);
+//    clear();
+}
+
+void PHPlayerCore::forward(double duration)
+{
+    double current = render->getAudioClock();
+    seek(duration + current, 0);
+}
+
+void PHPlayerCore::backward(double duration)
+{
+    double current = render->getAudioClock();
+    seek(-duration + current, 1);
 }
 
 void PHPlayerCore::clear()
@@ -164,5 +177,10 @@ Decoder *PHPlayerCore::getAudioDecoder()
 Decoder *PHPlayerCore::getSubtitleDecoder()
 {
     return subtitleDecoder;
+}
+
+Render *PHPlayerCore::getRender()
+{
+    return render;
 }
 

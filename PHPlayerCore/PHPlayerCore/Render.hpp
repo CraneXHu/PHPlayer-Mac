@@ -27,6 +27,10 @@ public:
     void setVideoCallback(void *userData, VideoCallback callback);
     void renderVideo();
     void renderAudio(unsigned char* outData, int *size);
+    void seek(int64_t position);
+    void forward(int64_t dution);
+    void backward(int64_t dution);
+    double getAudioClock();
     
 private:
     PHPlayerCore *player;

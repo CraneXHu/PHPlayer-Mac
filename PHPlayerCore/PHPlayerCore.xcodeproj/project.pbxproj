@@ -17,7 +17,7 @@
 		AD1348AB1E5C29B200840214 /* Render.hpp in Headers */ = {isa = PBXBuildFile; fileRef = AD1348A91E5C29B200840214 /* Render.hpp */; };
 		AD1348AE1E5C29F700840214 /* Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD1348AC1E5C29F700840214 /* Source.cpp */; };
 		AD1348AF1E5C29F700840214 /* Source.hpp in Headers */ = {isa = PBXBuildFile; fileRef = AD1348AD1E5C29F700840214 /* Source.hpp */; };
-		AD284DD31E2CE63200A15F31 /* PHPlayerCore.hpp in Headers */ = {isa = PBXBuildFile; fileRef = AD284DD21E2CE63200A15F31 /* PHPlayerCore.hpp */; };
+		AD2824F61E66D3F300255F7E /* PHPlayerCore.hpp in Headers */ = {isa = PBXBuildFile; fileRef = AD2824F51E66D3F300255F7E /* PHPlayerCore.hpp */; };
 		AD284DD71E2CE63200A15F31 /* PHPlayerCore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD284DD61E2CE63200A15F31 /* PHPlayerCore.cpp */; };
 		AD284DEC1E2DE92F00A15F31 /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD284DEA1E2DE92F00A15F31 /* Player.cpp */; };
 		AD284DED1E2DE92F00A15F31 /* Player.hpp in Headers */ = {isa = PBXBuildFile; fileRef = AD284DEB1E2DE92F00A15F31 /* Player.hpp */; };
@@ -51,8 +51,8 @@
 		AD1348AD1E5C29F700840214 /* Source.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Source.hpp; sourceTree = "<group>"; };
 		AD1348B01E5C481100840214 /* globalenum.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = globalenum.h; sourceTree = "<group>"; };
 		AD1348B11E5D2E0200840214 /* globaldef.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = globaldef.h; sourceTree = "<group>"; };
+		AD2824F51E66D3F300255F7E /* PHPlayerCore.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PHPlayerCore.hpp; sourceTree = "<group>"; };
 		AD284DCF1E2CE63200A15F31 /* libPHPlayerCore.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libPHPlayerCore.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
-		AD284DD21E2CE63200A15F31 /* PHPlayerCore.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PHPlayerCore.hpp; sourceTree = "<group>"; };
 		AD284DD61E2CE63200A15F31 /* PHPlayerCore.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PHPlayerCore.cpp; sourceTree = "<group>"; };
 		AD284DEA1E2DE92F00A15F31 /* Player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Player.cpp; sourceTree = "<group>"; };
 		AD284DEB1E2DE92F00A15F31 /* Player.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Player.hpp; sourceTree = "<group>"; };
@@ -113,7 +113,7 @@
 		AD284DD11E2CE63200A15F31 /* PHPlayerCore */ = {
 			isa = PBXGroup;
 			children = (
-				AD284DD21E2CE63200A15F31 /* PHPlayerCore.hpp */,
+				AD2824F51E66D3F300255F7E /* PHPlayerCore.hpp */,
 				AD284DD61E2CE63200A15F31 /* PHPlayerCore.cpp */,
 				AD284DEA1E2DE92F00A15F31 /* Player.cpp */,
 				AD284DEB1E2DE92F00A15F31 /* Player.hpp */,
@@ -164,12 +164,12 @@
 			files = (
 				ADE4A0031E4B2CE0009D3AD7 /* VideoToolbox.h in Headers */,
 				AD13489F1E5C24AE00840214 /* Demuxer.hpp in Headers */,
+				AD2824F61E66D3F300255F7E /* PHPlayerCore.hpp in Headers */,
 				AD284DED1E2DE92F00A15F31 /* Player.hpp in Headers */,
 				AD1348AF1E5C29F700840214 /* Source.hpp in Headers */,
 				AD1348A71E5C297300840214 /* Converter.hpp in Headers */,
 				AD284E0E1E325F3C00A15F31 /* FrameQueue.hpp in Headers */,
 				AD1348A31E5C293C00840214 /* Decoder.hpp in Headers */,
-				AD284DD31E2CE63200A15F31 /* PHPlayerCore.hpp in Headers */,
 				AD284E0A1E325F2700A15F31 /* PacketQueue.hpp in Headers */,
 				AD1348AB1E5C29B200840214 /* Render.hpp in Headers */,
 			);

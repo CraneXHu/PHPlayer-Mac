@@ -13,7 +13,6 @@
 /* The classes below are exported */
 #pragma GCC visibility push(default)
 
-#include <stdio.h>
 #include "globalenum.h"
 #include "globaldef.h"
 
@@ -35,7 +34,9 @@ public:
     void pause();
     void play();
     void stop();
-    void seek(__int64_t postion);
+    void seek(double postion, int flag);
+    void forward(double duration);
+    void backward(double duration);
     void clear();
     
     void setVideoCallback(void *userData, VideoCallback callback);
@@ -56,6 +57,7 @@ public:
     Decoder *getVideoDecoder();
     Decoder *getAudioDecoder();
     Decoder *getSubtitleDecoder();
+    Render *getRender();
     
 private:
     PlayerState state;

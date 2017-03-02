@@ -49,6 +49,16 @@ void Render::setVideoCallback(void *userData, VideoCallback callback)
     videoCallback = callback;
 }
 
+void Render::seek(int64_t postion)
+{
+//    audioClock = postion;
+}
+
+double Render::getAudioClock()
+{
+    return audioClock;
+}
+
 void Render::renderVideo()
 {
     AVFrame *frame = av_frame_alloc();
@@ -77,8 +87,13 @@ void Render::renderVideo()
         }
         double timestamp;
         timestamp = av_frame_get_best_effort_timestamp(frame)*av_q2d(player->getDemuxer()->getVideoStream()->time_base);
+        printf("Video: %f  Audio: %f\n", timestamp, audioClock);
         if (timestamp > audioClock) {
-            std::this_thread::sleep_for(std::chrono::milliseconds((unsigned long)((timestamp - audioClock)*1000)));
+            if (timestamp - audioClock < 0.1) {
+                std::this_thread::sleep_for(std::chrono::milliseconds((unsigned long)((timestamp - audioClock)*1000)));
+            } else {
+                std::this_thread::sleep_for(std::chrono::milliseconds(100));
+            }
         }
         sws_scale(imageConvertContext, (uint8_t const * const *)frame->data, frame->linesize, 0, codecContext->height, rgbaFrame->data, rgbaFrame->linesize);
         av_frame_unref(frame);
