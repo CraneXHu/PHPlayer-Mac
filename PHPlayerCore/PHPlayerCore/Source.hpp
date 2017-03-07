@@ -21,7 +21,7 @@ public:
     static void init();
     bool open(char * file);
     void close();
-    __int64_t getDuration();
+    double getDuration();
     char *getFileName();
     AVFormatContext *getContext();
     

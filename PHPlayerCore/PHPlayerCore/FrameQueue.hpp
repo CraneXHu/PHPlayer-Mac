@@ -21,6 +21,7 @@ class FrameQueue
 {
 public:
     FrameQueue(int maxSize);
+    void setAbort(bool abort);
     bool push(const AVFrame *pFrame);
     bool front(AVFrame **pFrame);
     void clear();
@@ -32,5 +33,6 @@ private:
     std::condition_variable conditionEmpty;
     std::condition_variable conditionFull;
     int maxSize;
+    bool abort;
 };
 #endif /* FrameQueue_hpp */

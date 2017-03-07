@@ -11,6 +11,12 @@
 FrameQueue::FrameQueue(int maxSize)
 {
     this->maxSize = maxSize;
+    this->abort = false;
+}
+
+void FrameQueue::setAbort(bool abort)
+{
+    this->abort = abort;
 }
 
 bool FrameQueue::push(const AVFrame *pFrame)
@@ -40,6 +46,9 @@ bool FrameQueue::front(AVFrame **pFrame)
 {
     std::unique_lock<std::mutex> lock(mutex);
     for (; ; ) {
+        if (abort) {
+            return false;
+        }
         if (!queue.empty()) {
             int ret = av_frame_ref(*pFrame, queue.front());
             if (ret < 0) {

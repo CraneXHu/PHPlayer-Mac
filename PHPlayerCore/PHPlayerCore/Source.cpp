@@ -47,7 +47,7 @@ void Source::close()
     avformat_close_input(&formatContext);
 }
 
-int64_t Source::getDuration()
+double Source::getDuration()
 {
     //second
    return formatContext->duration/AV_TIME_BASE;

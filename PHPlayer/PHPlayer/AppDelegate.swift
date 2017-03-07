@@ -33,8 +33,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let path = (filename as NSString).utf8String
         AppDelegate.player.open(UnsafeMutablePointer<Int8>(mutating: path))
         AppDelegate.player.start()
-        mainWindowController.setTitle()
-        mainWindowController.videoView.initData()
+//        mainWindowController.initTimer()
+//        mainWindowController.setTitle()
+//        mainWindowController.videoView.initData()
+        mainWindowController.initData()
         AppDelegate.audioController.initData()
         AppDelegate.audioController.play()
         return true

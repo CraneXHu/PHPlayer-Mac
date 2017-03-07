@@ -97,9 +97,14 @@
     static_cast<PHPlayerCore*>(_player)->getAudioData(outData, size);
 }
 
--(int64_t) getDuration
+-(double) getDuration
 {
     return static_cast<PHPlayerCore*>(_player)->getDuration();
+}
+
+-(double) getCurrentTime
+{
+    return static_cast<PHPlayerCore*>(_player)->getCurrentTime();
 }
 
 -(char*) getFileName

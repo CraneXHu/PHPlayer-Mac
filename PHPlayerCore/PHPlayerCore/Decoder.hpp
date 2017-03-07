@@ -24,6 +24,7 @@ public:
 
     bool openDecoder();
     bool start();
+    void stop();
     void clear();
     void decode();
     

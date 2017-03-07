@@ -83,6 +83,11 @@ bool Decoder::start()
     return true;
 }
 
+void Decoder::stop()
+{
+    frameQueue->setAbort(true);
+}
+
 void Decoder::decode()
 {
     AVPacket *pkt = av_packet_alloc();

@@ -49,7 +49,8 @@ public:
     int getAudioChannels();
     
     char * getFileName();
-    __int64_t getDuration();
+    double getDuration();
+    double getCurrentTime();
     
 public:
     Source *getSource();

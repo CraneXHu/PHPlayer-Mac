@@ -8,7 +8,11 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="MainWindowController" customModule="PHPlayer" customModuleProvider="target">
             <connections>
+                <outlet property="audioSlider" destination="cYs-xx-hYf" id="anN-lq-nuH"/>
                 <outlet property="controlbar" destination="gd5-5p-kNS" id="0o7-ur-Lxd"/>
+                <outlet property="currentDuration" destination="7MM-XN-dtf" id="WCK-Us-oRr"/>
+                <outlet property="duration" destination="QX6-aS-lD5" id="G1y-IF-7EL"/>
+                <outlet property="videoSlider" destination="JMX-Vh-cUa" id="ZgM-WH-rdb"/>
                 <outlet property="videoView" destination="vyB-bv-ZI8" id="6DI-Bt-hZ1"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="tpU-JG-bTN"/>
                 <outlet property="windowTitle" destination="uYe-OX-OZ5" id="WvS-iA-PqE"/>
@@ -72,10 +76,16 @@
                             </button>
                             <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VKm-RG-vfw" userLabel="Play slider">
                                 <rect key="frame" x="73" y="40" width="332" height="17"/>
-                                <sliderCell key="cell" controlSize="small" state="on" alignment="left" maxValue="100" doubleValue="59.248824668141594" tickMarkPosition="above" sliderType="linear" id="JMX-Vh-cUa"/>
+                                <sliderCell key="cell" controlSize="small" state="on" alignment="left" maxValue="100" doubleValue="53.717714905362776" tickMarkPosition="above" sliderType="linear" id="JMX-Vh-cUa"/>
+                                <connections>
+                                    <action selector="videoSliderChanged:" target="-2" id="dSh-AG-iC6"/>
+                                </connections>
                             </slider>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QX6-aS-lD5">
                                 <rect key="frame" x="413" y="39" width="61" height="17"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="57" id="5Cf-km-uak"/>
+                                </constraints>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="00:00:00" id="0Ee-Qu-L2e">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -84,6 +94,9 @@
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7MM-XN-dtf">
                                 <rect key="frame" x="6" y="39" width="61" height="17"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="57" id="qW4-0C-vbT"/>
+                                </constraints>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="00:00:00" id="K0U-YL-wDf">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -102,7 +115,7 @@
                                 <rect key="frame" x="8" y="10" width="24" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="volume" imagePosition="overlaps" alignment="center" alternateImage="mute" imageScaling="proportionallyUpOrDown" inset="2" id="iGW-vx-ZOD">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                             </button>
@@ -110,6 +123,9 @@
                                 <rect key="frame" x="34" y="10" width="92" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <sliderCell key="cell" controlSize="small" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="cko-WH-GeV"/>
+                                <connections>
+                                    <action selector="volumeSliderChanged:" target="-2" id="MtW-e6-sxd"/>
+                                </connections>
                             </slider>
                             <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wNz-Rv-4CR" userLabel="Playlist button">
                                 <rect key="frame" x="444" y="8" width="22" height="22"/>

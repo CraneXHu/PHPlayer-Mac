@@ -45,7 +45,9 @@ typedef void (*VideoCallback)(void *userData, unsigned char *data, int width, in
 
 -(int) getAudioChannels;
 
--(int64_t) getDuration;
+-(double) getDuration;
+
+-(double) getCurrentTime;
 
 -(char *) getFileName;
 

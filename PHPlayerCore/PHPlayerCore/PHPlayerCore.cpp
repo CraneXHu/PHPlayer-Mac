@@ -82,8 +82,11 @@ void PHPlayerCore::play()
 void PHPlayerCore::stop()
 {
     state = PH_STATE_STOPED;
-    clear();
     demuxer->stop();
+    videoDecoder->stop();
+    audioDecoder->stop();
+    subtitleDecoder->stop();
+    clear();
     source->close();
 }
 
@@ -144,9 +147,14 @@ int PHPlayerCore::getAudioChannels()
     return audioDecoder->getCodecContex()->channels;
 }
 
-__int64_t PHPlayerCore::getDuration()
+double PHPlayerCore::getDuration()
 {
     return source->getDuration();
+}
+
+double PHPlayerCore::getCurrentTime()
+{
+    return render->getAudioClock();
 }
 
 char *PHPlayerCore::getFileName()
