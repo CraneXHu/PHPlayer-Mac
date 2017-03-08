@@ -113,6 +113,8 @@
 		AD284DD11E2CE63200A15F31 /* PHPlayerCore */ = {
 			isa = PBXGroup;
 			children = (
+				ADE4A0001E4B2CE0009D3AD7 /* VideoToolbox.c */,
+				ADE4A0011E4B2CE0009D3AD7 /* VideoToolbox.h */,
 				AD2824F51E66D3F300255F7E /* PHPlayerCore.hpp */,
 				AD284DD61E2CE63200A15F31 /* PHPlayerCore.cpp */,
 				AD284DEA1E2DE92F00A15F31 /* Player.cpp */,
@@ -121,8 +123,6 @@
 				AD284E081E325F2700A15F31 /* PacketQueue.hpp */,
 				AD284E0B1E325F3C00A15F31 /* FrameQueue.cpp */,
 				AD284E0C1E325F3C00A15F31 /* FrameQueue.hpp */,
-				ADE4A0001E4B2CE0009D3AD7 /* VideoToolbox.c */,
-				ADE4A0011E4B2CE0009D3AD7 /* VideoToolbox.h */,
 				AD13489C1E5C24AE00840214 /* Demuxer.cpp */,
 				AD13489D1E5C24AE00840214 /* Demuxer.hpp */,
 				AD1348A01E5C293C00840214 /* Decoder.cpp */,

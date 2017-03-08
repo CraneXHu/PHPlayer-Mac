@@ -12,6 +12,32 @@
 #include "FrameQueue.hpp"
 #include "Demuxer.hpp"
 
+extern "C" {
+#include "libavutil/pixdesc.h"
+#include "VideoToolbox.h"
+}
+
+static enum AVPixelFormat get_format(AVCodecContext *s, const enum AVPixelFormat *pix_fmts)
+{
+    const enum AVPixelFormat *p;
+    for(p = pix_fmts; *p != -1; p++){
+        const AVPixFmtDescriptor *desc = av_pix_fmt_desc_get(*p);
+        if (!(desc->flags & AV_PIX_FMT_FLAG_HWACCEL)){
+            break;
+        }
+        if (*p == AV_PIX_FMT_VIDEOTOOLBOX){
+            videotoolbox_init(s);
+            break;
+        }
+    }
+    return *p;
+}
+
+static int get_buffer(AVCodecContext *s, AVFrame *frame, int flags)
+{
+    return avcodec_default_get_buffer2(s, frame, flags);
+}
+
 Decoder::Decoder(PHPlayerCore *player, DecoderType type)
 {
     this->player = player;
@@ -62,8 +88,11 @@ bool Decoder::openDecoder()
         return false;
     }
     
-//    codecContext->get_format = get_format;
-//    codecContext->thread_safe_callbacks = 1;
+    if (type == PH_DECODER_VIDEO){
+        codecContext->get_format = get_format;
+        //    codecContext->get_buffer2 = get_buffer;
+        //    codecContext->thread_safe_callbacks = 1;
+    }
     
     ret = avcodec_open2(codecContext, codec, NULL);
     if (ret < 0) {
@@ -86,6 +115,8 @@ bool Decoder::start()
 void Decoder::stop()
 {
     frameQueue->setAbort(true);
+//    avcodec_close(codecContext);
+    videotoolbox_uninit(codecContext);
 }
 
 void Decoder::decode()
@@ -114,6 +145,10 @@ void Decoder::decode()
             ret = avcodec_receive_frame(codecContext, frame);
             if (!ret)
             {
+                if (type == PH_DECODER_VIDEO){
+                    videotoolbox_retrieve_data(codecContext, frame);
+                }
+
                 frameQueue->push(frame);
             }
             av_frame_free(&frame);

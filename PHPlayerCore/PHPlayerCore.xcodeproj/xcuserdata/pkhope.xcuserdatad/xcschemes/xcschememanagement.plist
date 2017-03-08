@@ -7,11 +7,36 @@
 		<key>PHPlayerCore.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>0</integer>
+			<integer>1</integer>
+		</dict>
+		<key>cocoa.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>AD19AB061E6FAA240038117D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>AD19AB151E6FAA670038117D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>AD19AB1D1E6FAAD00038117D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>AD19AB251E6FABBB0038117D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>AD284DCE1E2CE63200A15F31</key>
 		<dict>
 			<key>primary</key>
