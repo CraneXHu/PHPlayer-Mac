@@ -17,6 +17,8 @@
 		AD1348AB1E5C29B200840214 /* Render.hpp in Headers */ = {isa = PBXBuildFile; fileRef = AD1348A91E5C29B200840214 /* Render.hpp */; };
 		AD1348AE1E5C29F700840214 /* Source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD1348AC1E5C29F700840214 /* Source.cpp */; };
 		AD1348AF1E5C29F700840214 /* Source.hpp in Headers */ = {isa = PBXBuildFile; fileRef = AD1348AD1E5C29F700840214 /* Source.hpp */; };
+		AD19AB2E1E7169280038117D /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD19AB2D1E7169280038117D /* AudioToolbox.framework */; };
+		AD19AB301E7169440038117D /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD19AB2F1E7169440038117D /* VideoToolbox.framework */; };
 		AD2824F61E66D3F300255F7E /* PHPlayerCore.hpp in Headers */ = {isa = PBXBuildFile; fileRef = AD2824F51E66D3F300255F7E /* PHPlayerCore.hpp */; };
 		AD284DD71E2CE63200A15F31 /* PHPlayerCore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD284DD61E2CE63200A15F31 /* PHPlayerCore.cpp */; };
 		AD284DEC1E2DE92F00A15F31 /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD284DEA1E2DE92F00A15F31 /* Player.cpp */; };
@@ -51,6 +53,8 @@
 		AD1348AD1E5C29F700840214 /* Source.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Source.hpp; sourceTree = "<group>"; };
 		AD1348B01E5C481100840214 /* globalenum.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = globalenum.h; sourceTree = "<group>"; };
 		AD1348B11E5D2E0200840214 /* globaldef.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = globaldef.h; sourceTree = "<group>"; };
+		AD19AB2D1E7169280038117D /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		AD19AB2F1E7169440038117D /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		AD2824F51E66D3F300255F7E /* PHPlayerCore.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PHPlayerCore.hpp; sourceTree = "<group>"; };
 		AD284DCF1E2CE63200A15F31 /* libPHPlayerCore.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libPHPlayerCore.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD284DD61E2CE63200A15F31 /* PHPlayerCore.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PHPlayerCore.cpp; sourceTree = "<group>"; };
@@ -78,6 +82,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD19AB301E7169440038117D /* VideoToolbox.framework in Frameworks */,
+				AD19AB2E1E7169280038117D /* AudioToolbox.framework in Frameworks */,
 				ADE49FF11E482958009D3AD7 /* libavcodec.57.70.101.dylib in Frameworks */,
 				ADE49FF21E482958009D3AD7 /* libavdevice.57.2.100.dylib in Frameworks */,
 				ADE49FF31E482958009D3AD7 /* libavfilter.6.68.100.dylib in Frameworks */,
@@ -142,6 +148,8 @@
 		ADE49FE71E482958009D3AD7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AD19AB2F1E7169440038117D /* VideoToolbox.framework */,
+				AD19AB2D1E7169280038117D /* AudioToolbox.framework */,
 				ADE49FE81E482958009D3AD7 /* libavcodec.57.70.101.dylib */,
 				ADE49FE91E482958009D3AD7 /* libavdevice.57.2.100.dylib */,
 				ADE49FEA1E482958009D3AD7 /* libavfilter.6.68.100.dylib */,
