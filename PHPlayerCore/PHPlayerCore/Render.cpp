@@ -49,21 +49,21 @@ void Render::setVideoCallback(void *userData, VideoCallback callback)
     videoCallback = callback;
 }
 
-void Render::seek(int64_t postion)
-{
-//    audioClock = postion;
-}
-
 double Render::getAudioClock()
 {
     return audioClock;
 }
 
+void Render::setAudioClock(double clock)
+{
+    audioClock = clock;
+}
+
 void Render::renderVideo()
 {
-    AVFrame *frame = av_frame_alloc();
+    AVFrame *frame = NULL;
     AVFrame *rgbaFrame = av_frame_alloc();
-    AVCodecContext *codecContext = player->getVideoDecoder()->getCodecContex();
+    AVCodecContext *codecContext = player->getDemuxer()->getVideoDecoder()->getCodecContex();
     rgbaFrame->width = codecContext->width;
     rgbaFrame->height = codecContext->height;
     rgbaFrame->format = AV_PIX_FMT_RGBA;
@@ -74,20 +74,19 @@ void Render::renderVideo()
     
     SwsContext *imageConvertContext = sws_getContext(codecContext->width, codecContext->height, codecContext->pix_fmt, codecContext->width, codecContext->height, AV_PIX_FMT_RGBA, SWS_BILINEAR, NULL, NULL, NULL);
     
-    while (player->getState() != PH_STATE_STOPED) {
+    while (true) {
         
         std::unique_lock<std::mutex> lock(mutex);
         while (player->getState() == PH_STATE_PAUSED) {
             cv.wait(lock);
         }
         
-        bool ret = player->getVideoDecoder()->getFrameQueue()->front(&frame);
-        if (ret == false) {
-            continue;
+        frame = player->getDemuxer()->getVideoDecoder()->getFrameQueue()->front();
+        if (frame == 0) {
+            break;
         }
         double timestamp;
         timestamp = av_frame_get_best_effort_timestamp(frame)*av_q2d(player->getDemuxer()->getVideoStream()->time_base);
-        printf("Video: %f  Audio: %f\n", timestamp, audioClock);
         if (timestamp > audioClock) {
             if (timestamp - audioClock < 0.1) {
                 std::this_thread::sleep_for(std::chrono::milliseconds((unsigned long)((timestamp - audioClock)*1000)));
@@ -96,22 +95,20 @@ void Render::renderVideo()
             }
         }
         sws_scale(imageConvertContext, (uint8_t const * const *)frame->data, frame->linesize, 0, codecContext->height, rgbaFrame->data, rgbaFrame->linesize);
-        av_frame_unref(frame);
+        av_frame_free(&frame);
         if (videoCallback) {
             videoCallback(userData, (unsigned char *)rgbaFrame->data[0], rgbaFrame->width, rgbaFrame->height, rgbaFrame->linesize);
         }
     }
     av_free(outBuffer);
     av_frame_free(&rgbaFrame);
-    av_frame_free(&frame);
 }
 
 void Render::renderAudio(unsigned char* outData, int *size)
 {
-    AVFrame * frame = av_frame_alloc();
-    bool ret = player->getAudioDecoder()->getFrameQueue()->front(&frame);
-    if (ret == false) {
-        av_frame_free(&frame);
+    AVFrame * frame = NULL;
+    frame = player->getDemuxer()->getAudioDecoder()->getFrameQueue()->front();
+    if (frame == 0) {
         return;
     }
     audioClock = frame->pts*av_q2d(player->getDemuxer()->getAudioStream()->time_base);

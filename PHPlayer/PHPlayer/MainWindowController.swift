@@ -41,8 +41,8 @@ class MainWindowController: NSWindowController, NSWindowDelegate {
     
     func windowWillClose(_ notification: Notification) {
         syncPlayTimeTimer?.invalidate()
-        AppDelegate.player.stop()
         AppDelegate.audioController.stop()
+        AppDelegate.player.stop()
     }
     
     override func keyDown(with event: NSEvent) {

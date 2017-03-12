@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include "globaldef.h"
 #include <thread>
+#include <atomic>
 
 class PHPlayerCore;
 
@@ -21,22 +22,18 @@ public:
     ~Render();
     
     void start();
-//    void pause();
     void play();
-    void stop();
     void setVideoCallback(void *userData, VideoCallback callback);
     void renderVideo();
     void renderAudio(unsigned char* outData, int *size);
-    void seek(int64_t position);
-    void forward(int64_t dution);
-    void backward(int64_t dution);
     double getAudioClock();
+    void setAudioClock(double clock);
     
 private:
     PHPlayerCore *player;
     void *userData;
     VideoCallback videoCallback;
-    double audioClock;
+    std::atomic<double> audioClock;
     std::mutex mutex;
     std::condition_variable cv;
 };

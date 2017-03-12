@@ -13,6 +13,7 @@
 #include "globalenum.h"
 
 struct AVCodecContext;
+class Demuxer;
 class PHPlayerCore;
 class PacketQueue;
 class FrameQueue;
@@ -22,11 +23,11 @@ public:
     Decoder(PHPlayerCore *player, DecoderType type);
     ~Decoder();
 
-    bool openDecoder();
+    bool open();
     bool start();
-    void stop();
     void clear();
     void decode();
+    void close();
     
     AVCodecContext *getCodecContex();
     FrameQueue *getFrameQueue();

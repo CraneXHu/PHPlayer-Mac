@@ -16,7 +16,7 @@
     self = [super init];
     if (self) {
         _player = new PHPlayerCore();
-        static_cast<PHPlayerCore*>(_player)->init();
+//        static_cast<PHPlayerCore*>(_player)->init();
     }
     return self;
 };

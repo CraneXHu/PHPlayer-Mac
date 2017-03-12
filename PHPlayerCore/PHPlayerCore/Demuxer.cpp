@@ -6,14 +6,16 @@
 //  Copyright © 2017年 huhexiang. All rights reserved.
 //
 
-extern "C"{
-#include "avformat.h"
-}
+#include "spdlog/spdlog.h"
 #include "Demuxer.hpp"
-#include "Source.hpp"
+#include "globalenum.h"
+#include "Decoder.hpp"
 #include "Render.hpp"
 #include "PHPlayerCore.hpp"
 #include "PacketQueue.hpp"
+extern "C"{
+#include "avformat.h"
+}
 
 Demuxer::Demuxer(PHPlayerCore *player)
 {
@@ -29,6 +31,10 @@ Demuxer::Demuxer(PHPlayerCore *player)
     isRequestSeek = false;
     seekPosition = 0;
     flag = 0;
+    
+    videoDecoder = new Decoder(player, PH_DECODER_VIDEO);
+    audioDecoder = new Decoder(player, PH_DECODER_AUDIO);
+    subtitleDecoder = new Decoder(player, PH_DECODER_SUBTITLE);
 }
 
 Demuxer::~Demuxer()
@@ -38,17 +44,41 @@ Demuxer::~Demuxer()
     delete subtitlePacketQueue;
 }
 
+bool Demuxer::open(char *url)
+{
+    if (avformat_open_input(&formatContext, url, NULL, NULL) < 0) {
+        return false;
+    }
+    
+    if (avformat_find_stream_info(formatContext, NULL) < 0) {
+        return false;
+    }
+    findStream();
+    
+    bool res = videoDecoder->open();
+    if (res) {
+        videoDecoder->start();
+    }
+    res = audioDecoder->open();
+    if (res) {
+        audioDecoder->start();
+    }
+    res = subtitleDecoder->open();
+    if (res) {
+        subtitleDecoder->start();
+    }
+    return true;
+}
+
 void Demuxer::findStream()
 {
-    AVFormatContext *formatContext = player->getSource()->getContext();
     int streamIndex = av_find_best_stream(formatContext, AVMEDIA_TYPE_VIDEO, -1, -1, NULL, 0);
     if (streamIndex < 0) {
-        videoStream = 0;
+        videoStream = NULL;
     } else {
         videoStream = formatContext->streams[streamIndex];
     }
     
-    formatContext = player->getSource()->getContext();
     streamIndex = av_find_best_stream(formatContext, AVMEDIA_TYPE_AUDIO, -1, -1, NULL, 0);
     if (streamIndex < 0) {
         audioStream = NULL;
@@ -56,7 +86,6 @@ void Demuxer::findStream()
         audioStream = formatContext->streams[streamIndex];
     }
     
-    formatContext = player->getSource()->getContext();
     streamIndex = av_find_best_stream(formatContext, AVMEDIA_TYPE_SUBTITLE, -1, -1, NULL, 0);
     if (streamIndex < 0) {
         subtitleStream = NULL;
@@ -67,21 +96,24 @@ void Demuxer::findStream()
 
 bool Demuxer::start()
 {
-//    findStream();
     std::thread demuxThread(&Demuxer::demux, this);
     demuxThread.detach();
+    
     return true;
 }
 
-void Demuxer::stop()
+void Demuxer::close()
 {
-    videoPacketQueue->setAbort(true);
-    audioPacketQueue->setAbort(true);
-    subtitlePacketQueue->setAbort(true);
+    clear();
+    videoDecoder->close();
+    audioDecoder->close();
+    subtitleDecoder->close();
+    avformat_close_input(&formatContext);
 }
 
 void Demuxer::demux()
 {
+
     int videoStreamIndex = -1;
     int audioStreamIndex = -1;
     int subtitleStreamIndex = -1;
@@ -95,8 +127,7 @@ void Demuxer::demux()
         subtitleStreamIndex = subtitleStream->index;
     }
     
-    AVFormatContext *formatContext = player->getSource()->getContext();
-    AVPacket *packet = av_packet_alloc();
+//    AVPacket *packet = av_packet_alloc();
     while (player->getState() != PH_STATE_STOPED) {
         
         //used for network stream
@@ -109,12 +140,15 @@ void Demuxer::demux()
         if (isRequestSeek) {
             int ret = av_seek_frame(formatContext, -1, seekPosition*AV_TIME_BASE, flag);
             if (ret < 0) {
-                printf("Error while seeking.");
+                spdlog::get("phplayer.log")->info("Error while seeking.");
             }
-//            printf("Seek position: %f.\n", seekPosition);
-            player->clear();
             isRequestSeek = false;
+            
+            clear();
+            //put flush packet
+            
         }
+        AVPacket *packet = av_packet_alloc();
         int ret = av_read_frame(formatContext, packet);
         if (ret == AVERROR(EAGAIN)) {
             continue;
@@ -130,13 +164,13 @@ void Demuxer::demux()
         } else if(packet->stream_index == subtitleStreamIndex){
             subtitlePacketQueue->push(packet);
         }
-        av_packet_unref(packet);
+//        av_packet_unref(packet);
     }
     
-    av_packet_free(&packet);
+//    av_packet_free(&packet);
 }
 
-void Demuxer::seek(__int64_t position, int flag)
+void Demuxer::seek(double position, int flag)
 {
     this->seekPosition = position;
     isRequestSeek = true;
@@ -148,6 +182,10 @@ void Demuxer::clear()
     videoPacketQueue->clear();
     audioPacketQueue->clear();
     subtitlePacketQueue->clear();
+    
+    videoDecoder->clear();
+    audioDecoder->clear();
+    subtitleDecoder->clear();
 }
 
 AVStream *Demuxer::getVideoStream()
@@ -178,4 +216,49 @@ PacketQueue *Demuxer::getAudioPacketQueue()
 PacketQueue *Demuxer::getSubtitlePacketQueue()
 {
     return subtitlePacketQueue;
+}
+
+Decoder *Demuxer::getVideoDecoder()
+{
+    return videoDecoder;
+}
+
+Decoder *Demuxer::getAudioDecoder()
+{
+    return audioDecoder;
+}
+
+Decoder *Demuxer::getSubtitleDecoder()
+{
+    return subtitleDecoder;
+}
+
+int Demuxer::getVideoWidth()
+{
+    return videoDecoder->getCodecContex()->width;
+}
+
+int Demuxer::getVideoHeight()
+{
+    return videoDecoder->getCodecContex()->height;
+}
+
+int Demuxer::getAudioSampleRate()
+{
+    return audioDecoder->getCodecContex()->sample_rate;
+}
+
+int Demuxer::getAudioChannels()
+{
+    return audioDecoder->getCodecContex()->channels;
+}
+
+double Demuxer::getDuration()
+{
+    return formatContext->duration/AV_TIME_BASE;
+}
+
+char *Demuxer::getFileName()
+{
+    return formatContext->filename;
 }

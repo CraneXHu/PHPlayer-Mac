@@ -15,8 +15,8 @@
 
 #include "globalenum.h"
 #include "globaldef.h"
+#include <atomic>
 
-class Source;
 class Demuxer;
 class Decoder;
 class Render;
@@ -37,7 +37,7 @@ public:
     void seek(double postion, int flag);
     void forward(double duration);
     void backward(double duration);
-    void clear();
+//    void clear();
     
     void setVideoCallback(void *userData, VideoCallback callback);
     void getAudioData(unsigned char* outData, int* size);
@@ -53,20 +53,12 @@ public:
     double getCurrentTime();
     
 public:
-    Source *getSource();
     Demuxer *getDemuxer();
-    Decoder *getVideoDecoder();
-    Decoder *getAudioDecoder();
-    Decoder *getSubtitleDecoder();
     Render *getRender();
     
 private:
-    PlayerState state;
-    Source *source;
+    std::atomic<PlayerState> state;
     Demuxer *demuxer;
-    Decoder *videoDecoder;
-    Decoder *audioDecoder;
-    Decoder *subtitleDecoder;
     Render *render;
 };
 

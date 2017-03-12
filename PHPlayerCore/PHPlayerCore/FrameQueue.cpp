@@ -8,63 +8,36 @@
 
 #include "FrameQueue.hpp"
 
-FrameQueue::FrameQueue(int maxSize)
+FrameQueue::FrameQueue(int capacity)
 {
-    this->maxSize = maxSize;
-    this->abort = false;
+    this->capacity = capacity;
 }
 
-void FrameQueue::setAbort(bool abort)
+bool FrameQueue::push(AVFrame *frame)
 {
-    this->abort = abort;
-}
-
-bool FrameQueue::push(const AVFrame *pFrame)
-{
-    AVFrame *pDistFrame = av_frame_alloc();
-    int ret = av_frame_ref(pDistFrame, pFrame);
-    if (ret < 0) {
-        av_free(pDistFrame);
-        return false;
-    }
+//    AVFrame *newFrame = av_frame_alloc();
+//    int ret = av_frame_ref(newFrame, frame);
+//    if (ret < 0) {
+//        av_free(newFrame);
+//        return false;
+//    }
     
     std::unique_lock<std::mutex> lock(mutex);
-    for (; ; ) {
-        if (queue.size() <= maxSize) {
-            queue.push(pDistFrame);
-            conditionEmpty.notify_one();
-            return true;
-        } else {
-//            conditionFull.wait(lock, [&]() -> bool {return queue.size() < MAX_SIZE;});
-            conditionFull.wait(lock);
-        }
-    }
+    conditionFull.wait(lock, [this] {return queue.size() < capacity;});
+    queue.push(frame);
+    conditionEmpty.notify_one();
+    return true;
 
 }
 
-bool FrameQueue::front(AVFrame **pFrame)
+AVFrame * FrameQueue::front()
 {
     std::unique_lock<std::mutex> lock(mutex);
-    for (; ; ) {
-        if (abort) {
-            return false;
-        }
-        if (!queue.empty()) {
-            int ret = av_frame_ref(*pFrame, queue.front());
-            if (ret < 0) {
-                return false;
-            }
-            
-            AVFrame *temp = queue.front();
-            queue.pop();
-            av_frame_free(&temp);
-            conditionFull.notify_one();
-            return true;
-        } else{
-            //        conditionEmpty.wait(lock, [&]() -> bool {return queue.size() != 0;});
-            conditionEmpty.wait(lock);
-        }
-    }
+    conditionEmpty.wait(lock, [this]{return !queue.empty();});
+    AVFrame*frame = queue.front();
+    queue.pop();
+    conditionFull.notify_one();
+    return frame;
 }
 
 void FrameQueue::clear()
@@ -76,10 +49,4 @@ void FrameQueue::clear()
         av_frame_free(&temp);
     }
     conditionFull.notify_one();
-}
-
-int FrameQueue::size()
-{
-    std::unique_lock<std::mutex> lock(mutex);
-    return queue.size();
 }

@@ -6,6 +6,7 @@
 //  Copyright © 2017年 huhexiang. All rights reserved.
 //
 
+#include "spdlog/spdlog.h"
 #include "Decoder.hpp"
 #include "PHPlayerCore.hpp"
 #include "PacketQueue.hpp"
@@ -44,13 +45,6 @@ Decoder::Decoder(PHPlayerCore *player, DecoderType type)
     this->type = type;
     
     frameQueue = new FrameQueue(16);
-    if (type == PH_DECODER_VIDEO) {
-        packetQueue = player->getDemuxer()->getVideoPacketQueue();
-    } else if(type == PH_DECODER_AUDIO) {
-        packetQueue = player->getDemuxer()->getAudioPacketQueue();
-    } else {
-        packetQueue = player->getDemuxer()->getSubtitlePacketQueue();
-    }
 }
 
 Decoder::~Decoder()
@@ -58,8 +52,16 @@ Decoder::~Decoder()
     delete frameQueue;
 }
 
-bool Decoder::openDecoder()
+bool Decoder::open()
 {
+    if (type == PH_DECODER_VIDEO) {
+        packetQueue = player->getDemuxer()->getVideoPacketQueue();
+    } else if(type == PH_DECODER_AUDIO) {
+        packetQueue = player->getDemuxer()->getAudioPacketQueue();
+    } else {
+        packetQueue = player->getDemuxer()->getSubtitlePacketQueue();
+    }
+    
     AVStream *stream;
     if (type == PH_DECODER_VIDEO) {
         stream = player->getDemuxer()->getVideoStream();
@@ -68,10 +70,11 @@ bool Decoder::openDecoder()
     } else {
         stream = player->getDemuxer()->getSubtitleStream();
     }
-    
     if (stream == NULL) {
         return false;
     }
+    
+
     
     AVCodec *codec = avcodec_find_decoder(stream->codecpar->codec_id);
     if (!codec) {
@@ -89,7 +92,7 @@ bool Decoder::openDecoder()
     }
     
     if (type == PH_DECODER_VIDEO){
-        codecContext->get_format = get_format;
+//        codecContext->get_format = get_format;
         //    codecContext->get_buffer2 = get_buffer;
         //    codecContext->thread_safe_callbacks = 1;
     }
@@ -103,39 +106,39 @@ bool Decoder::openDecoder()
 
 bool Decoder::start()
 {
-    bool ret = openDecoder();
-    if (ret == false) {
-        return false;
-    }
     std::thread decodeThread(&Decoder::decode, this);
     decodeThread.detach();
     return true;
 }
 
-void Decoder::stop()
+void Decoder::close()
 {
-    frameQueue->setAbort(true);
+    packetQueue->push(0);
+    frameQueue->push(0);
+    
+//    if(type == PH_DECODER_VIDEO){
+//        videotoolbox_uninit(codecContext);
+//    }
 //    avcodec_close(codecContext);
-    videotoolbox_uninit(codecContext);
 }
 
 void Decoder::decode()
 {
-    AVPacket *pkt = av_packet_alloc();
-    while (player->getState() != PH_STATE_STOPED) {
+    AVPacket *packet = 0;
+    while (true) {
         
-        bool isSucceed = packetQueue->front(pkt);
-        if (!isSucceed) {
-            continue;
+        packet = packetQueue->front();
+        if (packet == 0) {
+            break;
         }
         
-        if (pkt->size == 0) {
+        if (packet->size == 0) {
             avcodec_flush_buffers(codecContext);
-            printf("Flush buffers.\n");
+            spdlog::get("phplayer.log")->info("Flush codec buffers.");
             continue;
         }
         
-        int ret = avcodec_send_packet(codecContext, pkt);
+        int ret = avcodec_send_packet(codecContext, packet);
         if (ret < 0) {
             goto out;
         }
@@ -145,26 +148,23 @@ void Decoder::decode()
             ret = avcodec_receive_frame(codecContext, frame);
             if (!ret)
             {
-                if (type == PH_DECODER_VIDEO){
-                    videotoolbox_retrieve_data(codecContext, frame);
-                }
+//                if (type == PH_DECODER_VIDEO){
+//                    videotoolbox_retrieve_data(codecContext, frame);
+//                }
 
                 frameQueue->push(frame);
+            } else {
+                av_frame_free(&frame);
             }
-            av_frame_free(&frame);
         }
-        out:
-            av_packet_unref(pkt);
+    out:
+        av_packet_free(&packet);
     }
-    av_packet_free(&pkt);
 }
 
 void Decoder::clear()
 {
     frameQueue->clear();
-    AVPacket *pkt = av_packet_alloc();
-    packetQueue->push(pkt);
-    av_packet_free(&pkt);
 }
 
 AVCodecContext *Decoder::getCodecContex()

@@ -1,19 +1,19 @@
 //
-//  Converter.cpp
+//  Filter.cpp
 //  PHPlayerCore
 //
 //  Created by huhexiang on 17/2/21.
 //  Copyright © 2017年 huhexiang. All rights reserved.
 //
 
-#include "Converter.hpp"
+#include "Filter.hpp"
 
-Converter::Converter()
+Filter::Filter()
 {
     
 }
 
-Converter::~Converter()
+Filter::~Filter()
 {
     
 }

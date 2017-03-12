@@ -20,19 +20,16 @@ extern "C" {
 class FrameQueue
 {
 public:
-    FrameQueue(int maxSize);
-    void setAbort(bool abort);
-    bool push(const AVFrame *pFrame);
-    bool front(AVFrame **pFrame);
+    FrameQueue(int capacity);
+    bool push(AVFrame *frame);
+    AVFrame* front();
     void clear();
-    int size();
     
 private:
     std::queue<AVFrame*> queue;
     std::mutex mutex;
     std::condition_variable conditionEmpty;
     std::condition_variable conditionFull;
-    int maxSize;
-    bool abort;
+    int capacity;
 };
 #endif /* FrameQueue_hpp */

@@ -8,80 +8,45 @@
 
 #include "PacketQueue.hpp"
 
-PacketQueue::PacketQueue(int maxSize)
+PacketQueue::PacketQueue(int capacity)
 {
-    this->maxSize = maxSize;
-    abort = false;
+    this->capacity = capacity;
 }
 
-bool PacketQueue::push(const AVPacket *packet)
+bool PacketQueue::push(AVPacket *packet)
 {
-	AVPacket *pkt = av_packet_alloc();
-    int ret = av_packet_ref(pkt, packet);
-    if (ret < 0) {
-//        av_packet_free(&pkt);
-        return false;
-    }
+//	AVPacket *newPacket = av_packet_alloc();
+//    int ret = av_packet_ref(newPacket, packet);
+//    if (ret < 0) {
+//        av_packet_free(&newPacket);
+//        return false;
+//    }
     
     std::unique_lock<std::mutex> lock(mutex);
-    for (; ; ) {
-        if (queue.size() <= maxSize) {
-            queue.push(pkt);
-            conditionEmpty.notify_one();
-            return true;
-        } else {
-//            conditionFull.wait(lock, [&]() -> bool {return queue.size() < MAX_SIZE;});
-//            printf("Packet full %d\n", maxSize);
-            conditionFull.wait(lock);
-        }
-    }
-    
+    conditionFull.wait(lock, [this] {return queue.size() < capacity;});
+    queue.push(packet);
+    conditionEmpty.notify_one();
+    return true;
 }
 
 //need to optimize，not use av_packet_ref, use move.
-bool PacketQueue::front(AVPacket *packet)
+AVPacket * PacketQueue::front()
 {
     std::unique_lock<std::mutex> lock(mutex);
-    for (; ; ) {
-        if (abort) {
-            return false;
-        }
-        if (!queue.empty()) {
-            int ret = av_packet_ref(packet, queue.front());
-            if (ret < 0) {
-                return false;
-            }
-            AVPacket *pkt = queue.front();
-            queue.pop();
-            av_packet_free(&pkt);
-            conditionFull.notify_one();
-            return true;
-        } else{
-//            conditionEmpty.wait(lock, [&]() -> bool {return queue.size() != 0;});
-//            printf("Packet empty %d\n", maxSize);
-            conditionEmpty.wait(lock);
-        }
-    }
-}
-
-void PacketQueue::setAbort(bool abort)
-{
-    this->abort = abort;
+    conditionEmpty.wait(lock, [this]{return !queue.empty();});
+    AVPacket *packet = queue.front();
+    queue.pop();
+    conditionFull.notify_one();
+    return packet;
 }
 
 void PacketQueue::clear()
 {
     std::unique_lock<std::mutex> lock(mutex);
     while (queue.size() > 0) {
-        AVPacket *pkt = queue.front();
+        AVPacket *packet = queue.front();
         queue.pop();
-        av_packet_free(&pkt);
+        av_packet_free(&packet);
     }
-    conditionFull.notify_all();
-}
-
-int PacketQueue::size()
-{
-    std::unique_lock<std::mutex> lock(mutex);
-    return queue.size();
+    conditionFull.notify_one();
 }
