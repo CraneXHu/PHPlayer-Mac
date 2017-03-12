@@ -34,12 +34,15 @@ int videotoolbox_retrieve_data(AVCodecContext *pAVCodecContext, AVFrame *pFrame)
     tempFrame->width  = width;
     tempFrame->height = height;
     ret = av_frame_get_buffer(tempFrame, 32);
-    if (ret < 0)
+    if (ret < 0){
+        av_frame_free(tempFrame);
         return ret;
+    }
     
     err = CVPixelBufferLockBaseAddress(pixbuf, kCVPixelBufferLock_ReadOnly);
     if (err != kCVReturnSuccess) {
         av_log(NULL, AV_LOG_ERROR, "Error locking the pixel buffer.\n");
+        av_frame_free(tempFrame);
         return AVERROR_UNKNOWN;
     }
     
@@ -61,12 +64,14 @@ int videotoolbox_retrieve_data(AVCodecContext *pAVCodecContext, AVFrame *pFrame)
     
     ret = av_frame_copy_props(tempFrame, pFrame);
     CVPixelBufferUnlockBaseAddress(pixbuf, kCVPixelBufferLock_ReadOnly);
-    if (ret < 0)
+    if (ret < 0){
+        av_frame_free(tempFrame);
         return ret;
+    }
     
     av_frame_unref(pFrame);
     av_frame_move_ref(pFrame, tempFrame);
-    av_frame_free(tempFrame);
+    av_frame_free(&tempFrame);
     
     return 0;
 }

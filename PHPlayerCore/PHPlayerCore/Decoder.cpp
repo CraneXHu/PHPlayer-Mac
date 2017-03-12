@@ -92,7 +92,7 @@ bool Decoder::open()
     }
     
     if (type == PH_DECODER_VIDEO){
-//        codecContext->get_format = get_format;
+        codecContext->get_format = get_format;
         //    codecContext->get_buffer2 = get_buffer;
         //    codecContext->thread_safe_callbacks = 1;
     }
@@ -148,9 +148,9 @@ void Decoder::decode()
             ret = avcodec_receive_frame(codecContext, frame);
             if (!ret)
             {
-//                if (type == PH_DECODER_VIDEO){
-//                    videotoolbox_retrieve_data(codecContext, frame);
-//                }
+                if (type == PH_DECODER_VIDEO){
+                    videotoolbox_retrieve_data(codecContext, frame);
+                }
 
                 frameQueue->push(frame);
             } else {
