@@ -10,6 +10,7 @@
 #define Decoder_hpp
 
 #include <stdio.h>
+#include <atomic>
 #include "globalenum.h"
 
 struct AVCodecContext;
@@ -26,8 +27,12 @@ public:
     bool open();
     bool start();
     void clear();
+    void flush();
     void decode();
     void close();
+    
+    void setEnableHardwareAcceleration(bool isEnable);
+    bool isEnableHardwareAcceleration();
     
     AVCodecContext *getCodecContex();
     FrameQueue *getFrameQueue();
@@ -35,6 +40,7 @@ public:
 private:
     PHPlayerCore *player;
     DecoderType type;
+    std::atomic<bool> hardwareAcceleration;
     AVCodecContext *codecContext;
     PacketQueue *packetQueue;
     FrameQueue *frameQueue;

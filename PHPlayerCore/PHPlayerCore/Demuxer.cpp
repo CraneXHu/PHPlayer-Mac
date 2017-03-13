@@ -127,7 +127,6 @@ void Demuxer::demux()
         subtitleStreamIndex = subtitleStream->index;
     }
     
-//    AVPacket *packet = av_packet_alloc();
     while (player->getState() != PH_STATE_STOPED) {
         
         //used for network stream
@@ -139,21 +138,26 @@ void Demuxer::demux()
         
         if (isRequestSeek) {
             int ret = av_seek_frame(formatContext, -1, seekPosition*AV_TIME_BASE, flag);
+//            int64_t pos = seekPosition*AV_TIME_BASE;
+//            int ret = avformat_seek_file(formatContext, -1, pos-100, pos, pos+100, flag);
             if (ret < 0) {
-                spdlog::get("phplayer.log")->info("Error while seeking.");
+                spdlog::get("phplayer")->info("Error while seeking.");
+                continue;
             }
             isRequestSeek = false;
             
             clear();
             //put flush packet
-            
+            flush();
         }
         AVPacket *packet = av_packet_alloc();
         int ret = av_read_frame(formatContext, packet);
         if (ret == AVERROR(EAGAIN)) {
+            av_packet_free(&packet);
             continue;
         }
         if (ret < 0) {
+            close();
             break;
         }
         
@@ -164,10 +168,8 @@ void Demuxer::demux()
         } else if(packet->stream_index == subtitleStreamIndex){
             subtitlePacketQueue->push(packet);
         }
-//        av_packet_unref(packet);
     }
     
-//    av_packet_free(&packet);
 }
 
 void Demuxer::seek(double position, int flag)
@@ -186,6 +188,33 @@ void Demuxer::clear()
     videoDecoder->clear();
     audioDecoder->clear();
     subtitleDecoder->clear();
+}
+
+void Demuxer::flush()
+{
+    AVPacket *packet = av_packet_alloc();
+    char *msg = (char *)av_malloc(6);
+    strcpy(msg, "flush");
+    packet->data = (uint8_t*)msg;
+    packet->size = 6;
+    videoPacketQueue->push(packet);
+    
+    packet = av_packet_alloc();
+    msg = (char *)av_malloc(6);
+    strcpy(msg, "flush");
+    packet->data = (uint8_t*)msg;
+    packet->size = 6;
+    audioPacketQueue->push(packet);
+    
+    packet = av_packet_alloc();
+    msg = (char *)av_malloc(6);
+    strcpy(msg, "flush");
+    packet->data = (uint8_t*)msg;
+    packet->size = 6;
+    subtitlePacketQueue->push(packet);
+//    videoDecoder->flush();
+//    audioDecoder->flush();
+//    subtitleDecoder->flush();
 }
 
 AVStream *Demuxer::getVideoStream()

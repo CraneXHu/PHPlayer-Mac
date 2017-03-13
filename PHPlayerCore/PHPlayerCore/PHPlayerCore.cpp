@@ -44,9 +44,10 @@ void PHPlayerCore::init()
 {
     av_register_all();
     avformat_network_init();
-    av_log_set_callback(av_log_callback);
+//    av_log_set_callback(av_log_callback);
     spdlog::basic_logger_st("phplayer", "phplayer.log");
     spdlog::basic_logger_st("ffmpeg", "ffmpeg.log");
+    spdlog::get("phplayer")->info("init");
 }
 
 void PHPlayerCore::setState(PlayerState state)
@@ -104,6 +105,16 @@ void PHPlayerCore::backward(double duration)
 {
     double current = render->getAudioClock();
     seek(-duration + current, 1);
+}
+
+void PHPlayerCore::setEnableHardwareAcceleration(bool isEnable)
+{
+    demuxer->getVideoDecoder()->setEnableHardwareAcceleration(isEnable);
+}
+
+bool PHPlayerCore::isEnableHardwareAcceleration()
+{
+    return demuxer->getVideoDecoder()->isEnableHardwareAcceleration();
 }
 
 //void PHPlayerCore::clear()

@@ -44,6 +44,8 @@ Decoder::Decoder(PHPlayerCore *player, DecoderType type)
     this->player = player;
     this->type = type;
     
+    hardwareAcceleration = false;
+    codecContext = 0;
     frameQueue = new FrameQueue(16);
 }
 
@@ -74,8 +76,6 @@ bool Decoder::open()
         return false;
     }
     
-
-    
     AVCodec *codec = avcodec_find_decoder(stream->codecpar->codec_id);
     if (!codec) {
         return false;
@@ -91,10 +91,10 @@ bool Decoder::open()
         return false;
     }
     
-    if (type == PH_DECODER_VIDEO){
+    if (hardwareAcceleration && type == PH_DECODER_VIDEO){
         codecContext->get_format = get_format;
-        //    codecContext->get_buffer2 = get_buffer;
-        //    codecContext->thread_safe_callbacks = 1;
+        codecContext->get_buffer2 = get_buffer;
+        codecContext->thread_safe_callbacks = 1;
     }
     
     ret = avcodec_open2(codecContext, codec, NULL);
@@ -116,7 +116,7 @@ void Decoder::close()
     packetQueue->push(0);
     frameQueue->push(0);
     
-//    if(type == PH_DECODER_VIDEO){
+//    if(hardwareAcceleration && type == PH_DECODER_VIDEO){
 //        videotoolbox_uninit(codecContext);
 //    }
 //    avcodec_close(codecContext);
@@ -132,9 +132,12 @@ void Decoder::decode()
             break;
         }
         
-        if (packet->size == 0) {
-            avcodec_flush_buffers(codecContext);
-            spdlog::get("phplayer.log")->info("Flush codec buffers.");
+        if (strcmp((char*)packet->data, "flush") == 0) {
+            if (!hardwareAcceleration) {
+                avcodec_flush_buffers(codecContext);
+            }
+            av_packet_free(&packet);
+            spdlog::get("phplayer")->info("Flush codec buffers.");
             continue;
         }
         
@@ -148,7 +151,7 @@ void Decoder::decode()
             ret = avcodec_receive_frame(codecContext, frame);
             if (!ret)
             {
-                if (type == PH_DECODER_VIDEO){
+                if (hardwareAcceleration && type == PH_DECODER_VIDEO){
                     videotoolbox_retrieve_data(codecContext, frame);
                 }
 
@@ -159,12 +162,30 @@ void Decoder::decode()
         }
     out:
         av_packet_free(&packet);
+        
     }
 }
 
 void Decoder::clear()
 {
     frameQueue->clear();
+}
+
+void Decoder::flush()
+{
+    if(codecContext){
+        avcodec_flush_buffers(codecContext);
+    }
+}
+
+void Decoder::setEnableHardwareAcceleration(bool isEnable)
+{
+    hardwareAcceleration = isEnable;
+}
+
+bool Decoder::isEnableHardwareAcceleration()
+{
+    return hardwareAcceleration;
 }
 
 AVCodecContext *Decoder::getCodecContex()

@@ -28,6 +28,7 @@ public:
     void demux();
     void seek(double position, int flag);
     void clear();
+    void flush();
     void close();
     
     AVStream *getVideoStream();

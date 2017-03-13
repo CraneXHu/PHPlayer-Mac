@@ -37,6 +37,8 @@ public:
     void seek(double postion, int flag);
     void forward(double duration);
     void backward(double duration);
+    void setEnableHardwareAcceleration(bool isEnable);
+    bool isEnableHardwareAcceleration();
 //    void clear();
     
     void setVideoCallback(void *userData, VideoCallback callback);
