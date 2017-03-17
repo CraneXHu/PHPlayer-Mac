@@ -37,8 +37,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 //        mainWindowController.setTitle()
 //        mainWindowController.videoView.initData()
         mainWindowController.initData()
-        AppDelegate.audioController.initData()
-        AppDelegate.audioController.play()
+//        AppDelegate.audioController.initData()
+//        AppDelegate.audioController.play()
         return true
     }
     

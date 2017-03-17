@@ -9,8 +9,10 @@
 #include "spdlog/spdlog.h"
 #include "Demuxer.hpp"
 #include "globalenum.h"
-#include "Decoder.hpp"
-#include "Render.hpp"
+#include "VideoDecoder.hpp"
+#include "AudioDecoder.hpp"
+#include "SubtitleDecoder.hpp"
+#include "Renderer.hpp"
 #include "PHPlayerCore.hpp"
 #include "PacketQueue.hpp"
 extern "C"{
@@ -32,9 +34,9 @@ Demuxer::Demuxer(PHPlayerCore *player)
     seekPosition = 0;
     flag = 0;
     
-    videoDecoder = new Decoder(player, PH_DECODER_VIDEO);
-    audioDecoder = new Decoder(player, PH_DECODER_AUDIO);
-    subtitleDecoder = new Decoder(player, PH_DECODER_SUBTITLE);
+    videoDecoder = 0;
+    audioDecoder = 0;
+    subtitleDecoder = 0;
 }
 
 Demuxer::~Demuxer()
@@ -55,17 +57,27 @@ bool Demuxer::open(char *url)
     }
     findStream();
     
-    bool res = videoDecoder->open();
-    if (res) {
-        videoDecoder->start();
+    if (videoStream) {
+        videoDecoder = new VideoDecoder(player);
+        bool res = videoDecoder->open();
+        if (res) {
+            videoDecoder->start();
+        }
     }
-    res = audioDecoder->open();
-    if (res) {
-        audioDecoder->start();
+    if (audioStream) {
+        audioDecoder = new AudioDecoder(player);
+        bool res = audioDecoder->open();
+        if (res) {
+            audioDecoder->start();
+        }
     }
-    res = subtitleDecoder->open();
-    if (res) {
-        subtitleDecoder->start();
+
+    if (subtitleStream) {
+        subtitleDecoder = new SubtitleDecoder(player);
+        bool res = subtitleDecoder->open();
+        if (res) {
+            subtitleDecoder->start();
+        }
     }
     return true;
 }
@@ -105,9 +117,15 @@ bool Demuxer::start()
 void Demuxer::close()
 {
     clear();
-    videoDecoder->close();
-    audioDecoder->close();
-    subtitleDecoder->close();
+    if (videoDecoder) {
+        videoDecoder->close();
+    }
+    if (audioDecoder) {
+        audioDecoder->close();
+    }
+    if (subtitleDecoder) {
+        subtitleDecoder->close();
+    }
     avformat_close_input(&formatContext);
 }
 
@@ -185,9 +203,15 @@ void Demuxer::clear()
     audioPacketQueue->clear();
     subtitlePacketQueue->clear();
     
-    videoDecoder->clear();
-    audioDecoder->clear();
-    subtitleDecoder->clear();
+    if (videoDecoder) {
+        videoDecoder->clear();
+    }
+    if (audioDecoder) {
+        audioDecoder->clear();
+    }
+    if (subtitleDecoder) {
+        subtitleDecoder->clear();
+    }
 }
 
 void Demuxer::flush()
@@ -257,7 +281,7 @@ Decoder *Demuxer::getAudioDecoder()
     return audioDecoder;
 }
 
-Decoder *Demuxer::getSubtitleDecoder()
+SubtitleDecoder *Demuxer::getSubtitleDecoder()
 {
     return subtitleDecoder;
 }

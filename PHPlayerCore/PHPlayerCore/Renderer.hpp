@@ -1,25 +1,27 @@
 //
-//  Render.hpp
+//  Renderer.hpp
 //  PHPlayerCore
 //
 //  Created by huhexiang on 17/2/21.
 //  Copyright © 2017年 huhexiang. All rights reserved.
 //
 
-#ifndef Render_hpp
-#define Render_hpp
+#ifndef Renderer_hpp
+#define Renderer_hpp
 
 #include <stdio.h>
 #include "globaldef.h"
 #include <thread>
 #include <atomic>
 
+struct AVSubtitle;
+struct AVFrame;
 class PHPlayerCore;
 
-class Render{
+class Renderer{
 public:
-    Render(PHPlayerCore *player);
-    ~Render();
+    Renderer(PHPlayerCore *player);
+    ~Renderer();
     
     void start();
     void play();
@@ -28,6 +30,7 @@ public:
     void renderAudio(unsigned char* outData, int *size);
     double getAudioClock();
     void setAudioClock(double clock);
+    void subOverlay(AVSubtitle *sub, AVFrame *frame);
     
 private:
     PHPlayerCore *player;
@@ -37,4 +40,4 @@ private:
     std::mutex mutex;
     std::condition_variable cv;
 };
-#endif /* Render_hpp */
+#endif /* Renderer_hpp */

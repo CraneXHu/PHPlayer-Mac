@@ -21,26 +21,21 @@ class FrameQueue;
 
 class Decoder{
 public:
-    Decoder(PHPlayerCore *player, DecoderType type);
+    Decoder(PHPlayerCore *player);
     ~Decoder();
 
-    bool open();
-    bool start();
+    virtual bool open();
+    virtual void start();
     void clear();
     void flush();
-    void decode();
+    virtual void decode();
     void close();
-    
-    void setEnableHardwareAcceleration(bool isEnable);
-    bool isEnableHardwareAcceleration();
     
     AVCodecContext *getCodecContex();
     FrameQueue *getFrameQueue();
     
-private:
+protected:
     PHPlayerCore *player;
-    DecoderType type;
-    std::atomic<bool> hardwareAcceleration;
     AVCodecContext *codecContext;
     PacketQueue *packetQueue;
     FrameQueue *frameQueue;

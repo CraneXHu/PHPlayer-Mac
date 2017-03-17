@@ -1,15 +1,17 @@
 //
-//  Render.cpp
+//  Renderer.cpp
 //  PHPlayerCore
 //
 //  Created by huhexiang on 17/2/21.
 //  Copyright © 2017年 huhexiang. All rights reserved.
 //
 
-#include "Render.hpp"
+#include "Renderer.hpp"
 #include "PHPlayerCore.hpp"
 #include "Demuxer.hpp"
 #include "Decoder.hpp"
+#include "SubtitleDecoder.hpp"
+#include "SubtitleRenderer.hpp"
 #include "FrameQueue.hpp"
 
 extern "C"{
@@ -18,7 +20,7 @@ extern "C"{
 #include "libswresample/swresample.h"
 }
 
-Render::Render(PHPlayerCore *player)
+Renderer::Renderer(PHPlayerCore *player)
 {
     this->player = player;
     userData = 0;
@@ -26,40 +28,50 @@ Render::Render(PHPlayerCore *player)
     audioClock = 0;
 }
 
-Render::~Render()
+Renderer::~Renderer()
 {
     
 }
 
-void Render::start()
+void Renderer::start()
 {
-    std::thread renderVideoThread(&Render::renderVideo, this);
+    std::thread renderVideoThread(&Renderer::renderVideo, this);
     renderVideoThread.detach();
 }
 
-void Render::play()
+void Renderer::play()
 {
     std::unique_lock<std::mutex> lock(mutex);
     cv.notify_one();
 }
 
-void Render::setVideoCallback(void *userData, VideoCallback callback)
+void Renderer::setVideoCallback(void *userData, VideoCallback callback)
 {
     this->userData = userData;
     videoCallback = callback;
 }
 
-double Render::getAudioClock()
+double Renderer::getAudioClock()
 {
     return audioClock;
 }
 
-void Render::setAudioClock(double clock)
+void Renderer::setAudioClock(double clock)
 {
     audioClock = clock;
 }
 
-void Render::renderVideo()
+void Renderer::subOverlay(AVSubtitle *sub, AVFrame *frame)
+{
+    if (sub->format == 0) {
+        int n = sub->num_rects;
+        for (int i = 0; i < n; i++) {
+            AVSubtitleRect*rect = sub->rects[i];
+        }
+    }
+}
+
+void Renderer::renderVideo()
 {
     AVFrame *frame = NULL;
     AVFrame *rgbaFrame = av_frame_alloc();
@@ -95,6 +107,13 @@ void Render::renderVideo()
             }
         }
         sws_scale(imageConvertContext, (uint8_t const * const *)frame->data, frame->linesize, 0, codecContext->height, rgbaFrame->data, rgbaFrame->linesize);
+        if (player->getDemuxer()->getSubtitleDecoder()) {
+            AVSubtitle * sub = player->getDemuxer()->getSubtitleDecoder()->getSubtitleQueue()->front();
+            if (sub) {
+//                subOverlay(sub, frame);
+                av_free(sub);
+            }
+        }
         av_frame_free(&frame);
         if (videoCallback) {
             videoCallback(userData, (unsigned char *)rgbaFrame->data[0], rgbaFrame->width, rgbaFrame->height, rgbaFrame->linesize);
@@ -104,7 +123,7 @@ void Render::renderVideo()
     av_frame_free(&rgbaFrame);
 }
 
-void Render::renderAudio(unsigned char* outData, int *size)
+void Renderer::renderAudio(unsigned char* outData, int *size)
 {
     AVFrame * frame = NULL;
     frame = player->getDemuxer()->getAudioDecoder()->getFrameQueue()->front();

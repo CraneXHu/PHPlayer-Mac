@@ -19,7 +19,9 @@
 
 class Demuxer;
 class Decoder;
-class Render;
+class Renderer;
+class SubtitleRenderer;
+class AudioRenderer;
 
 class PHPlayerCore
 {
@@ -39,6 +41,7 @@ public:
     void backward(double duration);
     void setEnableHardwareAcceleration(bool isEnable);
     bool isEnableHardwareAcceleration();
+    void setVolume(float volume);
 //    void clear();
     
     void setVideoCallback(void *userData, VideoCallback callback);
@@ -54,14 +57,17 @@ public:
     double getDuration();
     double getCurrentTime();
     
-public:
     Demuxer *getDemuxer();
-    Render *getRender();
+    Renderer *getRender();
+    SubtitleRenderer *getSubRender();
+    AudioRenderer *getAudioRender();
     
 private:
     std::atomic<PlayerState> state;
     Demuxer *demuxer;
-    Render *render;
+    Renderer *renderer;
+    SubtitleRenderer *subRenderer;
+    AudioRenderer *audioRenderer;
 };
 
 #pragma GCC visibility pop

@@ -41,7 +41,7 @@ class MainWindowController: NSWindowController, NSWindowDelegate {
     
     func windowWillClose(_ notification: Notification) {
         syncPlayTimeTimer?.invalidate()
-        AppDelegate.audioController.stop()
+//        AppDelegate.audioController.stop()
         AppDelegate.player.stop()
     }
     
@@ -55,10 +55,10 @@ class MainWindowController: NSWindowController, NSWindowDelegate {
         case 49:
             if AppDelegate.player.getState() != 2 {
                 AppDelegate.player.pause()
-                AppDelegate.audioController.pause()
+//                AppDelegate.audioController.pause()
             } else {
                 AppDelegate.player.play()
-                AppDelegate.audioController.play()
+//                AppDelegate.audioController.play()
             }
         default:
             return
@@ -97,17 +97,18 @@ class MainWindowController: NSWindowController, NSWindowDelegate {
     }
     
     @IBAction func volumeSliderChanged(_ sender: NSSlider) {
-        AppDelegate.audioController.setPlaybackVolume(playbackVolume: Float(sender.doubleValue))
+//        AppDelegate.audioController.setPlaybackVolume(playbackVolume: Float(sender.doubleValue))
+        AppDelegate.player.setVolume(Float(sender.doubleValue))
     }
     
     @IBAction func playAction(_ sender: NSButton) {
         
         if sender.state == NSOffState {
             AppDelegate.player.pause()
-            AppDelegate.audioController.pause()
+//            AppDelegate.audioController.pause()
         } else {
             AppDelegate.player.play()
-            AppDelegate.audioController.play()
+//            AppDelegate.audioController.play()
         }
     }
 

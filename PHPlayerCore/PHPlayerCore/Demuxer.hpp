@@ -16,6 +16,7 @@ struct AVStream;
 class PacketQueue;
 class PHPlayerCore;
 class Decoder;
+class SubtitleDecoder;
 
 class Demuxer {
 public:
@@ -40,7 +41,7 @@ public:
     
     Decoder *getVideoDecoder();
     Decoder *getAudioDecoder();
-    Decoder *getSubtitleDecoder();
+    SubtitleDecoder *getSubtitleDecoder();
     
     int getVideoWidth();
     int getVideoHeight();
@@ -62,7 +63,7 @@ private:
     PacketQueue *subtitlePacketQueue;
     Decoder *videoDecoder;
     Decoder *audioDecoder;
-    Decoder *subtitleDecoder;
+    SubtitleDecoder *subtitleDecoder;
     bool isRequestSeek;
     double seekPosition;
     int flag;

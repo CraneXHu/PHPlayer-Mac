@@ -62,6 +62,11 @@
     static_cast<PHPlayerCore*>(_player)->backward(postion);
 }
 
+-(void) setVolume:(float)volume
+{
+    static_cast<PHPlayerCore*>(_player)->setVolume(volume);
+}
+
 -(int) getState
 {
     return static_cast<PHPlayerCore*>(_player)->getState();

@@ -29,6 +29,8 @@
 
 -(void) backward: (double) postion;
 
+-(void) setVolume: (float) volume;
+
 -(int) getState;
 
 typedef void (*VideoCallback)(void *userData, unsigned char *data, int width, int height, int *linesize);
