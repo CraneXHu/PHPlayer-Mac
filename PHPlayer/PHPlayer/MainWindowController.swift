@@ -41,7 +41,6 @@ class MainWindowController: NSWindowController, NSWindowDelegate {
     
     func windowWillClose(_ notification: Notification) {
         syncPlayTimeTimer?.invalidate()
-//        AppDelegate.audioController.stop()
         AppDelegate.player.stop()
     }
     
@@ -55,10 +54,8 @@ class MainWindowController: NSWindowController, NSWindowDelegate {
         case 49:
             if AppDelegate.player.getState() != 2 {
                 AppDelegate.player.pause()
-//                AppDelegate.audioController.pause()
             } else {
                 AppDelegate.player.play()
-//                AppDelegate.audioController.play()
             }
         default:
             return
@@ -79,7 +76,7 @@ class MainWindowController: NSWindowController, NSWindowDelegate {
     }
     
     func setDurtion() {
-        duration.stringValue = String(AppDelegate.player.getDuration())
+        duration.stringValue = VideoTimeUtil.convert(second: Int(AppDelegate.player.getDuration()))
     }
     
     func initTimer() {
@@ -87,7 +84,7 @@ class MainWindowController: NSWindowController, NSWindowDelegate {
     }
     
     func updateTime() {
-        currentDuration.stringValue = String(AppDelegate.player.getCurrentTime())
+        currentDuration.stringValue = VideoTimeUtil.convert(second: Int(AppDelegate.player.getCurrentTime()))
         videoSlider.doubleValue = 100*AppDelegate.player.getCurrentTime()/AppDelegate.player.getDuration()
     }
     
@@ -97,7 +94,6 @@ class MainWindowController: NSWindowController, NSWindowDelegate {
     }
     
     @IBAction func volumeSliderChanged(_ sender: NSSlider) {
-//        AppDelegate.audioController.setPlaybackVolume(playbackVolume: Float(sender.doubleValue))
         AppDelegate.player.setVolume(Float(sender.doubleValue))
     }
     
@@ -105,10 +101,8 @@ class MainWindowController: NSWindowController, NSWindowDelegate {
         
         if sender.state == NSOffState {
             AppDelegate.player.pause()
-//            AppDelegate.audioController.pause()
         } else {
             AppDelegate.player.play()
-//            AppDelegate.audioController.play()
         }
     }
 

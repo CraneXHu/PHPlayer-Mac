@@ -187,6 +187,7 @@ void Demuxer::demux()
             subtitlePacketQueue->push(packet);
         }
     }
+    close();
     
 }
 
@@ -313,5 +314,5 @@ double Demuxer::getDuration()
 
 char *Demuxer::getFileName()
 {
-    return formatContext->filename;
+    return strrchr(formatContext->filename, '/')+1;
 }

@@ -10,6 +10,7 @@ import Cocoa
 
 class AboutWindowController: NSWindowController {
 
+    @IBOutlet weak var iconImageView: NSImageView!
     override var windowNibName: String {
         return "AboutWindowController"
     }
@@ -18,6 +19,7 @@ class AboutWindowController: NSWindowController {
         super.windowDidLoad()
 
         // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
+        iconImageView.image = NSApp.applicationIconImage
     }
     
 }

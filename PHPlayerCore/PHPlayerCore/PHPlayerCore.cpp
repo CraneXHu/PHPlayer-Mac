@@ -94,7 +94,6 @@ void PHPlayerCore::stop()
 {
     setState(PH_STATE_STOPED);
     audioRenderer->stop();
-    demuxer->close();
 }
 
 void PHPlayerCore::seek(double position, int flag)
