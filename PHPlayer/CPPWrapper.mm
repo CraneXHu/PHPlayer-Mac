@@ -16,7 +16,7 @@
     self = [super init];
     if (self) {
         _player = new PHPlayerCore();
-        static_cast<PHPlayerCore*>(_player)->init();
+//        static_cast<PHPlayerCore*>(_player)->init();
     }
     return self;
 };
@@ -60,6 +60,11 @@
 -(void) backward:(double)postion
 {
     static_cast<PHPlayerCore*>(_player)->backward(postion);
+}
+
+-(void) setVolume:(float)volume
+{
+    static_cast<PHPlayerCore*>(_player)->setVolume(volume);
 }
 
 -(int) getState

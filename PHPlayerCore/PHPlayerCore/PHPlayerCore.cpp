@@ -9,39 +9,48 @@
 
 #include <iostream>
 #include <thread>
+#include "spdlog/spdlog.h"
 #include "PHPlayerCore.hpp"
-#include "Source.hpp"
 #include "Demuxer.hpp"
-#include "Decoder.hpp"
-#include "Render.hpp"
-
-extern "C" {
+#include "VideoDecoder.hpp"
+#include "Renderer.hpp"
+#include "SubtitleRenderer.hpp"
+#include "AudioRenderer.hpp"
+extern "C"{
+#include "avformat.h"
 #include "avcodec.h"
+}
+
+void av_log_callback(void* avcl, int level, const char *fmt, va_list vl)
+{
+    char msg[1024];
+    sprintf(msg, fmt, vl);
+    spdlog::get("ffmpeg")->info(msg);
 }
 
 PHPlayerCore::PHPlayerCore()
 {
-    source = new Source(this);
     demuxer = new Demuxer(this);
-    videoDecoder = new Decoder(this, PH_DECODER_VIDEO);
-    audioDecoder = new Decoder(this, PH_DECODER_AUDIO);
-    subtitleDecoder = new Decoder(this, PH_DECODER_SUBTITLE);
-    render = new Render(this);
+    renderer = new Renderer(this);
+    subRenderer = new SubtitleRenderer(this);
+    audioRenderer = new AudioRenderer(this);
+    init();
 }
 
 PHPlayerCore::~PHPlayerCore()
 {
-    delete source;
     delete demuxer;
-    delete videoDecoder;
-    delete audioDecoder;
-    delete subtitleDecoder;
-    delete render;
+    delete renderer;
 }
 
 void PHPlayerCore::init()
 {
-    Source::init();
+    av_register_all();
+    avformat_network_init();
+//    av_log_set_callback(av_log_callback);
+    spdlog::basic_logger_st("phplayer", "phplayer.log");
+    spdlog::basic_logger_st("ffmpeg", "ffmpeg.log");
+    spdlog::get("phplayer")->info("init");
 }
 
 void PHPlayerCore::setState(PlayerState state)
@@ -56,115 +65,118 @@ PlayerState PHPlayerCore::getState()
 
 bool PHPlayerCore::open(char *file)
 {
-    return source->open(file);
+    demuxer->open(file);
+    audioRenderer->init();
+    return true;
 }
 
 void PHPlayerCore::start()
 {
     demuxer->start();
-    videoDecoder->start();
-    audioDecoder->start();
-    subtitleDecoder->start();
-    render->start();
+    renderer->start();
+    audioRenderer->play();
 }
 
 void PHPlayerCore::pause()
 {
-    state = PH_STATE_PAUSED;
+    setState(PH_STATE_PAUSED);
+    audioRenderer->pause();
 }
 
 void PHPlayerCore::play()
 {
-    state = PH_STATE_RUNNING;
-    render->play();
+    setState(PH_STATE_RUNNING);
+    renderer->play();
+    audioRenderer->play();
 }
 
 void PHPlayerCore::stop()
 {
-    state = PH_STATE_STOPED;
-    demuxer->stop();
-    videoDecoder->stop();
-    audioDecoder->stop();
-    subtitleDecoder->stop();
-    clear();
-    source->close();
+    setState(PH_STATE_STOPED);
+    audioRenderer->stop();
 }
 
 void PHPlayerCore::seek(double position, int flag)
 {
+    renderer->setAudioClock(position);
     demuxer->seek(position, flag);
-    render->seek(0);
-//    clear();
 }
 
 void PHPlayerCore::forward(double duration)
 {
-    double current = render->getAudioClock();
+    double current = renderer->getAudioClock();
     seek(duration + current, 0);
 }
 
 void PHPlayerCore::backward(double duration)
 {
-    double current = render->getAudioClock();
+    double current = renderer->getAudioClock();
     seek(-duration + current, 1);
 }
 
-void PHPlayerCore::clear()
+void PHPlayerCore::setEnableHardwareAcceleration(bool isEnable)
 {
-    demuxer->clear();
-    videoDecoder->clear();
-    audioDecoder->clear();
-    subtitleDecoder->clear();
+    ((VideoDecoder*)demuxer->getVideoDecoder())->setEnableHardwareAcceleration(isEnable);
 }
+
+bool PHPlayerCore::isEnableHardwareAcceleration()
+{
+    return ((VideoDecoder*)demuxer->getVideoDecoder())->isEnableHardwareAcceleration();
+}
+
+void PHPlayerCore::setVolume(float volume)
+{
+    audioRenderer->setPlaybackVolume(volume);
+}
+
+//void PHPlayerCore::clear()
+//{
+//    demuxer->clear();
+//}
 
 void PHPlayerCore::setVideoCallback(void *userData, VideoCallback callback)
 {
-    render->setVideoCallback(userData, callback);
+    renderer->setVideoCallback(userData, callback);
 }
 
 void PHPlayerCore::getAudioData(unsigned char *outData, int *size)
 {
-    render->renderAudio(outData, size);
+    renderer->renderAudio(outData, size);
 }
 
 int PHPlayerCore::getVideoWidth()
 {
-    return videoDecoder->getCodecContex()->width;
+    return demuxer->getVideoWidth();
 }
 
 int PHPlayerCore::getVideoHeight()
 {
-    return videoDecoder->getCodecContex()->height;
+    return demuxer->getVideoHeight();
 }
 
 int PHPlayerCore::getAudioSampleRate()
 {
-    return audioDecoder->getCodecContex()->sample_rate;
+    return demuxer->getAudioSampleRate();
 }
 
 int PHPlayerCore::getAudioChannels()
 {
-    return audioDecoder->getCodecContex()->channels;
+    return demuxer->getAudioChannels();
 }
 
 double PHPlayerCore::getDuration()
 {
-    return source->getDuration();
+    return demuxer->getDuration();
 }
 
 double PHPlayerCore::getCurrentTime()
 {
-    return render->getAudioClock();
+    return renderer->getAudioClock();
 }
 
 char *PHPlayerCore::getFileName()
 {
-    return source->getFileName();
-}
-
-Source* PHPlayerCore::getSource()
-{
-    return source;
+    return demuxer->getFileName();
 }
 
 Demuxer* PHPlayerCore::getDemuxer()
@@ -172,23 +184,13 @@ Demuxer* PHPlayerCore::getDemuxer()
     return demuxer;
 }
 
-Decoder *PHPlayerCore::getVideoDecoder()
+Renderer *PHPlayerCore::getRender()
 {
-    return videoDecoder;
+    return renderer;
 }
 
-Decoder *PHPlayerCore::getAudioDecoder()
+SubtitleRenderer *PHPlayerCore::getSubRender()
 {
-    return audioDecoder;
-}
-
-Decoder *PHPlayerCore::getSubtitleDecoder()
-{
-    return subtitleDecoder;
-}
-
-Render *PHPlayerCore::getRender()
-{
-    return render;
+    return subRenderer;
 }
 

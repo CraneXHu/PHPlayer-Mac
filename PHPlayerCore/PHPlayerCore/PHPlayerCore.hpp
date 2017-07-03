@@ -15,11 +15,13 @@
 
 #include "globalenum.h"
 #include "globaldef.h"
+#include <atomic>
 
-class Source;
 class Demuxer;
 class Decoder;
-class Render;
+class Renderer;
+class SubtitleRenderer;
+class AudioRenderer;
 
 class PHPlayerCore
 {
@@ -37,7 +39,10 @@ public:
     void seek(double postion, int flag);
     void forward(double duration);
     void backward(double duration);
-    void clear();
+    void setEnableHardwareAcceleration(bool isEnable);
+    bool isEnableHardwareAcceleration();
+    void setVolume(float volume);
+//    void clear();
     
     void setVideoCallback(void *userData, VideoCallback callback);
     void getAudioData(unsigned char* outData, int* size);
@@ -52,22 +57,17 @@ public:
     double getDuration();
     double getCurrentTime();
     
-public:
-    Source *getSource();
     Demuxer *getDemuxer();
-    Decoder *getVideoDecoder();
-    Decoder *getAudioDecoder();
-    Decoder *getSubtitleDecoder();
-    Render *getRender();
+    Renderer *getRender();
+    SubtitleRenderer *getSubRender();
+    AudioRenderer *getAudioRender();
     
 private:
-    PlayerState state;
-    Source *source;
+    std::atomic<PlayerState> state;
     Demuxer *demuxer;
-    Decoder *videoDecoder;
-    Decoder *audioDecoder;
-    Decoder *subtitleDecoder;
-    Render *render;
+    Renderer *renderer;
+    SubtitleRenderer *subRenderer;
+    AudioRenderer *audioRenderer;
 };
 
 #pragma GCC visibility pop

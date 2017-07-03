@@ -31,7 +31,7 @@
                             <action selector="generalSetting:" target="-2" id="GOV-wG-XSJ"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="143020DC-01B7-4D71-AD7A-5C3EF59F14E2" explicitItemIdentifier="PrefShortcutKeys" label="Shortcut Keys" paletteLabel="Shortcut Keys" tag="-1" image="pref_toolbar_shortcut_keys" autovalidates="NO" selectable="YES" id="qlL-DC-7GX">
+                    <toolbarItem implicitItemIdentifier="143020DC-01B7-4D71-AD7A-5C3EF59F14E2" explicitItemIdentifier="PrefShortcutKeys" label="Shortcut Keys" paletteLabel="Shortcut Keys" tag="-1" image="keybord" autovalidates="NO" selectable="YES" id="qlL-DC-7GX">
                         <connections>
                             <action selector="shortcutKeySetting:" target="-2" id="MaL-My-3k4"/>
                         </connections>
@@ -50,7 +50,7 @@
         </window>
     </objects>
     <resources>
-        <image name="pref_toolbar_general" width="32" height="32"/>
-        <image name="pref_toolbar_shortcut_keys" width="32" height="32"/>
+        <image name="keybord" width="206" height="206"/>
+        <image name="pref_toolbar_general" width="206" height="206"/>
     </resources>
 </document>

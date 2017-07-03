@@ -19,6 +19,7 @@
 		AD1348E21E65545D00840214 /* ControlbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1348E11E65545D00840214 /* ControlbarView.swift */; };
 		AD15A8111E50441700E3245A /* AudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD15A8101E50441700E3245A /* AudioController.swift */; };
 		AD15A8131E50442800E3245A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD15A8121E50442800E3245A /* AudioToolbox.framework */; };
+		AD1A582E1E7BF219005E237C /* VideoTimeUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1A582D1E7BF219005E237C /* VideoTimeUtil.swift */; };
 		AD25E55B1E476AB000415E8D /* libPHPlayerCore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AD25E55A1E476AB000415E8D /* libPHPlayerCore.dylib */; };
 		AD284DBC1E2CE43300A15F31 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD284DBB1E2CE43300A15F31 /* Assets.xcassets */; };
 		AD284DBF1E2CE43300A15F31 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD284DBD1E2CE43300A15F31 /* MainMenu.xib */; };
@@ -43,6 +44,7 @@
 		AD1348E11E65545D00840214 /* ControlbarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlbarView.swift; sourceTree = "<group>"; };
 		AD15A8101E50441700E3245A /* AudioController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioController.swift; sourceTree = "<group>"; };
 		AD15A8121E50442800E3245A /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		AD1A582D1E7BF219005E237C /* VideoTimeUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoTimeUtil.swift; sourceTree = "<group>"; };
 		AD25E55A1E476AB000415E8D /* libPHPlayerCore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libPHPlayerCore.dylib; path = "../../../../../Library/Developer/Xcode/DerivedData/PHPlayer-eduvxblpmmuqsnghgyqnmsxhgvac/Build/Products/Debug/libPHPlayerCore.dylib"; sourceTree = "<group>"; };
 		AD284DB61E2CE43300A15F31 /* PHPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PHPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD284DBB1E2CE43300A15F31 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -94,6 +96,14 @@
 			name = views;
 			sourceTree = "<group>";
 		};
+		AD1A582C1E7BF1D6005E237C /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				AD1A582D1E7BF219005E237C /* VideoTimeUtil.swift */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
 		AD284DAD1E2CE43300A15F31 = {
 			isa = PBXGroup;
 			children = (
@@ -115,6 +125,7 @@
 		AD284DB81E2CE43300A15F31 /* PHPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				AD1A582C1E7BF1D6005E237C /* Utils */,
 				AD74BEBB1E65DF3400974282 /* AppDelegate.swift */,
 				AD1348E01E65541700840214 /* views */,
 				AD1348D11E613A5C00840214 /* Prefs */,
@@ -234,6 +245,7 @@
 				ADE4A0051E4C54C7009D3AD7 /* VideoView.swift in Sources */,
 				AD1348E21E65545D00840214 /* ControlbarView.swift in Sources */,
 				AD1348D81E613B3A00840214 /* PrefsShortcutKeyViewController.swift in Sources */,
+				AD1A582E1E7BF219005E237C /* VideoTimeUtil.swift in Sources */,
 				AD1348D41E613B0600840214 /* PrefsGeneralViewController.swift in Sources */,
 				ADE4A00B1E4C6B9A009D3AD7 /* MainWindowController.swift in Sources */,
 				AD284DE01E2CFC0900A15F31 /* CPPWrapper.mm in Sources */,

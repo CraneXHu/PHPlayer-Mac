@@ -9,6 +9,14 @@
 import Foundation
 
 struct Preferences {
+    
+    struct Keys {
+        static let enableHardwareDecoding = "enableHardwareDecoding"
+        static let seekTime = "seekTime"
+    }
+    
     static let defaults: [String:Any] = [
-        "enableHardwareDecoding": true]
+        Keys.enableHardwareDecoding: true,
+        Keys.seekTime: 5
+        ]
 }

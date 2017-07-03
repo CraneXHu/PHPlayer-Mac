@@ -11,21 +11,26 @@
 
 #include <stdio.h>
 
+struct AVFormatContext;
 struct AVStream;
 class PacketQueue;
 class PHPlayerCore;
+class Decoder;
+class SubtitleDecoder;
 
 class Demuxer {
 public:
     Demuxer(PHPlayerCore *player);
     ~Demuxer();
     
+    bool open(char *url);
     void findStream();
     bool start();
     void demux();
-    void seek(__int64_t position, int flag);
+    void seek(double position, int flag);
     void clear();
-    void stop();
+    void flush();
+    void close();
     
     AVStream *getVideoStream();
     AVStream *getAudioStream();
@@ -34,14 +39,31 @@ public:
     PacketQueue *getAudioPacketQueue();
     PacketQueue *getSubtitlePacketQueue();
     
+    Decoder *getVideoDecoder();
+    Decoder *getAudioDecoder();
+    SubtitleDecoder *getSubtitleDecoder();
+    
+    int getVideoWidth();
+    int getVideoHeight();
+    
+    int getAudioSampleRate();
+    int getAudioChannels();
+    
+    char * getFileName();
+    double getDuration();
+    
 private:
     PHPlayerCore *player;
+    AVFormatContext *formatContext;
     AVStream *videoStream;
     AVStream *audioStream;
     AVStream *subtitleStream;
     PacketQueue *videoPacketQueue;
     PacketQueue *audioPacketQueue;
     PacketQueue *subtitlePacketQueue;
+    Decoder *videoDecoder;
+    Decoder *audioDecoder;
+    SubtitleDecoder *subtitleDecoder;
     bool isRequestSeek;
     double seekPosition;
     int flag;

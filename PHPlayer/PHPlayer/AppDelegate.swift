@@ -12,7 +12,6 @@ import Cocoa
 class AppDelegate: NSObject, NSApplicationDelegate {
     
     static let player = PlayerWrapper()
-    static let audioController : AudioController = AudioController()
     let mainWindowController : MainWindowController = MainWindowController()
     let preferenceWindowController = PreferencesWindowController()
     let aboutWindowController = AboutWindowController()
@@ -21,7 +20,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Insert code here to initialize your application
         
         UserDefaults.standard.register(defaults: Preferences.defaults)
-        mainWindowController.showWindow(nil);
+//        mainWindowController.showWindow(nil);
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
@@ -29,16 +28,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func application(_ sender: NSApplication, openFile filename: String) -> Bool {
-
+        mainWindowController.showWindow(nil)
         let path = (filename as NSString).utf8String
         AppDelegate.player.open(UnsafeMutablePointer<Int8>(mutating: path))
         AppDelegate.player.start()
-//        mainWindowController.initTimer()
-//        mainWindowController.setTitle()
-//        mainWindowController.videoView.initData()
         mainWindowController.initData()
-        AppDelegate.audioController.initData()
-        AppDelegate.audioController.play()
         return true
     }
     

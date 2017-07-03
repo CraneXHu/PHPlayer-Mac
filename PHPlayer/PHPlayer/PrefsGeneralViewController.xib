@@ -44,55 +44,24 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f8N-0Q-8e3">
+                <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f8N-0Q-8e3" userLabel="Theme option">
                     <rect key="frame" x="195" y="316" width="76" height="26"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="loP-gx-6WU" id="DH8-79-NNW">
+                    <popUpButtonCell key="cell" type="push" title="Dark" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="loP-gx-6WU" id="DH8-79-NNW" userLabel="option">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="menu"/>
                         <menu key="menu" id="vUi-aK-FJi">
                             <items>
-                                <menuItem title="Item 1" state="on" id="loP-gx-6WU"/>
-                                <menuItem title="Item 2" id="oj6-6y-7hl"/>
-                                <menuItem title="Item 3" id="DxA-ow-8Tg"/>
-                            </items>
-                        </menu>
-                    </popUpButtonCell>
-                </popUpButton>
-                <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c63-vr-pwf">
-                    <rect key="frame" x="265" y="263" width="76" height="26"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="2AE-y2-vIV" id="Nvx-c2-vv8">
-                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="menu"/>
-                        <menu key="menu" id="Otj-OD-zp6">
-                            <items>
-                                <menuItem title="Item 1" state="on" id="2AE-y2-vIV"/>
-                                <menuItem title="Item 2" id="tLZ-Er-GRC"/>
-                                <menuItem title="Item 3" id="yOW-SU-FtX"/>
-                            </items>
-                        </menu>
-                    </popUpButtonCell>
-                </popUpButton>
-                <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="byv-sC-iRm">
-                    <rect key="frame" x="265" y="232" width="76" height="26"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="GMi-RH-JYC" id="gyN-Ri-B4d">
-                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="menu"/>
-                        <menu key="menu" id="UG4-oq-jSW">
-                            <items>
-                                <menuItem title="Item 1" state="on" id="GMi-RH-JYC"/>
-                                <menuItem title="Item 2" id="DLc-i8-3XV"/>
-                                <menuItem title="Item 3" id="fam-6b-8Za"/>
+                                <menuItem title="Dark" state="on" id="loP-gx-6WU"/>
+                                <menuItem title="Light" id="oj6-6y-7hl"/>
                             </items>
                         </menu>
                     </popUpButtonCell>
                 </popUpButton>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7Ml-zu-5TP">
-                    <rect key="frame" x="133" y="268" width="120" height="17"/>
+                    <rect key="frame" x="133" y="268" width="123" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Control hiding time" id="t0f-uy-EeB">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Control hiding time:" id="t0f-uy-EeB">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -142,7 +111,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IQp-RM-vgA">
+                <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IQp-RM-vgA" userLabel="Path">
                     <rect key="frame" x="176" y="163" width="143" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="ii2-Ek-KhM">
@@ -159,17 +128,16 @@
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                 </button>
-                <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P32-Os-SjE">
+                <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P32-Os-SjE" userLabel="Format">
                     <rect key="frame" x="196" y="131" width="76" height="26"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="FO9-BV-UhA" id="oT4-xO-AbT">
+                    <popUpButtonCell key="cell" type="push" title="PNG" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="FO9-BV-UhA" id="oT4-xO-AbT" userLabel="Format">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="menu"/>
                         <menu key="menu" id="AeP-6a-2l9">
                             <items>
-                                <menuItem title="Item 1" state="on" id="FO9-BV-UhA"/>
-                                <menuItem title="Item 2" id="iyD-Vm-PEg"/>
-                                <menuItem title="Item 3" id="ZXq-Hs-JX0"/>
+                                <menuItem title="PNG" state="on" id="FO9-BV-UhA"/>
+                                <menuItem title="JPG" id="iyD-Vm-PEg"/>
                             </items>
                         </menu>
                     </popUpButtonCell>
@@ -219,8 +187,26 @@
                     <rect key="frame" x="135" y="117" width="232" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                 </box>
+                <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mjg-CI-4rg" userLabel="Hiding time">
+                    <rect key="frame" x="267" y="265" width="52" height="22"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="1" drawsBackground="YES" id="bhv-rp-8r0">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="R0o-54-0tJ" userLabel="Seek time">
+                    <rect key="frame" x="267" y="235" width="52" height="22"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="5" drawsBackground="YES" id="yGA-PL-BWq">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
             </subviews>
-            <point key="canvasLocation" x="240" y="174.5"/>
+            <point key="canvasLocation" x="240" y="174"/>
         </customView>
         <userDefaultsController representsSharedInstance="YES" id="HZ5-K5-Pf8"/>
     </objects>

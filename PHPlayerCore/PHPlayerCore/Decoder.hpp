@@ -10,30 +10,32 @@
 #define Decoder_hpp
 
 #include <stdio.h>
+#include <atomic>
 #include "globalenum.h"
 
 struct AVCodecContext;
+class Demuxer;
 class PHPlayerCore;
 class PacketQueue;
 class FrameQueue;
 
 class Decoder{
 public:
-    Decoder(PHPlayerCore *player, DecoderType type);
+    Decoder(PHPlayerCore *player);
     ~Decoder();
 
-    bool openDecoder();
-    bool start();
-    void stop();
+    virtual bool open();
+    virtual void start();
     void clear();
-    void decode();
+    void flush();
+    virtual void decode();
+    void close();
     
     AVCodecContext *getCodecContex();
     FrameQueue *getFrameQueue();
     
-private:
+protected:
     PHPlayerCore *player;
-    DecoderType type;
     AVCodecContext *codecContext;
     PacketQueue *packetQueue;
     FrameQueue *frameQueue;

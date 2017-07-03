@@ -20,19 +20,16 @@ extern "C" {
 class PacketQueue
 {
 public:
-    PacketQueue(int maxSize);
-    bool push(const AVPacket *packet);
-    bool front(AVPacket *packet);
-    void setAbort(bool abort);
+    PacketQueue(int capacity);
+    bool push(AVPacket *packet);
+    AVPacket * front();
     void clear();
-    int size();
     
 private:
     std::queue<AVPacket*> queue;
     std::mutex mutex;
     std::condition_variable conditionEmpty;
     std::condition_variable conditionFull;
-    int maxSize;
-    bool abort;
+    int capacity;
 };
 #endif /* PacketQueue_hpp */
