@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11542" systemVersion="15G1212" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11542"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -20,7 +20,7 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" animationBehavior="default" id="QvC-M9-y7g">
+        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" fullSizeContentView="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="659" height="421"/>
@@ -36,7 +36,7 @@
                         <rect key="frame" x="0.0" y="397" width="659" height="24"/>
                         <subviews>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="uYe-OX-OZ5">
-                                <rect key="frame" x="314" y="3" width="31" height="17"/>
+                                <rect key="frame" x="314" y="4" width="31" height="17"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Title" id="Z5H-kS-JKh">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -53,7 +53,7 @@
                     <visualEffectView appearanceType="vibrantDark" blendingMode="withinWindow" material="dark" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="gd5-5p-kNS" userLabel="Control bar" customClass="ControlbarView" customModule="PHPlayer" customModuleProvider="target">
                         <rect key="frame" x="90" y="20" width="480" height="64"/>
                         <subviews>
-                            <button translatesAutoresizingMaskIntoConstraints="NO" id="Nj7-cF-Nhq" userLabel="Play button">
+                            <button ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nj7-cF-Nhq" userLabel="Play button">
                                 <rect key="frame" x="228" y="8" width="24" height="25"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="24" id="bEi-mi-xTk"/>
@@ -74,7 +74,7 @@
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                             </button>
-                            <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VKm-RG-vfw" userLabel="Play slider">
+                            <slider verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VKm-RG-vfw" userLabel="Play slider">
                                 <rect key="frame" x="73" y="40" width="332" height="17"/>
                                 <sliderCell key="cell" controlSize="small" state="on" alignment="left" maxValue="100" doubleValue="53.717714905362776" tickMarkPosition="above" sliderType="linear" id="JMX-Vh-cUa"/>
                                 <connections>
@@ -171,12 +171,12 @@
         </window>
     </objects>
     <resources>
-        <image name="mute" width="200" height="200"/>
-        <image name="next" width="200" height="200"/>
-        <image name="pause" width="200" height="200"/>
-        <image name="play" width="200" height="200"/>
-        <image name="play_list" width="200" height="200"/>
-        <image name="pre" width="200" height="200"/>
-        <image name="volume" width="200" height="200"/>
+        <image name="mute" width="100" height="100"/>
+        <image name="next" width="100" height="100"/>
+        <image name="pause" width="100" height="100"/>
+        <image name="play" width="100" height="100"/>
+        <image name="play_list" width="100" height="100"/>
+        <image name="pre" width="100" height="100"/>
+        <image name="volume" width="100" height="100"/>
     </resources>
 </document>

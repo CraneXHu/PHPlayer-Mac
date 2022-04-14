@@ -44,6 +44,8 @@
 		AD7036231E77C3DD001027A5 /* SubtitleDecoder.hpp in Headers */ = {isa = PBXBuildFile; fileRef = AD7036211E77C3DD001027A5 /* SubtitleDecoder.hpp */; };
 		AD7036271E77E019001027A5 /* SubtitleQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD7036251E77E019001027A5 /* SubtitleQueue.cpp */; };
 		AD7036281E77E019001027A5 /* SubtitleQueue.hpp in Headers */ = {isa = PBXBuildFile; fileRef = AD7036261E77E019001027A5 /* SubtitleQueue.hpp */; };
+		ADB3BC0E28084CE2008264B0 /* PHQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADB3BC0C28084CE2008264B0 /* PHQueue.cpp */; };
+		ADB3BC0F28084CE2008264B0 /* PHQueue.hpp in Headers */ = {isa = PBXBuildFile; fileRef = ADB3BC0D28084CE2008264B0 /* PHQueue.hpp */; };
 		ADE4A0021E4B2CE0009D3AD7 /* VideoToolbox.c in Sources */ = {isa = PBXBuildFile; fileRef = ADE4A0001E4B2CE0009D3AD7 /* VideoToolbox.c */; };
 		ADE4A0031E4B2CE0009D3AD7 /* VideoToolbox.h in Headers */ = {isa = PBXBuildFile; fileRef = ADE4A0011E4B2CE0009D3AD7 /* VideoToolbox.h */; };
 /* End PBXBuildFile section */
@@ -91,6 +93,8 @@
 		AD7036211E77C3DD001027A5 /* SubtitleDecoder.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SubtitleDecoder.hpp; sourceTree = "<group>"; };
 		AD7036251E77E019001027A5 /* SubtitleQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SubtitleQueue.cpp; sourceTree = "<group>"; };
 		AD7036261E77E019001027A5 /* SubtitleQueue.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SubtitleQueue.hpp; sourceTree = "<group>"; };
+		ADB3BC0C28084CE2008264B0 /* PHQueue.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PHQueue.cpp; sourceTree = "<group>"; };
+		ADB3BC0D28084CE2008264B0 /* PHQueue.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PHQueue.hpp; sourceTree = "<group>"; };
 		ADE49FE81E482958009D3AD7 /* libavcodec.57.70.101.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libavcodec.57.70.101.dylib; path = ../ffmpeg/libavcodec.57.70.101.dylib; sourceTree = "<group>"; };
 		ADE49FE91E482958009D3AD7 /* libavdevice.57.2.100.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libavdevice.57.2.100.dylib; path = ../ffmpeg/libavdevice.57.2.100.dylib; sourceTree = "<group>"; };
 		ADE49FEA1E482958009D3AD7 /* libavfilter.6.68.100.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libavfilter.6.68.100.dylib; path = ../ffmpeg/libavfilter.6.68.100.dylib; sourceTree = "<group>"; };
@@ -232,6 +236,8 @@
 				AD284E0C1E325F3C00A15F31 /* FrameQueue.hpp */,
 				AD7036251E77E019001027A5 /* SubtitleQueue.cpp */,
 				AD7036261E77E019001027A5 /* SubtitleQueue.hpp */,
+				ADB3BC0C28084CE2008264B0 /* PHQueue.cpp */,
+				ADB3BC0D28084CE2008264B0 /* PHQueue.hpp */,
 			);
 			name = queue;
 			sourceTree = "<group>";
@@ -277,6 +283,7 @@
 				AD70361E1E77C397001027A5 /* AudioDecoder.hpp in Headers */,
 				ADE4A0031E4B2CE0009D3AD7 /* VideoToolbox.h in Headers */,
 				AD13489F1E5C24AE00840214 /* Demuxer.hpp in Headers */,
+				ADB3BC0F28084CE2008264B0 /* PHQueue.hpp in Headers */,
 				AD2824F61E66D3F300255F7E /* PHPlayerCore.hpp in Headers */,
 				AD70361A1E77BFA8001027A5 /* VideoDecoder.hpp in Headers */,
 				AD7036231E77C3DD001027A5 /* SubtitleDecoder.hpp in Headers */,
@@ -329,6 +336,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = AD284DC61E2CE63200A15F31;
@@ -351,6 +359,7 @@
 				AD1348A21E5C293C00840214 /* Decoder.cpp in Sources */,
 				AD1A58291E7AE322005E237C /* AudioRenderer.cpp in Sources */,
 				AD7036191E77BFA8001027A5 /* VideoDecoder.cpp in Sources */,
+				ADB3BC0E28084CE2008264B0 /* PHQueue.cpp in Sources */,
 				AD7036271E77E019001027A5 /* SubtitleQueue.cpp in Sources */,
 				AD284E091E325F2700A15F31 /* PacketQueue.cpp in Sources */,
 				AD284E0D1E325F3C00A15F31 /* FrameQueue.cpp in Sources */,

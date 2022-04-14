@@ -27,16 +27,16 @@ Demuxer::Demuxer(PHPlayerCore *player)
     audioPacketQueue = new PacketQueue(256);
     subtitlePacketQueue = new PacketQueue(16);
     
-    videoStream = NULL;
-    audioStream = NULL;
-    subtitleStream = NULL;
+    videoStream = nullptr;
+    audioStream = nullptr;
+    subtitleStream = nullptr;
     isRequestSeek = false;
     seekPosition = 0;
     flag = 0;
     
-    videoDecoder = 0;
-    audioDecoder = 0;
-    subtitleDecoder = 0;
+    videoDecoder = nullptr;
+    audioDecoder = nullptr;
+    subtitleDecoder = nullptr;
 }
 
 Demuxer::~Demuxer()
@@ -44,6 +44,18 @@ Demuxer::~Demuxer()
     delete videoPacketQueue;
     delete audioPacketQueue;
     delete subtitlePacketQueue;
+    
+    if (videoDecoder != nullptr) {
+        delete videoDecoder;
+    }
+    
+    if (audioDecoder != nullptr) {
+        delete audioDecoder;
+    }
+    
+    if (subtitleDecoder != nullptr) {
+        delete subtitleDecoder;
+    }
 }
 
 bool Demuxer::open(char *url)
